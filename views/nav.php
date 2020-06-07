@@ -6,22 +6,21 @@ $menu = array(
     "inventario" => "inventario",
     "transporte" => "transporte",
 );
+//COMPRUEBO URL OBTENIDA ESTA VACIA
 if(isset($urlobtained)){
+    //COMUTAR
     $inicio = "../".$menu["inicio"];
     $comision = "../".$menu["comision"];
     $inventario = "../".$menu["inventario"];
     $transporte = "../".$menu["transporte"];
 
 }else{
-    echo "vacio";
+    //COMUTAR
     $inicio = "./".$menu["inicio"];
     $comision = "./".$menu["comision"];
     $inventario = "./".$menu["inventario"];
     $transporte = "./".$menu["transporte"];
 }
-
-/*$btn_home = <a href='<? echo "$dominio/main.php" ?>'>
-//$btn_comisiones = <a href='<? echo "$dominio/comisiones/main.php" ?>'>*/
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Navbar</a>
