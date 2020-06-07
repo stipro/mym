@@ -21,7 +21,122 @@ $urlcurrent = $urlseparate[3];
   //Llamo Nav
   include ('../nav.php');
 ?>
-    <h1>Hello, <?php echo $urlcurrent?>!</h1>
+    <div class="container-fluid">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <h2>Modulo Comisiones</h2>
+
+            <!-- SELECCIONAR ARCHIVO -->
+            <div id="alert_rpta_group" class="d-flex flex-column justify-content-center">
+
+            </div>
+            <div class="shadow p-3 mb-5 bg-white rounded">
+                <div id="ajaxArchUpload" class="d-flex flex-column justify-content-center">
+                    
+                </div>
+                <div class="form-group">
+                    <label for="">HERRAMIENTAS</label>
+                    <div>
+                        <div id="pruebadd" class="btn-group" role="group" aria-label="Button group">
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal">
+                                Archivos
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal">
+                                Reportes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group was-validated">
+                    <label for="customFileLang">Excel</label>
+                    <!--<div class="input-group mb-3">-->
+                    <div class="input-group is-invalid">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Archivos (xlsx)</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFileLang" lang="es" required>
+                            <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label> 
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="customFileLang">Subir</span>
+                        </div>
+                    </div>
+                    <div class="invalid-feedback"> Elegir un archivo Excel </div>
+                    <div id="contprogArchExcel">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="example-month-input">Seleccionar Año y Mes</label>
+                    <div class="custom-file">
+                        <input id="damoArchExcel" class="form-control" type="month" value="" id="example-month-input" disabled>
+                    </div>
+                </div>
+
+
+                <div class="btn-group" role="group" aria-label="Button group">
+                    
+                </div>
+                <div class="form-group d-flex flex-row">
+                    <div class="col d-flex align-items-center justify-content-stard">
+
+                        <!-- Example single danger button -->
+                        <div class="btn-group">
+                            <!--PONER disabled BOTON -->
+                            <button id="btnactionsExcel" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Acciones 
+                            </button>
+                            <div class="dropdown-menu">
+                                <a id="agenerarReport" class="dropdown-item active" href="#generarExcelModal" data-toggle="modal">Generar Reporte</a>
+                                <a id="a" class="dropdown-item disabled" href="#">Visualizar Reporte</a>
+                                <a id="a" class="dropdown-item disabled" href="#">Modificar Reporte</a>
+                                <a id="a" class="dropdown-item disabled" href="#">Descargar Reporte</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item disabled" href="#">Eliminar Reporte</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="col d-flex align-items-center justify-content-end"> 
+
+                        <div class="d-flex justify-content-end">
+                            <button type="button" id="btn_insert_excel" class="btn btn-primary" id="btnregistrarExcel" disabled>Registrar</button>
+                        </div> 
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!-- EXCEL IMPORTAR-->
+
+            <!--CONTENEDO FOOTER-->
+            <div class="container form-group">                      
+                <!--DIVIMOS ESPACION (2) -->
+                <div class="row">
+                    <div class="col d-flex align-items-center justify-content-center">
+                        <div class="form-group">
+                            <label for="customSwitch1">Visualizar Tabla</label>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" disabled id="customSwitch1">
+                                <label class="custom-control-label" for="customSwitch1"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!---->
+            </div>
+            <!--CARGAR -->
+            <!--res (respuesta) -->
+            <div id="gentablaajax" class="d-flex flex-column justify-content-center">
+
+            </div>
+            <div class="cont-exceltable">
+                <table id="exceltable" class="table table-hover"></table>
+            </div>
+            <!---->
+        </div>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
