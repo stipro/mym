@@ -13,7 +13,7 @@
 <body>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
+    Nueva categoria
     </button>
 
     <!-- Modal -->
@@ -21,7 +21,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo categoria</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -44,7 +44,7 @@
         <div class="form-group">
             <label for="customSwitch1">Estado</label>
             <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
                 <label class="custom-control-label" for="customSwitch1"></label>
             </div>
         </div>
