@@ -73,12 +73,12 @@
         <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Modelo">
     </div>
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">n° Serial</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Modelo">
+        <label for="exampleFormControlInput1" class="form-label">N° Serial</label>
+        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="N° Seria">
     </div>
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">n° Lote</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Modelo">
+        <label for="exampleFormControlInput1" class="form-label">N° Lote</label>
+        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="N° Lote">
     </div>
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Garantia</label>
