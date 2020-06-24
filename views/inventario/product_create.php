@@ -85,8 +85,8 @@
                 <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Modelo">
             </div>
             <div class="form-group col-sm">
-                <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Nombre">
+                <label for="exampleFormControlInput1" class="form-label">Garantia</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Garantia">
             </div>
             <div class="form-group col-sm">
                 <label for="exampleFormControlInput1" class="form-label">N° Serial</label>
@@ -96,11 +96,6 @@
                 <label for="exampleFormControlInput1" class="form-label">N° Lote</label>
                 <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="N° Lote">
             </div>
-        </div>
-
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Garantia</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Garantia">
         </div>
         <div class="mb-3">
             <div class="form-check form-switch">
