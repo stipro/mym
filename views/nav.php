@@ -49,7 +49,7 @@ if(isset($urlobtained)){
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="<?php echo $inventario."/main.php" ?>">Inicio</a>
-            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="<?php echo $inventario."/products.php" ?>">Producto</a>
             <a class="dropdown-item" href="#">Something else here</a>
             </div>
         </li>
