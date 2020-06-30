@@ -29,10 +29,13 @@
             </div>
             <div class="col-sm">
                 <div class="form-row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label for="proveedor_ruc" class="form-label">Ruc</label>
-                            <input type="number" class="form-control" id="proveedor_ruc" placeholder="Ruc">
+                            <input type="number" class="form-control " id="proveedor_ruc" oninput="validarInput(this)" placeholder="Ruc">
+                            <div id="validador">
+
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm">
@@ -116,6 +119,7 @@
   </div>
 </div>
     <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="./../../assets/js/validador_ruc.js" type="text/javascript"></script>
 
 <!-- the fileinput plugin initialization -->
 <script>
@@ -142,11 +146,11 @@ $( "#btn-insert" ).click(function() {
     let bolestad;
     var bolestado = $('#estado_proveedor').is(":checked");
     if(bolestado){
-        bolestad = "1";
+        bolestad = true;
         alert("La caja está marcada" + bolestad);        
     }
     else{
-        bolestad = "0";
+        bolestad = false;
         alert("La caja NO está marcada" + bolestad);        
     }
     let varDescripcion = $('#descripcion_proveedor').val();
