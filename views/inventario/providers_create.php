@@ -14,6 +14,8 @@
             </button>
         </div>
         <div class="modal-body">
+        <div id="respuesta">
+        </div>
         <div class="row">
             <div class="col-sm-3 text-center">
                 <div class="kv-avatar">
@@ -79,15 +81,16 @@
         </div>
         <div class="mb-3">
             <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-            <label class="form-check-label" for="flexSwitchCheckChecked">Estado</label>
+            <input class="form-check-input" type="checkbox" id="estado_proveedor" checked>
+            <label class="form-check-label" for="estado_proveedor">Estado</label>
             </div>
         </div>
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <label for="descripcion_proveedor" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion_proveedor" rows="3"></textarea>
         </div>
       </div>
+      
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
         <!--ICONO-->
@@ -97,19 +100,96 @@
         <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
         </svg>
         Cerrar</button>
-        <button id="btn-insert" type="button" class="btn btn-primary">
+        <button id="btn-insert" type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmacion_modal">
         <svg class="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" d="M11.293 1.293a1 1 0 0 1 1.414 0l2 2a1 1 0 0 1 0 1.414l-9 9a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"/>
         <path fill-rule="evenodd" d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 0 0 .5.5H4v.5a.5.5 0 0 0 .5.5H5v.5a.5.5 0 0 0 .5.5H6v-1.5a.5.5 0 0 0-.5-.5H5v-.5a.5.5 0 0 0-.5-.5H3z"/>
         </svg>
         Guardar</button>
+        <button id="btn-limpiar" type="button" class="btn btn-primary">
+        Limpiar
+        </button>
+        <a class="btn btn-large btn-primary" data-toggle="confirmation" data-title="Open Google?"
+        href="https://google.com" target="_blank">Confirmation</a>
       </div>
     </div>
   </div>
 </div>
-<script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+
 <!-- the fileinput plugin initialization -->
 <script>
 
+//ESCUCHAMOS CHECKBOX
+$("#estado_proveedor").change(function(){
+  alert("Se esta cambiando estado de proveedor");
+});
+$( "#btn-limpiar" ).click(function() {
+    alert("Se eliminara elemento hijo");
+    alertPrimary = '<div class="alert alert-primary" role="alert">';
+    alertPrimary+= 'A simple primary alert—check it out!';
+    alertPrimary+= '</div>';
+    $("#respuesta").empty().append(alertPrimary);
+});
+$( "#btn-insert" ).click(function() {
+    //OBTENEMOS DATOS
+    let intRuc = $('#proveedor_ruc').val();
+    let varNombre = $('#proveedor_nombre').val();
+    let varRazSocial = $('#razonsoc_proveedor').val();
+    let intTelefono = $('#telefono_proveedor').val();
+    let intCelular = $('#celular_proveedor').val();
+    let varCorreo = $('#correo_proveedor').val();
+    let bolestad;
+    var bolestado = $('#estado_proveedor').is(":checked");
+    if(bolestado){
+        bolestad = "1";
+        alert("La caja está marcada" + bolestad);        
+    }
+    else{
+        bolestad = "0";
+        alert("La caja NO está marcada" + bolestad);        
+    }
+    let varDescripcion = $('#descripcion_proveedor').val();
+    //AGRUPAMOS DATOS OBTENIDO
+    var proveedor = {
+      "intRuc" : intRuc,
+      "varNombre" : varNombre,
+      "varRazSocial" : varRazSocial,
+      "intTelefono" : intTelefono,
+      "intCelular" : intCelular,
+      "varCorreo" : varCorreo,
+      "bolestad" : bolestad,
+      "varDescripcion" : varDescripcion,
+    };
+    var jqxhr = $.ajax({
+        /*
+        beforeSend: function(){
+            alertPrimary = '<div class="alert alert-primary" role="alert">';
+            alertPrimary+= 'A simple primary alert—check it out!';
+            alertPrimary+= '</div>';
+            $("#respuesta").empty().append(alertPrimary);
+        },*/
+        url: './../../controllers/controllerProviders.php',
+        type: 'POST',
+        data: proveedor,
+    })
+    //RECIBIENDO RESPUESTA
+    .done(function(data) {
+        console.log( data );
+    })
+    //SI OCURRE UN ERROR
+    .fail(function() {
+        alert( "error" );
+    })
+    //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
+    .always(function() {
+        alert( "completado" );
+    });
+    // Hacer otra cosa aquí ...
+    // Asignar otra función de completado para la petición de más arriba
+    jqxhr.always(function() {
+    alert( "completado segundo" );
+    });
+});
 
 </script>
