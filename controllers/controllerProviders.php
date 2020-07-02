@@ -2,16 +2,19 @@
 //vERIFICACION SI SE RECIBIO DATOS
 if($_POST){
     require_once '../models/providers.php';
-    /*
-    
-    $id      = intval($_POST['id']);
-    $codigo = $_POST['codigo'];*/
-
-    $datorecibido = $_POST;
-    $intruc  = $_POST['intRuc'];
-    //VALIDAMOS EL RUC
     if(strlen($intruc) == 11)
     {
+        $intruc  = intval($_POST['intRuc']);
+        $strnombre = $_POST['varNombre'];
+        $strnombre = $_POST['varRazSocial'];
+        $strnombre = intval($_POST['intTelefono']);
+        $strnombre = intval($_POST['intCelular']);
+        $strnombre = $_POST['varCorreo'];
+        $strnombre = $_POST['bolestad'];
+        $strnombre = $_POST['varDescripcion'];
+
+        $datorecibido = $_POST;
+        //VALIDAMOS EL RUC
         echo "ruc valido";
     }
     else{

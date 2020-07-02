@@ -7,16 +7,12 @@ function validarInput(input) {
         valido;
         
     //existente.innerHTML = "";
+    //ESTA VACIO EL INPUTA RUC?
     if (ruc) {
         console.log("lleno");
-    }
-    else{
-        console.log("vacio");
-    }
-    
-    //Es entero?    
-    if ((ruc = Number(ruc)) && ruc % 1 === 0
-    	&& rucValido(ruc)) { // ⬅️ ⬅️ ⬅️ ⬅️ Acá se comprueba
+        //Es entero?    
+        if ((ruc = Number(ruc)) && ruc % 1 === 0
+        && rucValido(ruc)) { // ⬅️ ⬅️ ⬅️ ⬅️ Acá se comprueba
         valido = "Válido";        
         resultado.classList.remove("invalid-feedback");
         inputruc.classList.remove("is-invalid");
@@ -24,15 +20,22 @@ function validarInput(input) {
         inputruc.classList.add("is-valid");
         
         //obtenerDatosSUNAT(ruc);
-    } else {
-        valido = "No válido";
-        resultado.classList.remove("valid-feedback");
-        inputruc.classList.remove("is-valid");
-        resultado.classList.add("invalid-feedback");
-        inputruc.classList.add("is-invalid");
+        } 
+        else {
+            valido = "No válido";
+            resultado.classList.remove("valid-feedback");
+            inputruc.classList.remove("is-valid");
+            resultado.classList.add("invalid-feedback");
+            inputruc.classList.add("is-invalid");
+        }
+        resultado.innerText = "RUC: " + ruc + " | Formato: " + valido;
     }
+    else{
+        console.log("vacio");
+        resultado.innerText = "Ingrese Ruc";
+    }
+    
 
-    resultado.innerText = "RUC: " + ruc + "\nFormato: " + valido;
 }
 
 // Devuelve un booleano si es un RUC válido
