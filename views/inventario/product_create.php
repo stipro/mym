@@ -110,8 +110,79 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Guardar</button>
+        <button id="btn-insert" type="button" class="btn btn-primary">Guardar</button>
       </div>
     </div>
   </div>
 </div>
+<script>
+//insertar
+$( "#btn-insert" ).click(function() {
+    //OBTENEMOS DATOS
+    let ruc = $('#proveedor_ruc').val();
+    let nombre = $('#proveedor_nombre').val();
+    let direccion = $('#direccion_proveedor').val();
+    let razSocial = $('#razonsoc_proveedor').val();
+    let telefono = $('#telefono_proveedor').val();
+    let celular = $('#celular_proveedor').val();
+    let correo = $('#correo_proveedor').val();
+    let estado;
+    var bolestado = $('#estado_proveedor').is(":checked");
+    //La caja está marcada
+    if(bolestado){
+        bolestad = true;
+        estado = '1';     
+    }
+    //La caja NO está marcada
+    else{
+        bolestad = false;
+        estado = '0';     
+    }
+    let descripcion = $('#descripcion_proveedor').val();
+    //AGRUPAMOS DATOS OBTENIDO
+    var proveedor = {
+      "ruc" : ruc,
+      "nombre" : nombre,
+      "direccion" : direccion,
+      "razSocial" : razSocial,
+      "telefono" : telefono,
+      "celular" : celular,
+      "correo" : correo,
+      "estado" : estado,
+      "descripcion" : descripcion,
+    };
+    var jqxhr = $.ajax({
+        /*
+        beforeSend: function(){
+            alertPrimary = '<div class="alert alert-primary" role="alert">';
+            alertPrimary+= 'A simple primary alert—check it out!';
+            alertPrimary+= '</div>';
+            $("#respuesta").empty().append(alertPrimary);
+        },*/
+        url: './../../controllers/controllerProviders.php',
+        type: 'POST',
+        data: proveedor,
+    })
+    //RECIBIENDO RESPUESTA
+    .done(function(data) {
+        alertPrimary = '<div class="alert alert-primary" role="alert">';
+        alertPrimary+= 'A simple primary alert—check it out!';
+        alertPrimary+= '</div>';
+        $("#respuesta").empty().append(data);
+        console.log( data );
+    })
+    //SI OCURRE UN ERROR
+    .fail(function() {
+        alert( "error" );
+    })
+    //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
+    .always(function() {
+        alert( "completado" );
+    });
+    // Hacer otra cosa aquí ...
+    // Asignar otra función de completado para la petición de más arriba
+    jqxhr.always(function() {
+    alert( "completado segundo" );
+    });
+});
+</script>
