@@ -137,33 +137,37 @@ $( "#btn-limpiar" ).click(function() {
 });
 $( "#btn-insert" ).click(function() {
     //OBTENEMOS DATOS
-    let intRuc = $('#proveedor_ruc').val();
-    let varNombre = $('#proveedor_nombre').val();
-    let varRazSocial = $('#razonsoc_proveedor').val();
-    let intTelefono = $('#telefono_proveedor').val();
-    let intCelular = $('#celular_proveedor').val();
-    let varCorreo = $('#correo_proveedor').val();
-    let bolestad;
+    let ruc = $('#proveedor_ruc').val();
+    let nombre = $('#proveedor_nombre').val();
+    let direccion = $('#direccion_proveedor').val();
+    let razSocial = $('#razonsoc_proveedor').val();
+    let telefono = $('#telefono_proveedor').val();
+    let celular = $('#celular_proveedor').val();
+    let correo = $('#correo_proveedor').val();
+    let estado;
     var bolestado = $('#estado_proveedor').is(":checked");
     if(bolestado){
         bolestad = true;
+        estado = '1';
         alert("La caja está marcada" + bolestad);        
     }
     else{
         bolestad = false;
+        estado = '0';
         alert("La caja NO está marcada" + bolestad);        
     }
-    let varDescripcion = $('#descripcion_proveedor').val();
+    let descripcion = $('#descripcion_proveedor').val();
     //AGRUPAMOS DATOS OBTENIDO
     var proveedor = {
-      "intRuc" : intRuc,
-      "varNombre" : varNombre,
-      "varRazSocial" : varRazSocial,
-      "intTelefono" : intTelefono,
-      "intCelular" : intCelular,
-      "varCorreo" : varCorreo,
-      "bolestad" : bolestad,
-      "varDescripcion" : varDescripcion,
+      "ruc" : ruc,
+      "nombre" : nombre,
+      "direccion" : direccion,
+      "razSocial" : razSocial,
+      "telefono" : telefono,
+      "celular" : celular,
+      "correo" : correo,
+      "estado" : estado,
+      "descripcion" : descripcion,
     };
     var jqxhr = $.ajax({
         /*

@@ -1,26 +1,36 @@
 <?php
+declare (strict_types = 1);
 //vERIFICACION SI SE RECIBIO DATOS
 if($_POST){
-    require_once '../models/providers.php';
-    if(strlen($intruc) == 11)
+    require_once ('./../models/providers.php');
+    //VALIDAMOS EL RUC
+    if(strlen($_POST['ruc']) == 11)
     {
-        $intruc  = intval($_POST['intRuc']);
-        $strnombre = $_POST['varNombre'];
-        $strnombre = $_POST['varRazSocial'];
-        $strnombre = intval($_POST['intTelefono']);
-        $strnombre = intval($_POST['intCelular']);
-        $strnombre = $_POST['varCorreo'];
-        $strnombre = $_POST['bolestad'];
-        $strnombre = $_POST['varDescripcion'];
-
-        $datorecibido = $_POST;
-        //VALIDAMOS EL RUC
-        echo "ruc valido";
+        $proveedor = new Proveedor();
+        $intruc  = intval($_POST['ruc']);
+        $strnombre = $_POST['nombre'];
+        $strDireccion = $_POST['direccion'];
+        $strRazSocial = $_POST['razSocial'];
+        $intTelefono = intval($_POST['telefono']);
+        $intCelular = intval($_POST['celular']);
+        $strCorreo = $_POST['correo'];
+        $bolestad = $_POST['estado'];
+        $strDescripcion = $_POST['descripcion'];
+        $proveedor->insert($intruc,
+                            $strnombre,
+                            $strRazSocial,
+                            $strDireccion,
+                            $intTelefono,
+                            $intCelular,
+                            $strCorreo,
+                            $strDescripcion,
+                            $bolestad);
+        
     }
     else{
         echo "ruc invalido";
     }
-    var_dump($datorecibido);
+    
 }
 else{
     echo "Nose recibio DATOS";

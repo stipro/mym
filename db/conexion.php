@@ -12,7 +12,7 @@ class Conexion
         try
         {
             $HOST   = '127.0.0.1';
-            $DBNAME = 'sisalmerick';
+            $DBNAME = 'corpmym';
             $USER   = 'root';
             $PASS   = '';
             $con    = new PDO("mysql:host={$HOST}; dbname={$DBNAME}", $USER, $PASS);
@@ -32,7 +32,7 @@ class Conexion
 
     protected function ConsultaCompleja(string $where, array $array): array
     {
-        $query  = "SELECT * FROM talmacen {$where}";
+        $query  = "SELECT * FROM provedores {$where}";
         $result = $this->db->prepare($query);
         $result->execute($array);
         return $result->fetchAll(PDO::FETCH_ASSOC);

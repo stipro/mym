@@ -1,31 +1,41 @@
 <?php
 declare (strict_types = 1);
-require_once './../Conexion.php';
+require_once('./../db/conexion.php');
 
-class Personas extends Conexion
+class Proveedor extends Conexion
 {
+    /*
+    public $intruc;
+    public $strnombre;
+    public $strDireccion;
+    public $strRazSocial;
+    public $intTelefono;
+    public $intCelular;
+    public $strCorreo;
+    public $bolestad;
+    public $strDescripcion;
+*/
     public function __construct()
     {
         parent::__construct();
     }
-    public function insert(string $codigo, int $ingreso, int $egreso, string $registro, string $factura, string $nombre, string $observacion)
+    public function insert(int $intruc, string $strnombre, string $strRazSocial, string $strDireccion, int $intTelefono, int $intCelular, string $strCorreo, string $strDescripcion, string $bolestad)
     {
-       
         try 
         {
-            $query  = "INSERT INTO talmacen VALUES (null,:codigo,:ingreso,:egreso,:fecha,:factura,:nombre,:observacion) ;";
+            $query  = "INSERT INTO provedores VALUES (null, :intruc, :strnombre, :strRazSocial, :strDireccion, :intTelefono, :intCelular, :strCorreo, :strDescripcion, :bolestad);";
             $result = $this->db->prepare($query);
-            $result->execute(array(':codigo' => $codigo,':ingreso' => $ingreso, ':egreso' => $egreso, ':fecha'=> $registro, ':factura' => $factura,':nombre' => $nombre,'observacion' => $observacion));
+            $result->execute(array(':intruc' => $intruc, ':strnombre' => $strnombre, ':strRazSocial' => $strRazSocial, ':strDireccion' => $strDireccion, ':intTelefono' => $intTelefono, ':intCelular' => $intCelular,':strCorreo' => $strCorreo, ':strDescripcion' => $strDescripcion, ':bolestad' => $bolestad));
             echo 'BIEN';
         } catch (PDOException $e) {
-            echo 'ERROR';
+            echo 'ERROR'.$e->getMessage();;
         }
     }
     public function delete(int $id)
     {
         error_reporting(0);
         try {
-            $query  = "DELETE FROM talmacen WHERE nIdAlm=:id;";
+            $query  = "DELETE FROM provedores WHERE nIdAlm=:id;";
             $result = $this->db->prepare($query);
             $result->execute(array(':id' => $id));
             echo 'BIEN';
@@ -37,7 +47,7 @@ class Personas extends Conexion
     {
         error_reporting(0);
         try {
-            $query  = "UPDATE talmacen SET nCodAlm=:codigo, nIngAlm=:ingreso, nEgrAlm=:egreso, fRegAlm=:fecha, nNFactAlm=:factura, cNomAlm=nombre, cObsAlm=:observacion WHERE nIdAlm=:id;";
+            $query  = "UPDATE provedores SET nCodAlm=:codigo, nIngAlm=:ingreso, nEgrAlm=:egreso, fRegAlm=:fecha, nNFactAlm=:factura, cNomAlm=nombre, cObsAlm=:observacion WHERE nIdAlm=:id;";
             $result = $this->db->prepare($query);
             $result->execute(array(':id' => $id, ':codigo' => $ingreso, ':ingreso' => $ingreso, ':egreso' => $egreso, ':fecha' => $registro, ':factura' => $factura, 'nombre' => $nombre, ':observacion' => $observacion));
             if ($result->rowCount()) {
@@ -53,7 +63,7 @@ class Personas extends Conexion
 
     public function getAll(int $desde, int $filas): array
     {
-        $query = "SELECT * FROM talmacen ORDER BY cNomAlm LIMIT {$desde},{$filas}";
+        $query = "SELECT * FROM provedores ORDER BY cNomAlm LIMIT {$desde},{$filas}";
         return $this->ConsultaSimple($query);
     }
     public function getSearch(string $termino): array
@@ -65,7 +75,7 @@ class Personas extends Conexion
 
     public function getPagination(): array
     {
-        $query = "SELECT COUNT(*) FROM talmacen;";
+        $query = "SELECT COUNT(*) FROM provedores;";
         return array(
             'filasTotal'  => intval($this->db->query($query)->fetch(PDO::FETCH_BOTH)[0]),
             'filasPagina' => 5,
