@@ -79,6 +79,30 @@
                             <input type="email" class="form-control" id="correo_proveedor" placeholder="Correo">
                         </div>
                     </div>
+                    
+    
+
+<!--CORREO
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label for="celular_proveedor" class="form-label">Correo</label>
+                                    <div class="form-row">
+                                        <div class="col-sm">
+                                            <input type="email" class="form-control" id="correo_proveedor" placeholder="Correo">
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">@</div>
+                                                </div>
+                                                <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+-->
+    
                 </div>
             </div>
         </div>
