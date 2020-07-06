@@ -73,7 +73,7 @@ class Proveedor extends Conexion
 
     public function getAll(int $desde, int $filas): array
     {
-        $query = "SELECT * FROM provedores ORDER BY cNomAlm LIMIT {$desde},{$filas}";
+        $query = "SELECT * FROM provedores ORDER BY nombre_proveedor LIMIT {$desde},{$filas}";
         return $this->ConsultaSimple($query);
     }
     public function getSearch(string $termino): array
