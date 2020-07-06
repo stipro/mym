@@ -23,12 +23,22 @@ class Proveedor extends Conexion
     {
         try 
         {
+            $alertsuccess = '<div class="alert alert-success" role="alert">
+            
+            </div>';
             $query  = "INSERT INTO provedores VALUES (null, :intruc, :strnombre, :strRazSocial, :strDireccion, :intTelefono, :intCelular, :strCorreo, :strDescripcion, :bolestad);";
             $result = $this->db->prepare($query);
-            $result->execute(array(':intruc' => $intruc, ':strnombre' => $strnombre, ':strRazSocial' => $strRazSocial, ':strDireccion' => $strDireccion, ':intTelefono' => $intTelefono, ':intCelular' => $intCelular,':strCorreo' => $strCorreo, ':strDescripcion' => $strDescripcion, ':bolestad' => $bolestad));
-            echo 'BIEN';
+            $sqlsuccess = $result -> execute(array(':intruc' => $intruc, ':strnombre' => $strnombre, ':strRazSocial' => $strRazSocial, ':strDireccion' => $strDireccion, ':intTelefono' => $intTelefono, ':intCelular' => $intCelular,':strCorreo' => $strCorreo, ':strDescripcion' => $strDescripcion, ':bolestad' => $bolestad));
+            if($sqlsuccess) // MENSAJE DE EXITO
+            {
+                echo '<div class="alert alert-success" role="alert">
+                Se realizo correctamente el registro.
+                </div>';
+            }
         } catch (PDOException $e) {
-            echo 'ERROR'.$e->getMessage();;
+            echo '<div class="alert alert-danger" role="alert">
+            Ocurrio un problema, llamar a sistemas '.$e->getMessage().'
+            </div>';
         }
     }
     public function delete(int $id)

@@ -146,15 +146,15 @@ $( "#btn-insert" ).click(function() {
     let correo = $('#correo_proveedor').val();
     let estado;
     var bolestado = $('#estado_proveedor').is(":checked");
+    //La caja está marcada
     if(bolestado){
         bolestad = true;
-        estado = '1';
-        alert("La caja está marcada" + bolestad);        
+        estado = '1';     
     }
+    //La caja NO está marcada
     else{
         bolestad = false;
-        estado = '0';
-        alert("La caja NO está marcada" + bolestad);        
+        estado = '0';     
     }
     let descripcion = $('#descripcion_proveedor').val();
     //AGRUPAMOS DATOS OBTENIDO
@@ -183,6 +183,10 @@ $( "#btn-insert" ).click(function() {
     })
     //RECIBIENDO RESPUESTA
     .done(function(data) {
+        alertPrimary = '<div class="alert alert-primary" role="alert">';
+        alertPrimary+= 'A simple primary alert—check it out!';
+        alertPrimary+= '</div>';
+        $("#respuesta").empty().append(data);
         console.log( data );
     })
     //SI OCURRE UN ERROR
