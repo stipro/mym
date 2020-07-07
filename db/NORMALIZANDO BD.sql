@@ -607,7 +607,6 @@ CREATE TABLE `producto` (
 `stock_producto` varchar(255) NULL,
 `caracteristica_producto` varchar(255) NULL,
 `descripcion_producto` varchar(255) NULL,
-`garantia_producto` varchar(255) NULL,
 PRIMARY KEY (`id_producto`) 
 )
 ENGINE = InnoDB;

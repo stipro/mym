@@ -54,11 +54,11 @@
         <div class="form-row">
             <div class="form-group col-sm">
                 <label for="exampleFormControlInput1" class="form-label">Codigo</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Codigo">
+                <input type="email" class="form-control" id="codigo_producto" placeholder="Codigo">
             </div>
             <div class="form-group col-sm">
                 <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Nombre">
+                <input type="email" class="form-control" id="nombre_producto" placeholder="Nombre">
             </div>
             <div class="form-group col-sm">
                 <label for="exampleFormControlInput1" class="form-label">Precio</label>
@@ -67,7 +67,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                     </div>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Precio">
+                    <input type="email" class="form-control" id="precio_producto" placeholder="Precio">
                     <div class="input-group-append">
                         <span class="input-group-text">.00</span>
                     </div>
@@ -75,7 +75,7 @@
             </div>
             <div class="form-group col-sm">
                 <label for="exampleFormControlInput1" class="form-label">Stock</label>
-                <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Stock">
+                <input type="number" class="form-control" id="stock_producto" placeholder="Stock">
             </div>
         </div>
 
@@ -105,7 +105,7 @@
         </div>
         <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <textarea class="form-control" id="descripcion_producto" rows="3"></textarea>
         </div>
       </div>
       <div class="modal-footer">
@@ -119,70 +119,47 @@
 //insertar
 $( "#btn-insert" ).click(function() {
     //OBTENEMOS DATOS
-    let ruc = $('#proveedor_ruc').val();
-    let nombre = $('#proveedor_nombre').val();
-    let direccion = $('#direccion_proveedor').val();
-    let razSocial = $('#razonsoc_proveedor').val();
-    let telefono = $('#telefono_proveedor').val();
-    let celular = $('#celular_proveedor').val();
-    let correo = $('#correo_proveedor').val();
-    let estado;
-    var bolestado = $('#estado_proveedor').is(":checked");
-    //La caja está marcada
-    if(bolestado){
-        bolestad = true;
-        estado = '1';     
-    }
-    //La caja NO está marcada
-    else{
-        bolestad = false;
-        estado = '0';     
-    }
-    let descripcion = $('#descripcion_proveedor').val();
+    let codigo = $('#codigo_producto').val();
+    let nombre = $('#nombre_producto').val();
+    let precio = $('#precio_producto').val();
+    let stock = $('#stock_producto').val();
+    let descripcion = $('#descripcion_producto').val();
     //AGRUPAMOS DATOS OBTENIDO
-    var proveedor = {
-      "ruc" : ruc,
+    var producto = {
+      "codigo" : codigo,
       "nombre" : nombre,
-      "direccion" : direccion,
-      "razSocial" : razSocial,
-      "telefono" : telefono,
-      "celular" : celular,
-      "correo" : correo,
-      "estado" : estado,
+      "precio" : precio,
+      "stock" : stock,
       "descripcion" : descripcion,
     };
     var jqxhr = $.ajax({
-        /*
         beforeSend: function(){
             alertPrimary = '<div class="alert alert-primary" role="alert">';
-            alertPrimary+= 'A simple primary alert—check it out!';
+            alertPrimary+= 'Se envio estos datos'+producto+'!';
             alertPrimary+= '</div>';
             $("#respuesta").empty().append(alertPrimary);
-        },*/
-        url: './../../controllers/controllerProviders.php',
+        },
+        url: './../../controllers/controllerProducts.php',
         type: 'POST',
-        data: proveedor,
+        data: producto,
     })
     //RECIBIENDO RESPUESTA
     .done(function(data) {
-        alertPrimary = '<div class="alert alert-primary" role="alert">';
-        alertPrimary+= 'A simple primary alert—check it out!';
-        alertPrimary+= '</div>';
         $("#respuesta").empty().append(data);
         console.log( data );
     })
     //SI OCURRE UN ERROR
     .fail(function() {
-        alert( "error" );
+        console.log( "error" );
     })
     //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
     .always(function() {
-        alert( "completado" );
+        console.log( "completado" );
     });
     // Hacer otra cosa aquí ...
     // Asignar otra función de completado para la petición de más arriba
     jqxhr.always(function() {
-    alert( "completado segundo" );
+    console.log( "completado segundo" );
     });
 });
 </script>
