@@ -9,6 +9,8 @@
         </button>
       </div>
       <div class="modal-body">
+      <div id="respuesta">
+    </div>
         <div class="form-row">
             <div class="form-group col-sm">
                 <label for="exampleFormControlInput1" class="form-label">Almacen</label>
@@ -53,15 +55,15 @@
         </div>
         <div class="form-row">
             <div class="form-group col-sm">
-                <label for="exampleFormControlInput1" class="form-label">Codigo</label>
+                <label for="codigo_producto" class="form-label">Codigo</label>
                 <input type="email" class="form-control" id="codigo_producto" placeholder="Codigo">
             </div>
             <div class="form-group col-sm">
-                <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+                <label for="nombre_producto" class="form-label">Nombre</label>
                 <input type="email" class="form-control" id="nombre_producto" placeholder="Nombre">
             </div>
             <div class="form-group col-sm">
-                <label for="exampleFormControlInput1" class="form-label">Precio</label>
+                <label for="precio_producto" class="form-label">Precio</label>
                 
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -74,37 +76,37 @@
                 </div>
             </div>
             <div class="form-group col-sm">
-                <label for="exampleFormControlInput1" class="form-label">Stock</label>
+                <label for="stock_producto" class="form-label">Stock</label>
                 <input type="number" class="form-control" id="stock_producto" placeholder="Stock">
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-sm">
-                <label for="exampleFormControlInput1" class="form-label">Modelo</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Modelo">
+                <label for="modelo_producto" class="form-label">Modelo</label>
+                <input type="email" class="form-control" id="modelo_producto" placeholder="Modelo">
             </div>
             <div class="form-group col-sm">
-                <label for="exampleFormControlInput1" class="form-label">Garantia</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Garantia">
+                <label for="garanta_producto" class="form-label">Garantia</label>
+                <input type="email" class="form-control" id="garanta_producto" placeholder="Garantia">
             </div>
             <div class="form-group col-sm">
-                <label for="exampleFormControlInput1" class="form-label">N° Serial</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="N° Seria">
+                <label for="nserial_producto" class="form-label">N° Serial</label>
+                <input type="email" class="form-control" id="nserial_producto" placeholder="N° Seria">
             </div>
             <div class="form-group col-sm">
-                <label for="exampleFormControlInput1" class="form-label">N° Lote</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="N° Lote">
+                <label for="nlote_producto" class="form-label">N° Lote</label>
+                <input type="email" class="form-control" id="nlote_producto" placeholder="N° Lote">
             </div>
         </div>
         <div class="mb-3">
             <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-            <label class="form-check-label" for="flexSwitchCheckChecked">Estado Modulo</label>
+            <input class="form-check-input" type="checkbox" id="estado_producto" checked>
+            <label class="form-check-label" for="estado_producto">Estado Modulo</label>
             </div>
         </div>
         <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
+        <label for="descripcion_producto" class="form-label">Descripción</label>
         <textarea class="form-control" id="descripcion_producto" rows="3"></textarea>
         </div>
       </div>
@@ -115,6 +117,7 @@
     </div>
   </div>
 </div>
+<script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script>
 //insertar
 $( "#btn-insert" ).click(function() {
@@ -135,8 +138,9 @@ $( "#btn-insert" ).click(function() {
     var jqxhr = $.ajax({
         beforeSend: function(){
             alertPrimary = '<div class="alert alert-primary" role="alert">';
-            alertPrimary+= 'Se envio estos datos'+producto+'!';
+            alertPrimary+= 'Se envio estos datos!';
             alertPrimary+= '</div>';
+            console.log(producto);
             $("#respuesta").empty().append(alertPrimary);
         },
         url: './../../controllers/controllerProducts.php',
@@ -145,7 +149,7 @@ $( "#btn-insert" ).click(function() {
     })
     //RECIBIENDO RESPUESTA
     .done(function(data) {
-        $("#respuesta").empty().append(data);
+        $("#respuesta").append(data);
         console.log( data );
     })
     //SI OCURRE UN ERROR

@@ -19,16 +19,16 @@ class Producto extends Conexion
     {
         parent::__construct();
     }
-    public function insert(int $intruc, string $strnombre, string $strRazSocial, string $strDireccion, int $intTelefono, int $intCelular, string $strCorreo, string $strDescripcion, string $bolestad)
+    public function insert(string $strcodigo, string $strnombre, string $fotprecio, string $fotstock, string $strDescripcion)
     {
         try 
         {
             $alertsuccess = '<div class="alert alert-success" role="alert">
             
             </div>';
-            $query  = "INSERT INTO provedores VALUES (null, :intruc, :strnombre, :strRazSocial, :strDireccion, :intTelefono, :intCelular, :strCorreo, :strDescripcion, :bolestad);";
+            $query  = "INSERT INTO provedores VALUES (null, :strcodigo, :strnombre, :fotprecio, :fotstock, :strDescripcion);";
             $result = $this->db->prepare($query);
-            $sqlsuccess = $result -> execute(array(':intruc' => $intruc, ':strnombre' => $strnombre, ':strRazSocial' => $strRazSocial, ':strDireccion' => $strDireccion, ':intTelefono' => $intTelefono, ':intCelular' => $intCelular,':strCorreo' => $strCorreo, ':strDescripcion' => $strDescripcion, ':bolestad' => $bolestad));
+            $sqlsuccess = $result -> execute(array(':strcodigo' => $strcodigo, ':strnombre' => $strnombre, ':fotprecio' => $fotprecio, ':fotstock' => $fotstock, ':strDescripcion' => $strDescripcion));
             if($sqlsuccess) // MENSAJE DE EXITO
             {
                 echo '<div class="alert alert-success" role="alert">
