@@ -26,9 +26,25 @@ class Producto extends Conexion
             $alertsuccess = '<div class="alert alert-success" role="alert">
             
             </div>';
-            $query  = "INSERT INTO provedores VALUES (null, :strcodigo, :strnombre, :fotprecio, :fotstock, :strDescripcion);";
+            $query  = "INSERT INTO productos(
+                codigo_producto,
+                nombre_producto,
+                precio_producto,
+                stock_producto,
+                descripcion_producto
+            ) 
+            VALUES (:strcodigo, 
+            :strnombre, 
+            :fotprecio, 
+            :fotstock, 
+            :strDescripcion);";
             $result = $this->db->prepare($query);
-            $sqlsuccess = $result -> execute(array(':strcodigo' => $strcodigo, ':strnombre' => $strnombre, ':fotprecio' => $fotprecio, ':fotstock' => $fotstock, ':strDescripcion' => $strDescripcion));
+            $result -> bindParam(':strcodigo', $strcodigo, PDO::PARAM_STR);
+            $result -> bindParam(':strnombre', $strnombre, PDO::PARAM_STR);
+            $result -> bindParam(':fotprecio', $fotprecio, PDO::PARAM_STR);
+            $result -> bindParam(':fotstock', $fotstock, PDO::PARAM_STR);
+            $result -> bindParam(':strDescripcion', $strDescripcion, PDO::PARAM_STR);
+            $sqlsuccess = $result -> execute();
             if($sqlsuccess) // MENSAJE DE EXITO
             {
                 echo '<div class="alert alert-success" role="alert">
@@ -73,7 +89,7 @@ class Producto extends Conexion
 
     public function getAll(int $desde, int $filas): array
     {
-        $query = "SELECT * FROM provedores ORDER BY nombre_proveedor LIMIT {$desde},{$filas}";
+        $query = "SELECT * FROM productos ORDER BY nombre_producto";
         return $this->ConsultaSimple($query);
     }
     public function getSearch(string $termino): array
@@ -85,7 +101,7 @@ class Producto extends Conexion
 
     public function getPagination(): array
     {
-        $query = "SELECT COUNT(*) FROM provedores;";
+        $query = "SELECT COUNT(*) FROM productos;";
         return array(
             'filasTotal'  => intval($this->db->query($query)->fetch(PDO::FETCH_BOTH)[0]),
             'filasPagina' => 5,
@@ -96,22 +112,19 @@ class Producto extends Conexion
     {
         $html = '';
         if (count($array)) {
-            $html = '   <table class="table table-striped" id="table">
+            $html = '<table class="table table-striped" id="table">
                         <thead>
-                            <th class="d-none"></th>
-                            <th>CODIGO</th>
-                            <th>INGRESOS</th>
-                            <th>EGRESOS</th>
-                            <th>FECHA DE REGISTRO</th>
-                            <th>N° DE FACTURA</th>
-                            <th>NOMBRE</th>
-                            <th>OBSERVACION</th>
+                            <th scope="col">#</th>
+                            <th scope="col">codigo</th>
+                            <th scope="col">nombre</th>
+                            <th scope="col">precio</th>
+                            <th scope="col">stock</th>
+                            <th scope="col">caracteristica</th>
+                            <th scope="col">descripcion</th>
                         </thead>
-
-                        <tbody>
-                     ';
-            foreach ($array as $value) {
-                $html .= '  <tr>
+                        <tbody>';
+            foreach ($array as $value){
+                $html .= '<tr>
                         <td class="d-none">' . $value['nIdAlm'] . '</td>
                         <td>' . $value['nCodAlm'] . '</td>
                         <td>' . $value['nIngAlm'] . '</td>

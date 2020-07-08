@@ -86,51 +86,46 @@
       </form>
 
       <hr>
-
-      <div class="card-deck">
-        <!-- Item 1-->
-        <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
-        </div>
+      <div id="div_tabla">
       </div>
-      <!-- Item 2 -->
-      <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
-        </div>
-      </div>
-      <!-- Item 3 -->
-      <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
-        </div>
-      </div>
-      <!-- Item 4 -->
-      <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
-        </div>
-      </div>
-      </div>
-
-      
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">codigo</th>
+            <th scope="col">nombre</th>
+            <th scope="col">precio</th>
+            <th scope="col">stock</th>
+            <th scope="col">caracteristica</th>
+            <th scope="col">descripcion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div class="card-footer text-muted">
     <nav aria-label="Page navigation example">
@@ -158,35 +153,43 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script>
-    /*
     $(document).ready(function() {
-        //CLICK Agregar Nuevo producto
-        $("#btn_add").on('click', function(){
-            
-            //
-            $.ajax({
-                //indico el url que recibira y enviara datos
-                url: './product_create.php',
-                //Despues
-                beforeSend: function () {
-
-                },
-                //
-                success: function (rpta) {
-                    $('#modal').append(rpta);
-                    console.log('Acción ejecutada!');
-                },
-                //
-                error: function () {
-
-                },
-                //
-                complete: function() {
-
-                },
-            });
+      //CLICK Agregar Nuevo producto
+      listar('');
+    }); 
+      // -------------------Listar personas------------
+      var listar = (param) => {
+        var jqxhr = $.ajax({
+          beforeSend: function(){
+            alertPrimary = '<div class="alert alert-primary" role="alert">';
+            alertPrimary+= 'Se envio estos datos!';
+            alertPrimary+= '</div>';
+            //$("#respuesta").empty().append(alertPrimary);
+          },
+          url: './../../controllers/controllerList.php',
+          type: 'POST',
+          data: param,
         })
-    }); */
+        //RECIBIENDO RESPUESTA
+        .done(function(data) {
+          $("#div_tabla").append(data);
+          console.log( data );
+        })
+        //SI OCURRE UN ERROR
+        .fail(function() {
+          console.log( "error" );
+        })
+        //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
+        .always(function() {
+          console.log( "completado" );
+        });
+        // Hacer otra cosa aquí ...
+        // Asignar otra función de completado para la petición de más arriba
+        jqxhr.always(function() {
+          console.log( "completado segundo" );
+        });
+      }
+
     </script>
 </body>
 </html>

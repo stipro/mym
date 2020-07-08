@@ -16,9 +16,8 @@ if($_POST){
                             $fotstock,
                             $strDescripcion);
         echo 'Se recibio datos';
-    
 }
 else{
-    echo "Nose recibio DATOS";
+    echo "Nose recibio DATOS";  
 }
 ?>
