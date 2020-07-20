@@ -13,7 +13,7 @@
   <body>
   <?php
         //LLamo a mi nav
-        include('./nav.php');
+        include('./views/nav.php');
     ?>
     <div class="container-fluid">
     <h3>Sistema complementario, le da la Bienvenida</h3>

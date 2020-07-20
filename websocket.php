@@ -15,7 +15,9 @@ $port = 9000;
 if (($sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) === false) {
     echo "socket_create() falló: razón: " . socket_strerror(socket_last_error()) . "\n";
 }
-
+if(socket_set_option($sock, SOL_SOCKET, SO_REUSEADDR, 1) === false){
+    echo "socket_option() falló: razón: " . socket_strerror(socket_last_error()) . "\n";
+}
 if (socket_bind($sock, $address, $port) === false) {
     echo "socket_bind() falló: razón: " . socket_strerror(socket_last_error($sock)) . "\n";
 }
