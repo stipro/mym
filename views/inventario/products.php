@@ -140,8 +140,6 @@
     </div>
   </div>
 </div>
-
-
     <?php
     include ("./product_create.php");
     ?>
