@@ -25,7 +25,7 @@
             <div class="card-header">
                 Usuarios
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#btn_modal_cuser">
                 Nuevo
                 </button>
             </div>
@@ -56,8 +56,7 @@
                         <option data-tokens="Papel">Papel</option>
                     </select>
                     </div>
-
-                </div>
+                    </div>
                 </div>
 
             <form>
@@ -141,6 +140,9 @@
             </div>
         </div>
     </div>
+    <?php
+    include ("./user_create.php");
+    ?>
     <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </body>

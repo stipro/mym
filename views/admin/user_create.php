@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="btn_modal_cuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -28,30 +28,30 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Codigo</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Codigo">
+                        <label for="codigo_usuario" class="form-label">Codigo</label>
+                        <input type="text" class="form-control" id="codigo_usuario" placeholder="Codigo">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Nombre">
+                        <label for="nombre_usuario" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre_usuario" placeholder="Nombre">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Clave</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Clave">
+                        <label for="clave_usuario" class="form-label">Clave</label>
+                        <input type="password" class="form-control" id="clave_usuario" placeholder="Clave">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Correo Electroníco</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Correo">
+                        <label for="correo_usuario" class="form-label">Correo Electroníco</label>
+                        <input type="email" class="form-control" id="correo_usuario" placeholder="Correo">
                     </div>
                     <div class="mb-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                            <label class="form-check-label" for="flexSwitchCheckChecked">Estado Usuario</label>
+                            <input class="form-check-input" type="checkbox" id="estado_usuario" checked>
+                            <label class="form-check-label" for="estado_usuario">Estado</label>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <label for="descripcion_usuario" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="descripcion_usuario" rows="3"></textarea>
                     </div>
                 </div>
             </div>
@@ -73,8 +73,6 @@
             <button id="btn-limpiar" type="button" class="btn btn-primary">
             Limpiar
             </button>
-            <a class="btn btn-large btn-primary" data-toggle="confirmation" data-title="Open Google?"
-            href="https://google.com" target="_blank">Confirmation</a>
         </div>
     </div>
   </div>
@@ -98,34 +96,29 @@ $( "#btn-limpiar" ).click(function() {
 });
 $( "#btn-insert" ).click(function() {
     //OBTENEMOS DATOS
-    let ruc = $('#proveedor_ruc').val();
-    let nombre = $('#proveedor_nombre').val();
-    let direccion = $('#direccion_proveedor').val();
-    let razSocial = $('#razonsoc_proveedor').val();
-    let telefono = $('#telefono_proveedor').val();
-    let celular = $('#celular_proveedor').val();
-    let correo = $('#correo_proveedor').val();
+    let codigo = $('#codigo_usuario').val();
+    let nombre = $('#nombre_usuario').val();
+    let clave = $('#clave_usuario').val();
+    let correo = $('#correo_usuario').val();
+    let descripcion = $('#descripcion_usuario').val();
     let estado;
-    var bolestado = $('#estado_proveedor').is(":checked");
+    var bolestado = $('#estado_usuario').is(":checked");
+    var hoy = new Date();
+    console.log(hoy);
     //La caja está marcada
     if(bolestado){
-        bolestad = true;
+
         estado = '1';     
     }
     //La caja NO está marcada
     else{
-        bolestad = false;
         estado = '0';     
     }
-    let descripcion = $('#descripcion_proveedor').val();
     //AGRUPAMOS DATOS OBTENIDO
-    var proveedor = {
-      "ruc" : ruc,
+    var usuario = {
+      "codigo" : codigo,
       "nombre" : nombre,
-      "direccion" : direccion,
-      "razSocial" : razSocial,
-      "telefono" : telefono,
-      "celular" : celular,
+      "clave" : clave,
       "correo" : correo,
       "estado" : estado,
       "descripcion" : descripcion,
@@ -138,17 +131,13 @@ $( "#btn-insert" ).click(function() {
             alertPrimary+= '</div>';
             $("#respuesta").empty().append(alertPrimary);
         },*/
-        url: './../../controllers/controllerProviders.php',
+        url: './../../controllers/controllerUsers.php',
         type: 'POST',
-        data: proveedor,
+        data: usuario,
     })
     //RECIBIENDO RESPUESTA
     .done(function(data) {
-        alertPrimary = '<div class="alert alert-primary" role="alert">';
-        alertPrimary+= 'A simple primary alert—check it out!';
-        alertPrimary+= '</div>';
         $("#respuesta").empty().append(data);
-        console.log( data );
     })
     //SI OCURRE UN ERROR
     .fail(function() {

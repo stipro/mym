@@ -3,7 +3,7 @@ declare (strict_types = 1);
 //vERIFICACION SI SE RECIBIO DATOS
 if($_POST){
     require_once ('./../models/products.php');
-
+        //Se instacia la clase
         $producto = new Producto();
         $strcodigo = $_POST['codigo'];
         $strnombre = $_POST['nombre'];
