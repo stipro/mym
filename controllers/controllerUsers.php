@@ -13,7 +13,7 @@ if($_POST){
         $correo = $_POST['correo'];
         $estado = $_POST['estado'];
         $descripcion = $_POST['descripcion'];
-        //$producto->insert($codigo, $nombre, $clave, $correo, $estado, $descripcion);
+        $producto->insert($codigo, $nombre, $clave, $correo, $estado, $descripcion);
         echo 'Se recibio datos';
     }
     catch (Exception $e) {

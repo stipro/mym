@@ -141,16 +141,16 @@ $( "#btn-insert" ).click(function() {
     })
     //SI OCURRE UN ERROR
     .fail(function() {
-        alert( "error" );
+        console.log( "error" );
     })
     //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
     .always(function() {
-        alert( "completado" );
+        console.log( "completado" );
     });
     // Hacer otra cosa aquí ...
     // Asignar otra función de completado para la petición de más arriba
     jqxhr.always(function() {
-    alert( "completado segundo" );
+    console.log( "completado segundo" );
     });
 });
 

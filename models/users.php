@@ -23,22 +23,20 @@ class Usuario extends Conexion
     {
         try 
         {
-            $alertsuccess = '<div class="alert alert-success" role="alert">
-            
-            </div>';
-            $query  = "INSERT INTO productos(
+            $query  = "INSERT INTO usuarios(
                 codigo_usuario,
                 nombre_usuario,
                 clave_usuario,
                 correo_usuario,
                 estado_usuario,
-                descripcion_usuario,
+                descripcion_usuario
                 )
             VALUES (
                 :codigo, 
                 :nombre, 
                 :clave, 
-                :correo, 
+                :correo,
+                :estado,
                 :descripcion);";
             $result = $this->db->prepare($query);
             $result -> bindParam(':codigo', $codigo, PDO::PARAM_STR);
@@ -56,7 +54,8 @@ class Usuario extends Conexion
             }
         } catch (PDOException $e) {
             echo '<div class="alert alert-danger" role="alert">
-            Ocurrio un problema, llamar a sistemas '.$e->getMessage().'
+            Ocurrio un problema, llamar a sistemas:<br/><hr/>
+             '.$e->getMessage().'
             </div>';
         }
     }
