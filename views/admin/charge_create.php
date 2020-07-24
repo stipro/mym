@@ -38,7 +38,5 @@
   </div>
 </div>
 <script>
-    $("#md-collaborator").draggable({
-    handle: "#md-header_ccollaborator"
-    });
+
 </script>
