@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!--Bootstrap Stylesheet [ REQUIRED ]-->
+        <link rel="stylesheet" href="./../../libs/bootstrap-select/css/bootstrap-select.min.css">
         <!--Open Sans Font [ OPTIONAL ]-->
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
         <!--Bootstrap Stylesheet [ REQUIRED ]-->
         <link rel="stylesheet" href="./../../libs/bootstrap-4.5.0/css/bootstrap.min.css">
+
     <title>Document</title>
 </head>
 <body>
@@ -23,7 +26,7 @@
             <div class="card-header">
                 colaborador
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#btn_modal_cuser">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#btn_modal_ccollaborator">
                 Nuevo
                 </button>
             </div>
@@ -100,7 +103,11 @@
         </div>
     </div>
 <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="./../../assets/js/jquery-ui.js" type="text/javascript"></script>
+<script src="./../../libs/bootstrap-select/js/popper.min.js" type="text/javascript"></script>
 <script src="./../../libs/bootstrap-4.5.0/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="./../../libs/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+<script src="./../../libs/bootstrap-select/js/i18n/defaults-es_ES.min.js" type="text/javascript"></script>
 <div id="modal-requested" class="">
 <?php
     include ("./collaborator_create.php");

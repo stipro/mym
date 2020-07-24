@@ -1,8 +1,8 @@
 <!-- Modal -->
-<div class="modal fade" id="btn_modal_cuser" style="overflow-y: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="btn_modal_ccollaborator" style="overflow-y: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div id="md-collaborator" class="modal-content">
+            <div id="md-header_ccollaborator"class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
                 <!--ICONO-->
                 <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil-square.svg" alt="" width="32" height="32" title="title">
@@ -83,19 +83,26 @@
                                 <label for="exampleFormControlInput1" class="form-label">Cargo</label>
                                 <div>
                                     <select class="form-control selectpicker" data-live-search="true">
-                                        <option data-tokens="FRANK STIFT">Hombre</option>
-                                        <option data-tokens="SHERY PAOLA">Mujer</option>
-                                        <option data-tokens="ANTHONY EL PAPI">Otros</option>
+                                    <optgroup label="Picnic">
+                                        <option>Mustard</option>
+                                        <option>Ketchup</option>
+                                        <option>Relish</option>
+                                    </optgroup>
+                                    <optgroup label="Camping">
+                                        <option>Tent</option>
+                                        <option>Flashlight</option>
+                                        <option>Toilet Paper</option>
+                                    </optgroup>
                                     </select>
                                 </div>  
                             </div>
                         </div>
                         <div class="d-flex align-items-end form-group">
-                            <button type="button" id="btn_create_cargo" class="btn btn-primary p-0" data-toggle="modal" data-target="#btn_modal_ccargo">
+                            <button type="button" id="btn_create_cargo" class="btn btn-primary p-0">
                                 <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
                             </button>
                         </div>
-                    </div>
+                    </div>  
                 </div>
             </div>
         <div class="modal-footer">
@@ -112,9 +119,15 @@
             </button>
         </div>
     </div>
-  </div>
 </div>
+
 <script>
+    $("#md-collaborator").draggable({
+    handle: "#md-header_ccollaborator"
+    });
+    $("#md-collaborator").draggable({
+    handle: "#md-header_ccollaborator"
+    });
 $( "#btn-insert-collaborator" ).click(function() {
         //OBTENEMOS DATOS
         let codigo_colaborador = $('#codigo_colaborador').val();
