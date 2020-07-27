@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <!--Bootstrap Stylesheet [ REQUIRED ]-->
-        <link rel="stylesheet" href="./../../libs/bootstrap-select/css/bootstrap-select.min.css">
-        <!--Open Sans Font [ OPTIONAL ]-->
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-        <!--Bootstrap Stylesheet [ REQUIRED ]-->
-        <link rel="stylesheet" href="./../../libs/bootstrap-4.5.0/css/bootstrap.min.css">
-
+    <!--Bootstrap Stylesheet [ REQUIRED ]-->
+    <link rel="stylesheet" href="./../../libs/bootstrap-select/css/bootstrap-select.min.css">
+    <!--Open Sans Font [ OPTIONAL ]-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <!--Bootstrap Stylesheet [ REQUIRED ]-->
+    <link rel="stylesheet" href="./../../libs/bootstrap-4.5.0/css/bootstrap.min.css">
     <title>Articulos - Inventario</title>
 </head>
 <body>

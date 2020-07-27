@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">
                 <!--ICONO-->
                 <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil-square.svg" alt="" width="32" height="32" title="title">
-                Creación nuevo Colaborador</h5>
+                Creación nuevo Articulos</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -16,65 +16,104 @@
                 </div>
                 <div class="container-fluid">
                     <div class="form-row">
-                        <div class="col-sm">
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1" class="form-label">Proveedor</label>
-                                <div>
-                                    <select class="form-control selectpicker" data-live-search="true">
-                                        <option data-tokens="FRANK STIFT">Hombre</option>
-                                        <option data-tokens="SHERY PAOLA">Mujer</option>
-                                        <option data-tokens="ANTHONY EL PAPI">Otros</option>
-                                    </select>
-                                </div>  
-                            </div>
+                        <!-- Almacen -->
+                        <div class="form-group col-sm">
+                            <div class="container">
+                                <div class="row pb-2">
+                                    <label for="id_almacen"><strong>Almacen</strong></label>
+                                    <div class="col d-flex justify-content-end">
+                                        <button type="button" class="btn btn-primary p-0" data-toggle="tooltip" data-placement="top" title="Agregar">
+                                            <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
+                                        </button>
+                                    </div>  
+                                </div>
+                            </div>                            
+                            <select id="id_almacen" class="selectpicker form-control" data-live-search="true">
+                                <option data-tokens="00" disabled>Selecciona o busque un Almacen</option>
+                                <option data-tokens="01">Sistema</option>
+                                <option data-tokens="02">Recepcion</option>
+                                <option data-tokens="03">Transporte</option>
+                            </select>
                         </div>
-                        <div class="d-flex align-items-end form-group">
-                            <button type="button" class="btn btn-primary p-0">
-                                <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <!-- Almacen -->
-                            <div class="form-group">                                        
-                            <label for="filAlm"><strong>Almacen</strong></label>
-                            <select id="filAlm" class="selectpicker form-control" data-live-search="true">
-                                <option data-tokens="">Selecciona un Almacen</option>
+                        <!-- Proveedor -->
+                        <div class="form-group col-sm">
+                            <div class="container">
+                                <div class="row pb-2">
+                                    <label for="id_proveedor"><strong>Proveedor</strong></label>
+                                    <div class="col d-flex justify-content-end">
+                                        <button type="button" class="btn btn-primary p-0">
+                                            <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
+                                        </button>
+                                    </div>                                    
+                                </div>
+                            </div>                                                               
+                            <select id="id_proveedor" class="selectpicker form-control" data-live-search="true">
+                                <option data-tokens="">Selecciona un Proveedor</option>
                                 <option data-tokens="Recepción">Recepción</option>
                                 <option data-tokens="Sistemas">Sistemas</option>
                             </select>
-                            </div>
                         </div>
-                        <div class="col">
-                            <!-- Producto -->
-                            <div class="form-group">                                        
-                            <label for="filCodNom"><strong>Proveedor</strong></label>
-                            <select id="filCodNom" class="selectpicker form-control" data-live-search="true">
-                                <option data-tokens="">Selecciona o busque un Producto</option>
+                    </div>
+                    <div class="form-row">
+                        <!-- Marca -->
+                        <div class="form-group col-sm">
+                            <div class="container">
+                                <div class="row pb-2">
+                                    <label for="id_marca"><strong>Marca</strong></label>
+                                    <div class="col d-flex justify-content-end">
+                                        <button type="button" class="btn btn-primary p-0">
+                                            <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
+                                        </button>
+                                    </div>  
+                                </div>
+                            </div>                            
+                            <select id="id_marca" class="selectpicker form-control" data-live-search="true">
+                                <option data-tokens="">Selecciona o busque un Marca</option>
                                 <option data-tokens="Lapicero">Lapicero</option>
                                 <option data-tokens="Borrador">Borrador</option>
                                 <option data-tokens="Papel">Papel</option>
                             </select>
-                            </div>
+                        </div>
+                        <!-- Categoría -->
+                        <div class="form-group col-sm">
+                            <div class="container">
+                                <div class="row pb-2">
+                                    <label for="id_categoria"><strong>Categoría</strong></label>
+                                    <div class="col d-flex justify-content-end">
+                                        <button type="button" class="btn btn-primary p-0">
+                                            <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
+                                        </button>
+                                    </div>                                    
+                                </div>
+                            </div>                                                               
+                            <select id="id_categoria" class="selectpicker form-control" data-live-search="true">
+                                <option data-tokens="">Selecciona un Categoría</option>
+                                <option data-tokens="Recepción">Recepción</option>
+                                <option data-tokens="Sistemas">Sistemas</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="codigo_articulo" class="form-label">Codigo</label>
-                        <input type="text" class="form-control" id="codigo_articulo" placeholder="Codigo">
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label for="codigo_articulo" class="form-label">Codigo</label>
+                            <input type="text" class="form-control" id="codigo_articulo" placeholder="Codigo">
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="nombre_articulo" class="form-label">Nombre Articulo</label>
+                            <input type="text" class="form-control" id="nombre_articulo" placeholder="Nombre">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="nombre_articulo" class="form-label">Nombre Articulo</label>
-                        <input type="text" class="form-control" id="nombre_articulo" placeholder="Nombre">
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label for="precio_articulo" class="form-label">Precio</label>
+                            <input type="numeric" class="form-control" id="precio_articulo" placeholder="Precio">
+                        </div>                    
+                        <div class="form-group col-sm">
+                            <label for="stock_articulo" class="form-label">Stock</label>
+                            <input type="text" class="form-control" id="stock_articulo" placeholder="Stock">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="precio_articulo" class="form-label">Precio</label>
-                        <input type="numeric" class="form-control" id="precio_articulo" placeholder="Precio">
-                    </div>                    
-                    <div class="mb-3">
-                        <label for="stock_articulo" class="form-label">Stock</label>
-                        <input type="text" class="form-control" id="stock_articulo" placeholder="Stock">
-                    </div>
+
                     <div class="mb-3">
                         <label for="caracteristica_articulo" class="form-label">Caracteristica</label>
                         <input type="text" class="form-control" id="caracteristica_articulo" placeholder="Caracteristica">
@@ -82,51 +121,7 @@
                     <div class="mb-3">
                         <label for="descripcion_articulo" class="form-label">Descripción</label>
                         <input type="number" class="form-control" id="descripcion_articulo" placeholder="Descripción">
-                    </div>
-                    <div class="mb-3">
-                        <label for="telefono_colaborador" class="form-label">Telefono</label>
-                        <input type="tel" class="form-control" id="telefono_colaborador" placeholder="Telefono">
-                    </div>
-                    <div class="mb-3">
-                        <label for="celular_colaborador" class="form-label">Celular</label>
-                        <input type="tel" class="form-control" id="celular_colaborador" placeholder="Celular">
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="estado_colaborador" checked>
-                            <label class="form-check-label" for="estado_colaborador">Estado</label>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="descripcion_colaborador" class="form-label">Descripción</label>
-                        <textarea class="form-control" id="descripcion_colaborador" rows="3"></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-sm">
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1" class="form-label">Cargo</label>
-                                <div>
-                                    <select class="form-control selectpicker" data-live-search="true">
-                                    <optgroup label="Picnic">
-                                        <option>Mustard</option>
-                                        <option>Ketchup</option>
-                                        <option>Relish</option>
-                                    </optgroup>
-                                    <optgroup label="Camping">
-                                        <option>Tent</option>
-                                        <option>Flashlight</option>
-                                        <option>Toilet Paper</option>
-                                    </optgroup>
-                                    </select>
-                                </div>  
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-end form-group">
-                            <button type="button" id="btn_create_cargo" class="btn btn-primary p-0">
-                                <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
-                            </button>
-                        </div>
-                    </div>  
+                    </div> 
                 </div>
             </div>
         <div class="modal-footer">
@@ -153,53 +148,53 @@
     handle: "#md-header_ccollaborator"
     });
 $( "#btn-insert-collaborator" ).click(function() {
-        //OBTENEMOS DATOS
-        let codigo_colaborador = $('#codigo_colaborador').val();
-        let pnombre_colaborador = $('#pnombre_colaborador').val();
-        let snombre_colaborador = $('#snombre_colaborador').val();
-        let papellido_colaborador = $('#papellido_colaborador').val();
-        let sapellido_colaborador = $('#sapellido_colaborador').val();
-        let dni_colaborador = $('#dni_colaborador').val();
-        let genero_colaborador = $('#genero_colaborador').val();
-        let telefono_colaborador = $('#telefono_colaborador').val();
-        let celular_colaborador = $('#celular_colaborador').val();
-        let estado_colaborador = $('#estado_colaborador').is(":checked");
-        let estado;
-        if(estado_colaborador){//La caja está marcada
-        estado = '1';     
-        }
-        else{//La caja NO está marcada
-        estado = '0';     
-        }
-        let descripcion_colaborador = $('#descripcion_colaborador').val();
-        //Obtenemos la fecha
-        let date = new Date()
-        //
-        let day = date.getDate()
-        let month = date.getMonth() + 1
-        let year = date.getFullYear()
-        //Convertimos en Formato deseado
-        if(month < 10){
+    //OBTENEMOS DATOS
+    var id_almacen = document.getElementById('id_almacen');
+    //TEXTO
+    var txt_almacen = id_almacen.options[id_almacen.selectedIndex].text;
+    //DATA-TOKENS
+    var dt_almacen = id_almacen.options[id_almacen.selectedIndex].getAttribute('data-tokens');
+    var id_proveedor = document.getElementById('id_proveedor');
+    var dt_proveedor = id_proveedor.options[id_proveedor.selectedIndex].getAttribute('data-tokens');
+    var id_marca = document.getElementById('id_marca');
+    var dt_marca = id_marca.options[id_marca.selectedIndex].getAttribute('data-tokens');
+    var id_categoria = document.getElementById('id_categoria');
+    var dt_categoria = id_categoria.options[id_categoria.selectedIndex].getAttribute('data-tokens');
+    //
+    let codigo_articulo = $('#codigo_articulo').val();
+    let nombre_articulo = $('#nombre_articulo').val();
+    let precio_articulo = $('#precio_articulo').val();
+    let stock_articulo = $('#stock_articulo').val();
+    let caracteristica_articulo = $('#caracteristica_articulo').val();
+    let descripcion_articulo = $('#descripcion_articulo').val();
+    //Obtenemos la fecha
+    let date = new Date()
+    //
+    let day = date.getDate()
+    let month = date.getMonth() + 1
+    let year = date.getFullYear()
+    //Convertimos en Formato deseado
+    if(month < 10){
         var dateformate = `${day}-0${month}-${year}`;
-        }else{
+    }else{
         var dateformate = `${day}-${month}-${year}`;
-        }
-        var hora = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-        //AGRUPAMOS DATOS OBTENIDO
-        var colaborador = {
-        "codigo_colaborador" : codigo_colaborador,
-        "pnombre_colaborador" : pnombre_colaborador,
-        "snombre_colaborador" : snombre_colaborador,
-        "papellido_colaborador" : papellido_colaborador,
-        "sapellido_colaborador" : sapellido_colaborador,
-        "dni_colaborador" : dni_colaborador,
-        "genero_colaborador" : genero_colaborador,
-        "telefono_colaborador" : telefono_colaborador,
-        "celular_colaborador" : celular_colaborador,
-        "estado" : estado,
-        "descripcion_colaborador" : descripcion_colaborador,
-        };
-        console.log('Se creara un cargo '+dateformate+" y Hora "+hora)
+    }
+    var hora = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    var dateRegistro = dateformate + hora;
+    //AGRUPAMOS DATOS OBTENIDO
+    var colaborador = {
+        "dt_almacen" : dt_almacen,
+        "dt_proveedor" : dt_proveedor,
+        "dt_marca" : dt_marca,
+        "dt_categoria" : dt_categoria,
+        "codigo_articulo" : codigo_articulo,
+        "nombre_articulo" : nombre_articulo,
+        "precio_articulo" : precio_articulo,
+        "stock_articulo" : stock_articulo,
+        "caracteristica_articulo" : caracteristica_articulo,
+        "descripcion_articulo" : descripcion_articulo,
+        "dateRegistro" : dateRegistro,
+    };
     var jqxhr = $.ajax({        
         beforeSend: function(){
             alertPrimary = '<div class="alert alert-primary" role="alert">';
@@ -207,7 +202,7 @@ $( "#btn-insert-collaborator" ).click(function() {
             alertPrimary+= '</div>';
             $("#respuesta").append(alertPrimary);
         },
-        url: './../../controllers/controllerCollaboratssors.php',
+        url: './../../controllers/controllerUsers.php',
         type: 'POST',
         data: colaborador,
     })
