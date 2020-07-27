@@ -1,35 +1,34 @@
 <!-- Modal -->
-<div class="modal fade" id="btn_modal_ccollaborator" style="overflow-y: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div id="md_cArticulo" class="modal fade" style="overflow-y: scroll;" tabindex="-1" role="dialog" aria-modal="true">
     <div class="modal-dialog modal-xl">
         <div id="md-collaborator" class="modal-content">
             <div id="md-header_ccollaborator"class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                <!--ICONO-->
-                <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil-square.svg" alt="" width="32" height="32" title="title">
-                Creación nuevo Articulos</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title" id="mdl_lblArticle">
+                    <!--ICONO-->
+                    <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil-square.svg" alt="" width="32" height="32" title="title">
+                    Creación nuevo Articulo
+                </h5>
             </div>
             <div class="modal-body">
                 <div id="respuesta">
                 </div>
                 <div class="container-fluid">
                     <div class="form-row">
+
                         <!-- Almacen -->
                         <div class="form-group col-sm">
                             <div class="container">
                                 <div class="row pb-2">
                                     <label for="id_almacen"><strong>Almacen</strong></label>
                                     <div class="col d-flex justify-content-end">
-                                        <button type="button" class="btn btn-primary p-0" data-toggle="tooltip" data-placement="top" title="Agregar">
+                                        <button id="btn_mdl_cAlmacen" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
                                         </button>
                                     </div>  
                                 </div>
                             </div>                            
                             <select id="id_almacen" class="selectpicker form-control" data-live-search="true">
-                                <option data-tokens="00" disabled>Selecciona o busque un Almacen</option>
+                                <option data-tokens="00" disabled selected>Selecciona o busque un Almacen</option>
                                 <option data-tokens="01">Sistema</option>
                                 <option data-tokens="02">Recepcion</option>
                                 <option data-tokens="03">Transporte</option>
@@ -41,14 +40,14 @@
                                 <div class="row pb-2">
                                     <label for="id_proveedor"><strong>Proveedor</strong></label>
                                     <div class="col d-flex justify-content-end">
-                                        <button type="button" class="btn btn-primary p-0">
+                                        <button id="btn_mdl_cProveedor" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
                                         </button>
                                     </div>                                    
                                 </div>
                             </div>                                                               
                             <select id="id_proveedor" class="selectpicker form-control" data-live-search="true">
-                                <option data-tokens="">Selecciona un Proveedor</option>
+                                <option data-tokens="" disabled selected>Selecciona un Proveedor</option>
                                 <option data-tokens="Recepción">Recepción</option>
                                 <option data-tokens="Sistemas">Sistemas</option>
                             </select>
@@ -61,14 +60,14 @@
                                 <div class="row pb-2">
                                     <label for="id_marca"><strong>Marca</strong></label>
                                     <div class="col d-flex justify-content-end">
-                                        <button type="button" class="btn btn-primary p-0">
+                                        <button id="btn_md_cMarca" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
                                         </button>
                                     </div>  
                                 </div>
                             </div>                            
                             <select id="id_marca" class="selectpicker form-control" data-live-search="true">
-                                <option data-tokens="">Selecciona o busque un Marca</option>
+                                <option data-tokens="" disabled selected>Selecciona o busque un Marca</option>
                                 <option data-tokens="Lapicero">Lapicero</option>
                                 <option data-tokens="Borrador">Borrador</option>
                                 <option data-tokens="Papel">Papel</option>
@@ -80,14 +79,14 @@
                                 <div class="row pb-2">
                                     <label for="id_categoria"><strong>Categoría</strong></label>
                                     <div class="col d-flex justify-content-end">
-                                        <button type="button" class="btn btn-primary p-0">
+                                        <button id="btn_md_cCategoria" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
                                         </button>
                                     </div>                                    
                                 </div>
                             </div>                                                               
                             <select id="id_categoria" class="selectpicker form-control" data-live-search="true">
-                                <option data-tokens="">Selecciona un Categoría</option>
+                                <option data-tokens="" disabled selected>Selecciona un Categoría</option>
                                 <option data-tokens="Recepción">Recepción</option>
                                 <option data-tokens="Sistemas">Sistemas</option>
                             </select>
@@ -124,29 +123,24 @@
                     </div> 
                 </div>
             </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            <!--ICONO-->
-            <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="32" height="32" title="Bootstrap">    
-            Cerrar</button>
-            <button id="btn-insert-collaborator" type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmacion_modal">
-            <!--ICONO-->
-            <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil.svg" alt="" width="32" height="32" title="Bootstrap">
-            Guardar</button>
-            <button id="btn-limpiar" type="button" class="btn btn-primary">
-            Limpiar
-            </button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <!--ICONO-->
+                <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="32" height="32" title="Cerrar">    
+                Cerrar</button>
+                <button id="btn-insert-collaborator" type="button" class="btn btn-primary">
+                <!--ICONO-->
+                <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil.svg" alt="" width="32" height="32" title="Guardar">
+                Guardar</button>
+                <button id="btn-limpiar" type="button" class="btn btn-primary">
+                Limpiar
+                </button>
+            </div>
         </div>
     </div>
 </div>
-
 <script>
-    $("#md-collaborator").draggable({
-    handle: "#md-header_ccollaborator"
-    });
-    $("#md-collaborator").draggable({
-    handle: "#md-header_ccollaborator"
-    });
+//
 $( "#btn-insert-collaborator" ).click(function() {
     //OBTENEMOS DATOS
     var id_almacen = document.getElementById('id_almacen');
@@ -228,37 +222,135 @@ $( "#btn-insert-collaborator" ).click(function() {
     console.log( "completado segundo" );
     });
 });
-    $(document).on('click', '#btn_create_cargo', function() {
-        //modal-requested
-        var jqxhr = $.ajax({
+$(document).on('click', '#btn_mdl_cAlmacen ', function() {
+    //modal-requested
+    var jqxhr = $.ajax({
         /*
         beforeSend: function(){
-            alertPrimary = '<div class="alert alert-primary" role="alert">';
-            alertPrimary+= 'A simple primary alert—check it out!';
-            alertPrimary+= '</div>';
-            $("#respuesta").empty().append(alertPrimary);
+        alertPrimary = '<div class="alert alert-primary" role="alert">';
+        alertPrimary+= 'A simple primary alert—check it out!';
+        alertPrimary+= '</div>';
+                $("#respuesta").empty().append(alertPrimary);
         },*/
-        url: './charge_create.php',
+        url: './warehouse_create.php',
         type: 'POST',
-        })
-        //RECIBIENDO RESPUESTA
-        .done(function(data) {
-            $("#modal-requested").append(data);
-            $('#btn_modal_ccargo').modal('show');
-        })
-        //SI OCURRE UN ERROR
-        .fail(function() {
-            console.log( "error" );
-        })
-        //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
-        .always(function() {
-            console.log( "completado" );
-        });
-        // Hacer otra cosa aquí ...
-        // Asignar otra función de completado para la petición de más arriba
-        jqxhr.always(function() {
-        console.log( "completado segundo" );
-        });
-        
+    })
+    //RECIBIENDO RESPUESTA
+    .done(function(data) {
+        $("#modal-requested").empty();
+        $("#modal-requested").append(data);
+        $('#md_cAlmacen').modal('show');
+    })
+    //SI OCURRE UN ERROR
+    .fail(function() {
+        console.log( "error" );
+    })
+    //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
+    .always(function() {
+        console.log( "completado" );
     });
+    // Hacer otra cosa aquí ...
+    // Asignar otra función de completado para la petición de más arriba
+    jqxhr.always(function() {
+        console.log( "completado segundo" );
+    });
+});
+$(document).on('click', '#btn_mdl_cProveedor', function() {
+    //modal-requested
+    var jqxhr = $.ajax({
+        /*
+        beforeSend: function(){
+        alertPrimary = '<div class="alert alert-primary" role="alert">';
+        alertPrimary+= 'A simple primary alert—check it out!';
+        alertPrimary+= '</div>';
+                $("#respuesta").empty().append(alertPrimary);
+        },*/
+        url: './providers_create.php',
+        type: 'POST',
+    })
+    //RECIBIENDO RESPUESTA
+    .done(function(data) {
+        $("#modal-requested").empty();
+        $("#modal-requested").append(data);
+        $('#md_cProveedor').modal('show');
+    })
+    //SI OCURRE UN ERROR
+    .fail(function() {
+        console.log( "error" );
+    })
+    //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
+    .always(function() {
+        console.log( "completado" );
+    });
+    // Hacer otra cosa aquí ...
+    // Asignar otra función de completado para la petición de más arriba
+    jqxhr.always(function() {
+        console.log( "completado segundo" );
+    });
+});
+$(document).on('click', '#btn_md_cMarca', function() {
+    //modal-requested
+    var jqxhr = $.ajax({
+        /*
+        beforeSend: function(){
+        alertPrimary = '<div class="alert alert-primary" role="alert">';
+        alertPrimary+= 'A simple primary alert—check it out!';
+        alertPrimary+= '</div>';
+                $("#respuesta").empty().append(alertPrimary);
+        },*/
+        url: './brand_create.php',
+        type: 'POST',
+    })
+    //RECIBIENDO RESPUESTA
+    .done(function(data) {
+        $("#modal-requested").empty();
+        $("#modal-requested").append(data);
+        $('#md_cBrand').modal('show');
+    })
+    //SI OCURRE UN ERROR
+    .fail(function() {
+        console.log( "error" );
+    })
+    //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
+    .always(function() {
+        console.log( "completado" );
+    });
+    // Hacer otra cosa aquí ...
+    // Asignar otra función de completado para la petición de más arriba
+    jqxhr.always(function() {
+        console.log( "completado segundo" );
+    });
+});
+$(document).on('click', '#btn_md_cCategoria', function() {
+    //modal-requested
+    var jqxhr = $.ajax({
+        /*
+        beforeSend: function(){
+        alertPrimary = '<div class="alert alert-primary" role="alert">';
+        alertPrimary+= 'A simple primary alert—check it out!';
+        alertPrimary+= '</div>';
+                $("#respuesta").empty().append(alertPrimary);
+        },*/
+        url: './category_create.php',
+        type: 'POST',
+    })
+    //RECIBIENDO RESPUESTA
+    .done(function(data) {
+        $("#modal-requested").append(data);
+        $('#md_cCategory').modal('show');
+    })
+    //SI OCURRE UN ERROR
+    .fail(function() {
+        console.log( "error" );
+    })
+    //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
+    .always(function() {
+        console.log( "completado" );
+    });
+    // Hacer otra cosa aquí ...
+    // Asignar otra función de completado para la petición de más arriba
+    jqxhr.always(function() {
+        console.log( "completado segundo" );
+    });
+});
 </script>

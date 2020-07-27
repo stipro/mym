@@ -212,15 +212,15 @@ $( "#btn-insert-collaborator" ).click(function() {
     $(document).on('click', '#btn_create_cargo', function() {
         //modal-requested
         var jqxhr = $.ajax({
-        /*
-        beforeSend: function(){
-            alertPrimary = '<div class="alert alert-primary" role="alert">';
-            alertPrimary+= 'A simple primary alert—check it out!';
-            alertPrimary+= '</div>';
-            $("#respuesta").empty().append(alertPrimary);
-        },*/
-        url: './charge_create.php',
-        type: 'POST',
+            /*
+            beforeSend: function(){
+                alertPrimary = '<div class="alert alert-primary" role="alert">';
+                alertPrimary+= 'A simple primary alert—check it out!';
+                alertPrimary+= '</div>';
+                $("#respuesta").empty().append(alertPrimary);
+            },*/
+            url: './charge_create.php',
+            type: 'POST',
         })
         //RECIBIENDO RESPUESTA
         .done(function(data) {
