@@ -126,11 +126,11 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                 <!--ICONO-->
-                <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="32" height="32" title="Cerrar">    
+                <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="16" height="16" title="Cerrar">    
                 Cerrar</button>
                 <button id="btn-insert-collaborator" type="button" class="btn btn-primary">
                 <!--ICONO-->
-                <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil.svg" alt="" width="32" height="32" title="Guardar">
+                <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil.svg" alt="" width="16" height="16" title="Guardar">
                 Guardar</button>
                 <button id="btn-limpiar" type="button" class="btn btn-primary">
                 Limpiar

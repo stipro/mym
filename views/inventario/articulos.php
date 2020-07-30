@@ -23,15 +23,15 @@
     </div>
     <div class="card text-left">
         <div class="card-header">
-        <div class="col d-flex align-items-center">
-            <h4 clas="d-flex">Articulos</h4>        
-        </div>
-            
-            <!-- Button trigger modal -->
-            <div class="col d-flex justify-content-end">
-                <button type="button" id="btn_mdl_article" class="btn btn-primary">
-                    Nuevo
-                </button>
+            <div class="d-flex bd-highlight">
+                <div class="p-2 flex-fill bd-highlight">
+                    <h4>Articulos</h4> 
+                </div>
+                <div class="p-2 flex-fill bd-highlight d-flex justify-content-end">
+                    <button type="button" id="btn_mdl_article" class="btn btn-primary">
+                        Nuevo
+                    </button>
+                </div>
             </div>
         </div>
         <div class="card-body">
