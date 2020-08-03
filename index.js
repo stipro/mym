@@ -1,32 +1,21 @@
-const path = require('path');
-const express = require('express');
-const app = express();
+var socket = require( 'socket.io' );
+var express = require( 'express' );
+var http = require( 'http' );
 
-//settings
-app.set('port', process.env.PORT || 3000);
+var app = express();
+var server = http.createServer( app );
 
-//static file
-app.use(express.static(path.join(__dirname, 'public')));
+var io = socket.listen( server );
 
-//start on server
-const server = app.listen(app.get('port'), () => {
-    console.log('server on porte', app.get('port'));
-});
-const SocketIO = require('socket.io');
-const io = SocketIO(server);
-
-//websockets
-io.on('connection', (socket) => {
-    console.log('nueva conexion', socket.id);
-
-    socket.on('chat:message', (data) => {
-        //envia los datos
-        io.emit('chat:message', data);
-    });
-    socket.on('chat:typing', (data) => {
-        //envia los datos
-        socket.broadcast.emit('chat:typing', data);
-    });
-
+io.sockets.on( 'connection', function( client ) {
+	console.log( "New client !" );
+	
+	client.on( 'message', function( data ) {
+		console.log( 'Message received ' + data.name + ":" + data.message );
+		
+		//client.broadcast.emit( 'message', { name: data.name, message: data.message } );
+		io.sockets.emit( 'message', { name: data.name, message: data.message } );
+	});
 });
 
+server.listen( 8080 );

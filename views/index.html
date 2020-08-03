@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./../public/main.css">
+    <title>Chat Socket.io views</title>
+</head>
+<body>
+
+    <div id="chat-container">
+        <div id="chat-windows">
+            <div id="output"></div>
+            <div id="actions"></div>
+        </div>
+        <input type="text" id="username" placeholder="usuario">
+        <input type="text" id="message" placeholder="mensaje">
+        <button id="send">Enviar</button>
+        
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./corpmym/assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="chat.js"></script>
+
+</body>
+</html>
