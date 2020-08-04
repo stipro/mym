@@ -9,7 +9,7 @@
       <div class="form-row">
         <div class="form-group col-sm">
           <label for="nombre_almacen" class="form-label">Nombre</label>
-          <input type="text" class="form-control" id="nombre_almacen" placeholder="Nombre">
+          <input type="text" class="form-control" id="nombre_almacen" placeholder="Nombre" value="nombre Servidor">
         </div>
         <div class="form-group col-sm">
           <label for="descripcion_almacen" class="form-label">Descripcion</label>
@@ -28,6 +28,89 @@
   </div>
 </div>
 <script>
+  // Socket Server
+  var msg = {
+    type: "message",
+    text: document.getElementById("nombre_almacen").value,
+    id:   'clientID',
+    date: Date.now()
+  };
+      var conn = new WebSocket('ws://192.168.1.122:8080');
+            conn.onopen = function(e) {
+              conn.send(JSON.stringify(msg));
+              console.log("Connection established!");
+            };
+            conn.onmessage = function (event) {
+              console.log(event.data);
+            }
+            /*
+            (function () {
+                var Message;
+                Message = function (arg) {
+                    this.text = arg.text, this.message_side = arg.message_side;
+                    this.draw = function (_this) {
+                        return function () {
+                            var $message;
+                            $message = $($('.message_template').clone().html());
+                            $message.addClass(_this.message_side).find('.text').html(_this.text);
+                            $('.messages').append($message);
+                            return setTimeout(function () {
+                                return $message.addClass('appeared');
+                            }, 0);
+                        };
+                    }(this);
+                    return this;
+                };
+
+                $(function () {
+                    
+                    var getMessageText, message_side, sendMessage;
+                    message_side = 'right';
+
+                    getMessageText = function () {
+                        var $message_input;
+                        $message_input = $('.message_input');
+                        conn.send($message_input.val());
+                        return $message_input.val();
+                    };
+
+                    sendMessage = function (text, message_side) {
+                        var $messages, message;
+                        if (text.trim() === '') {
+                            return;
+                        }
+                        $('.message_input').val('');
+                        $messages = $('.messages');
+                        message_side = message_side || 'left';
+                        message = new Message({
+                            text: text,
+                            message_side: message_side
+                        });
+                        message.draw();
+                        
+                        return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+                    };
+
+                    $('.send_message').click(function (e) {
+                        return sendMessage(getMessageText());
+                    });
+
+                    $('.message_input').keyup(function (e) {
+                        if (e.which === 13) {
+                            return sendMessage(getMessageText());
+                        }
+                    });
+
+                    conn.onmessage = function(e) {
+                        console.log(e.data);
+                        sendMessage(e.data, 'right');
+                    };
+    
+                });
+
+            }.call(this));*/
+
+  /*
 var socket;
 document.getElementById('btn_ialmacen').addEventListener('click', function () {
   console.log("Se envio registro de Almacen");
@@ -35,9 +118,11 @@ document.getElementById('btn_ialmacen').addEventListener('click', function () {
 });
 function init() {
 	// Apuntar a la IP/Puerto configurado en el contructor del WebServerSocket, que es donde está escuchando el socket.
-	var host = "ws://192.168.1.122:9000"; 
+	var host = "ws://192.168.1.122:8080"; 
 	try {
-		socket = new WebSocket(host);
+    socket = new WebSocket(host);
+      console.log('conexion establecitada');
+    }
 		log('WebSocket (M&M) - Estado '+socket.readyState);
 		socket.onopen    = function(msg) { 
 							   log("Bienvenido - Estado "+this.readyState); 
@@ -81,5 +166,5 @@ function quit(){
 function reconnect() {
 	quit();
 	init();
-}
+}*/
 </script>

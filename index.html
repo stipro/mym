@@ -36,7 +36,7 @@
                     <div class="icon">
 
                     </div>
-                    <div class="text">Send</div>
+                     <div class="text">Send</div>
                 </div>
             </div>
         </div>
@@ -54,8 +54,11 @@
         </div>
         <script src="./libs/bootstrap-4.5.0/js/bootstrap.min.js"></script>
         <script>
+
+
             // Socket Server
-            var conn = new WebSocket('ws://192.168.3.16:8080');
+            
+            var conn = new WebSocket('ws://192.168.1.122:8080');
             conn.onopen = function(e) {
                 console.log("Connection established!");
             };

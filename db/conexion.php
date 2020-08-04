@@ -32,7 +32,7 @@ class Conexion
 
     protected function ConsultaCompleja(string $where, array $array): array
     {
-        $query  = "SELECT * FROM productos {$where}";
+        $query  = "SELECT * FROM almacenes {$where}";
         $result = $this->db->prepare($query);
         $result->execute($array);
         return $result->fetchAll(PDO::FETCH_ASSOC);
