@@ -2,7 +2,7 @@
 declare (strict_types = 1);
 require_once('./../db/conexion.php');
 
-class Producto extends Conexion
+class Warehouse extends Conexion
 {
     /*
     public $intruc;
@@ -87,7 +87,7 @@ class Producto extends Conexion
 
     }
 
-    public function getAll(int $desde, int $filas): array
+    public function getAll(): array
     {
         $query = "SELECT * FROM almacenes ORDER BY nombre_almacen";
         return $this->ConsultaSimple($query);
@@ -111,36 +111,30 @@ class Producto extends Conexion
     public function showTable(array $query): string
     {
         $html = '';
-        var_dump($query);
         if (count($query)) {
             $html = '<table class="table table-striped" id="table">
                         <thead>
-                            <th scope="col">#</th>
-                            <th scope="col">codigo</th>
-                            <th scope="col">nombre</th>
-                            <th scope="col">precio</th>
-                            <th scope="col">stock</th>
-                            <th scope="col">caracteristica</th>
-                            <th scope="col">descripcion</th>
+                            <!--<th scope="col">#</th>-->
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
                         </thead>
                         <tbody>';
             foreach ($query as $value){
                 $html .= '<tr>
-                        <td class="d-none">' . $value['nIdAlm'] . '</td>
-                        <td>' . $value['nCodAlm'] . '</td>
-                        <td>' . $value['nIngAlm'] . '</td>
-                        <td>' . $value['nEgrAlm'] . '</td>
-                        <td>' . $value['fRegAlm'] . '</td>
-                        <td>' . $value['nNFacAlm'] . '</td>
-                        <td>' . $value['cNomAlm'] . '</td>
-                        <td>' . $value['cObsAlm'] . '</td>
+                        <td class="d-none">' . $value['id_almacen'] . '</td>
+                        <td>' . $value['nombre_almacen'] . '</td>
+                        <td>' . $value['descripcion_almacen'] . '</td>
+                        <td>' . $value['estado_almacen'] . '</td>
                         <td class="text-center">
                             <button title="Editar este usuario" class="editar btn btn-secondary" data-toggle="modal" data-target="#ventanaModal">
-                                 <i class="fa fa-pencil-square-o"></i>
+                                <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil.svg" alt="" width="16" height="16" title="modificar">
                             </button>
 
                             <button title="Eliminar este usuario" type="button" class="eliminar btn btn-danger" data-toggle="modal" data-target="#ventanaModal">
-                                <i class="fa fa-trash-o"></i>
+                                <img src="./../../assets/icons/icons-1.0.0-alpha5/trash.svg" alt="" width="16" height="16" title="eliminar">
+                                <!--<i class="fa fa-trash-o"></i>-->
                             </button>
                         </td>
                         </tr>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-    <title>Productos</title>
+    <title>Almacen</title>
 </head>
 <body>
     <?php
@@ -24,7 +24,7 @@
     <div class="card-header">
         Almacenes
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#md_cAlmacen">
         Nuevo
         </button>
     </div>
@@ -88,44 +88,6 @@
       <hr>
       <div id="div_tabla">
       </div>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">codigo</th>
-            <th scope="col">nombre</th>
-            <th scope="col">precio</th>
-            <th scope="col">stock</th>
-            <th scope="col">caracteristica</th>
-            <th scope="col">descripcion</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
     <div class="card-footer text-muted">
     <nav aria-label="Page navigation example">
@@ -140,9 +102,6 @@
     </div>
   </div>
 </div>
-    <?php
-    include ("./warehouse_create.php");
-    ?>
         <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
@@ -150,6 +109,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <?php
+    include ("./warehouse_create.php");
+    ?>
     <script>
     $(document).ready(function() {
       //CLICK Agregar Nuevo producto
@@ -171,7 +133,6 @@
         //RECIBIENDO RESPUESTA
         .done(function(data) {
           $("#div_tabla").append(data);
-          console.log( data );
         })
         //SI OCURRE UN ERROR
         .fail(function() {

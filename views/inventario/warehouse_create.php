@@ -6,21 +6,22 @@
         <h5 class="modal-title">Creación nuevo Almacen</h5>
       </div>
       <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group col-sm">
-          <label for="nombre_almacen" class="form-label">Nombre</label>
-          <input type="text" class="form-control" id="nombre_almacen" placeholder="Nombre" value="nombre Servidor">
+      <div id="actions"></div>
+        <div class="form-row">
+          <div class="form-group col-sm">
+            <label for="nombre_almacen" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre_almacen" placeholder="Nombre" value="">
+          </div>
+          <div class="form-group col-sm">
+            <label for="descripcion_almacen" class="form-label">Descripcion</label>
+            <input type="text" class="form-control" id="descripcion_almacen" placeholder="Descripcion">
+          </div>
         </div>
-        <div class="form-group col-sm">
-          <label for="descripcion_almacen" class="form-label">Descripcion</label>
-          <input type="text" class="form-control" id="descripcion_almacen" placeholder="Descripcion">
-        </div>
-      </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
         <!--ICONO-->
-        <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="32" height="32" title="Cerrar">    
+        <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="16" height="16" title="Cerrar">    
         Cerrar</button>
         <button id="btn_ialmacen" type="button" class="btn btn-primary">Registrar</button>
       </div>
@@ -28,21 +29,44 @@
   </div>
 </div>
 <script>
-  // Socket Server
-  var msg = {
-    type: "message",
-    text: document.getElementById("nombre_almacen").value,
-    id:   'clientID',
-    date: Date.now()
+$(document).ready(function() {
+  //DOM elements
+  let nameWarehouse = document.getElementById('nombre_almacen');
+  let actions = document.getElementById('actions');
+  let valorinput = nameWarehouse.value;
+    // Socket Server
+  var msg;
+
+  const conn = new WebSocket('ws://192.168.1.122:8080');
+  conn.onopen = function(e) {
+    //conn.send(JSON.stringify(msg));
+    console.log("Conexion establecida!");
   };
-      var conn = new WebSocket('ws://192.168.1.122:8080');
-            conn.onopen = function(e) {
-              conn.send(JSON.stringify(msg));
-              console.log("Connection established!");
-            };
-            conn.onmessage = function (event) {
-              console.log(event.data);
-            }
+   
+  nameWarehouse.addEventListener('keypress', senType);
+  //conn.send('Se esta escribiendo !!!' + valorjquery);
+  //console.log('Se esta escribiendo !!!' + valorjquery);
+
+  conn.onmessage = function (event) {
+    actions.innerHTML = '<p><em>' + event.data + '</em></p>';
+    console.log(event.data);
+  }
+
+  function senType() {
+    msg = {
+      type: "message",
+      text: document.getElementById("nombre_almacen").value,
+      id:   'clientID',
+      date: Date.now()  
+    }
+    conn.send(JSON.stringify(msg));
+    console.log(msg)
+  }
+
+}); 
+
+
+
             /*
             (function () {
                 var Message;
