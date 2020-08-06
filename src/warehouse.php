@@ -16,7 +16,7 @@ class warehouse implements MessageComponentInterface {
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
 
-        echo "Nueva conexión! ({$conn->resourceId})\n";
+        echo "Nueva conexión! ID: ({$conn->resourceId}), "." Con IP: {$conn->remoteAddress}\n";
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {

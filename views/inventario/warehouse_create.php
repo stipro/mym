@@ -43,15 +43,22 @@ $(document).ready(function() {
     console.log("Conexion establecida!");
   };
    
-  nameWarehouse.addEventListener('keypress', senType);
+
   //conn.send('Se esta escribiendo !!!' + valorjquery);
   //console.log('Se esta escribiendo !!!' + valorjquery);
-
+  nameWarehouse.addEventListener("keyup", function(){
+    //alert(this.value);
+    //Envia Mensaje
+    conn.send('Estan registrando nuevo Almacen : ' + this.value);
+    console.log(this.value);
+  });
+  
+  //nameWarehouse.addEventListener('keypress', senType);
+  
   conn.onmessage = function (event) {
     actions.innerHTML = '<p><em>' + event.data + '</em></p>';
     console.log(event.data);
   }
-
   function senType() {
     msg = {
       type: "message",

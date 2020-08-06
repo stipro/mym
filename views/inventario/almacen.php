@@ -19,7 +19,7 @@
   <div class="shadow-sm p-3 mb-2 bg-white rounded">
     <h1>Bienvenido!</h1>
   </div>
-
+  <div id="actions"></div>
   <div class="card text-left">
     <div class="card-header">
         Almacenes
