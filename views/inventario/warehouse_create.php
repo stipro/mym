@@ -19,11 +19,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <button id="btn-warehouse-cCancel" type="button" class="btn btn-secondary" data-dismiss="modal">
         <!--ICONO-->
         <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="16" height="16" title="Cerrar">    
         Cerrar</button>
-        <button id="btn_ialmacen" type="button" class="btn btn-primary">Registrar</button>
+        <button id="btn-warehouse-cCreate" type="button" class="btn btn-primary">Registrar</button>
       </div>
     </div>
   </div>
@@ -31,8 +31,11 @@
 <script>
 $(document).ready(function() {
   //DOM elements
+  let btnCreate = document.getElementById('btn-warehouse-cCreate');
+  let btnCancel = document.getElementById('btn-warehouse-cCancel');
   let nameWarehouse = document.getElementById('nombre_almacen');
-  let actions = document.getElementById('actions');
+  let typing = document.getElementById('typing');
+  let gif = document.getElementById('gif');
   let valorinput = nameWarehouse.value;
     // Socket Server
   var msg;
@@ -42,22 +45,50 @@ $(document).ready(function() {
     //conn.send(JSON.stringify(msg));
     console.log("Conexion establecida!");
   };
-   
+  //CREATE
+  btnCreate.addEventListener('click', function(){
+    msg = {
+      userId: '15',
+      module: "Almacen",
+      text: "Un usuario REGISTRO un Almacen",
+      status: TRUE,
+    }
+    console.log('Creado');
+  });
+  //CANCEL
+  btnCancel.addEventListener('click', function(){
+    msg = {
+      userId: '15',
+      module: "Almacen",
+      text: "Un usuario DEJO registrar un Almacen",
+      status: false,
+    }
+    console.log('Cancelo');
+  });
 
   //conn.send('Se esta escribiendo !!!' + valorjquery);
   //console.log('Se esta escribiendo !!!' + valorjquery);
   nameWarehouse.addEventListener("keyup", function(){
     //alert(this.value);
     //Envia Mensaje
-    conn.send('Estan registrando nuevo Almacen : ' + this.value);
+    //conn.send('Un usuario esta registrando un Almacen : ' + this.value);
+    msg = {
+      userId: '15',
+      module: "Almacen",
+      text: "Un usuario esta registrando un Almacen",
+      status: true,
+    }
+    conn.send(JSON.stringify(msg));
     console.log(this.value);
   });
   
   //nameWarehouse.addEventListener('keypress', senType);
   
-  conn.onmessage = function (event) {
-    actions.innerHTML = '<p><em>' + event.data + '</em></p>';
-    console.log(event.data);
+  conn.onmessage = function (event) { 
+    gif.innerHTML = '<img src="./../../assets/gif/typing.gif" alt="Funny image" style="width: 3rem">';
+    typing.innerHTML = ' <p><em>' + event.data + '</em></p>';
+    let msg = event.data;
+    console.log(JSON.parse(msg));
   }
   function senType() {
     msg = {
