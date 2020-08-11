@@ -16,6 +16,13 @@
             <label for="descripcion_almacen" class="form-label">Descripcion</label>
             <input type="text" class="form-control" id="descripcion_almacen" placeholder="Descripcion">
           </div>
+          <button id="jsontable" type="button" class="btn btn-primary">TABLA JSON</button>
+          <div class="form-group col-sm">
+            <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="estado_almacen" checked>
+            <label class="form-check-label" for="estado_almacen">Estado</label>
+          </div>
+        </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -39,16 +46,16 @@ $(document).ready(function() {
   let gif = document.getElementById('gif');
   let valorinput = nameWarehouse.value;
     // Socket Server
-  var jsonData;
   var text;
   jsonData = {
     userId: '15',
-    module: "Almacen",
-    text: "Un usuario REGISTRO un Almacen",
+    module: 'Almacen',
+    text: 'Un usuario REGISTRO un Almacen',
+    action: '0',
     status: true,
   }
   console.log(jsonData);
-  const conn = new WebSocket('ws://192.168.43.236:8080');
+  const conn = new WebSocket('ws://192.168.1.122:8080');
   conn.onopen = function(e) {
     //conn.send(JSON.stringify(msg));
     console.log("Conexion establecida!");
@@ -75,22 +82,16 @@ $(document).ready(function() {
     console.log(jsonData['text']);
   });
   //DIGITANDO
+/*
   nameWarehouse.addEventListener("keyup", function(){
     //alert(this.value);
     //Envia Mensaje
     //conn.send('Un usuario esta registrando un Almacen : ' + this.value);
     jsonData['text'] = "Un usuario esta registrando un Almacen";
-    conn.send(JSON.stringify(msg));
+    conn.send(JSON.stringify(jsonData));
   });
-  
+
   //nameWarehouse.addEventListener('keypress', senType);
-  //RECIBE MENSAJE
-  conn.onmessage = function (event) { 
-    gif.innerHTML = '<img src="./../../assets/gif/typing.gif" alt="Funny image" style="width: 3rem">';
-    typing.innerHTML = ' <p><em>' + event.data + '</em></p>';
-    let msg = event.data;
-    console.log(JSON.parse(msg));
-  }
   function senType() {
     msg = {
       type: "message",
@@ -100,41 +101,43 @@ $(document).ready(function() {
     }
     conn.send(JSON.stringify(msg));
     console.log(msg)
+*/
+  //RECIBE MENSAJE
+  conn.onmessage = function (event) { 
+    gif.innerHTML = '<img src="./../../assets/gif/typing.gif" alt="Funny image" style="width: 3rem">';
+    typing.innerHTML = ' <p><em>' + event.data + '</em></p>';
+    let msg = event.data;
+    console.log(JSON.parse(msg));
+    //console.log(jsonWareHouse);
+    listar('');
   }
-  $( "#btn-insert" ).click(function() {
+  $( "#jsontable" ).click(function() {
+    console.log(jsonWareHouse);
+  });
+  $( "#btn-warehouse-cCreate" ).click(function() {
     //OBTENEMOS DATOS
-    let ruc = $('#proveedor_ruc').val();
-    let nombre = $('#proveedor_nombre').val();
-    let direccion = $('#direccion_proveedor').val();
-    let razSocial = $('#razonsoc_proveedor').val();
-    let telefono = $('#telefono_proveedor').val();
-    let celular = $('#celular_proveedor').val();
-    let correo = $('#correo_proveedor').val();
+    let name = $('#nombre_almacen').val();
+    let description = $('#descripcion_almacen').val();
     let estado;
-    var bolestado = $('#estado_proveedor').is(":checked");
+    var bolestado = $('#estado_almacen').is(":checked");
     //La caja está marcada
     if(bolestado){
         bolestad = true;
-        estado = '1';     
+        state = '1';     
     }
     //La caja NO está marcada
     else{
         bolestad = false;
-        estado = '0';     
+        state = '0';     
     }
-    let descripcion = $('#descripcion_proveedor').val();
     //AGRUPAMOS DATOS OBTENIDO
-    var proveedor = {
-      "ruc" : ruc,
-      "nombre" : nombre,
-      "direccion" : direccion,
-      "razSocial" : razSocial,
-      "telefono" : telefono,
-      "celular" : celular,
-      "correo" : correo,
-      "estado" : estado,
-      "descripcion" : descripcion,
+    var wareHouse = {
+      "name" : name,
+      "description" : description,
+      "state" : state,
     };
+    //console.log(JSON.stringify(wareHouse));
+    //conn.send(JSON.stringify(wareHouse));
     var jqxhr = $.ajax({
         /*
         beforeSend: function(){
@@ -145,7 +148,7 @@ $(document).ready(function() {
         },*/
         url: './../../controllers/controllerWarehouse.php',
         type: 'POST',
-        data: proveedor,
+        data: wareHouse,
     })
     //RECIBIENDO RESPUESTA
     .done(function(data) {
@@ -157,144 +160,17 @@ $(document).ready(function() {
     })
     //SI OCURRE UN ERROR
     .fail(function() {
-        alert( "error" );
+        console.log( "error" );
     })
     //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
     .always(function() {
-        alert( "completado" );
+        console.log( "completado" );
     });
     // Hacer otra cosa aquí ...
     // Asignar otra función de completado para la petición de más arriba
     jqxhr.always(function() {
-    alert( "completado segundo" );
+    console.log( "completado segundo" );
     });
-});
+  });
 }); 
-
-
-
-            /*
-            (function () {
-                var Message;
-                Message = function (arg) {
-                    this.text = arg.text, this.message_side = arg.message_side;
-                    this.draw = function (_this) {
-                        return function () {
-                            var $message;
-                            $message = $($('.message_template').clone().html());
-                            $message.addClass(_this.message_side).find('.text').html(_this.text);
-                            $('.messages').append($message);
-                            return setTimeout(function () {
-                                return $message.addClass('appeared');
-                            }, 0);
-                        };
-                    }(this);
-                    return this;
-                };
-
-                $(function () {
-                    
-                    var getMessageText, message_side, sendMessage;
-                    message_side = 'right';
-
-                    getMessageText = function () {
-                        var $message_input;
-                        $message_input = $('.message_input');
-                        conn.send($message_input.val());
-                        return $message_input.val();
-                    };
-
-                    sendMessage = function (text, message_side) {
-                        var $messages, message;
-                        if (text.trim() === '') {
-                            return;
-                        }
-                        $('.message_input').val('');
-                        $messages = $('.messages');
-                        message_side = message_side || 'left';
-                        message = new Message({
-                            text: text,
-                            message_side: message_side
-                        });
-                        message.draw();
-                        
-                        return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
-                    };
-
-                    $('.send_message').click(function (e) {
-                        return sendMessage(getMessageText());
-                    });
-
-                    $('.message_input').keyup(function (e) {
-                        if (e.which === 13) {
-                            return sendMessage(getMessageText());
-                        }
-                    });
-
-                    conn.onmessage = function(e) {
-                        console.log(e.data);
-                        sendMessage(e.data, 'right');
-                    };
-    
-                });
-
-            }.call(this));*/
-
-  /*
-var socket;
-document.getElementById('btn_ialmacen').addEventListener('click', function () {
-  console.log("Se envio registro de Almacen");
-  send()
-});
-function init() {
-	// Apuntar a la IP/Puerto configurado en el contructor del WebServerSocket, que es donde está escuchando el socket.
-	var host = "ws://192.168.1.122:8080"; 
-	try {
-    socket = new WebSocket(host);
-      console.log('conexion establecitada');
-    }
-		log('WebSocket (M&M) - Estado '+socket.readyState);
-		socket.onopen    = function(msg) { 
-							   log("Bienvenido - Estado "+this.readyState); 
-							   console.log(socket.readyState);
-						   };
-		socket.onmessage = function(msg) { 
-							   log("Recibido: "+msg.data); 
-						   };
-		socket.onclose   = function(msg) { 
-							   log("Disconnected - status "+this.readyState); 
-						   };
-	}
-	catch(ex){ 
-		log(ex); 
-	}
-	$("msg").focus();
-}
-
-function send(){
-  var txtName, txtDescription;
-  //Obtener Nombre
-  txtName = document.getElementById('nombre_almacen').value;
-  //Obtener Descripción
-  txtDescription = document.getElementById('descripcion_almacen').value;
-  console.log(txtName + ' Y ' + txtDescription);
-  //Comparo si los dos estan vacios
-	if(!txtName | !txtDescription) { 
-		alert("El mensaje no puede estar vacío."); 
-		return; 
-	}
-
-}
-function quit(){
-	if (socket != null) {
-		log("Goodbye!");
-		socket.close();
-		socket=null;
-	}
-}
-
-function reconnect() {
-	quit();
-	init();
-}*/
 </script>

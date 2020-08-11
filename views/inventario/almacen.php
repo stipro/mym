@@ -121,6 +121,8 @@
     ?>
     <script>
     $(document).ready(function() {
+      var jWareHouse;
+      var jsonWareHouse;
       //CLICK Agregar Nuevo producto
       listar('');
     }); 
@@ -139,7 +141,12 @@
         })
         //RECIBIENDO RESPUESTA
         .done(function(data) {
-          $("#div_tabla").append(data);
+          jWareHouse = JSON.parse(data);
+          //SEPARAMOS EL JSON, TABLE
+          jsonWareHouse = jWareHouse[0];
+          tableWareHouse = jWareHouse[1];
+          console.log(jsonWareHouse);
+          $("#div_tabla").empty().append(tableWareHouse);
         })
         //SI OCURRE UN ERROR
         .fail(function() {
@@ -155,7 +162,6 @@
           console.log( "completado segundo" );
         });
       }
-
     </script>
 </body>
 </html>

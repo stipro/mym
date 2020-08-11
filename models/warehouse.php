@@ -4,46 +4,29 @@ require_once('./../db/conexion.php');
 
 class Warehouse extends Conexion
 {
-    /*
-    public $intruc;
-    public $strnombre;
-    public $strDireccion;
-    public $strRazSocial;
-    public $intTelefono;
-    public $intCelular;
-    public $strCorreo;
-    public $bolestad;
-    public $strDescripcion;
-*/
     public function __construct()
     {
         parent::__construct();
     }
-    public function insert(string $strcodigo, string $strnombre, string $fotprecio, string $fotstock, string $strDescripcion)
+    public function insert(string $strName, string $strDescription, int $blaState)
     {
         try 
         {
-            $alertsuccess = '<div class="alert alert-success" role="alert">
-            
+            $alertsuccess = '<div class="alert alert-success" role="alert">            
             </div>';
-            $query  = "INSERT INTO productos(
-                codigo_producto,
-                nombre_producto,
-                precio_producto,
-                stock_producto,
-                descripcion_producto
+            $query  = "INSERT INTO almacenes(
+                nombre_almacen,
+                descripcion_almacen,
+                estado_almacen
             ) 
-            VALUES (:strcodigo, 
-            :strnombre, 
-            :fotprecio, 
-            :fotstock, 
-            :strDescripcion);";
+            VALUES (
+                :strName, 
+                :strDescription,
+                :blaState);";
             $result = $this->db->prepare($query);
-            $result -> bindParam(':strcodigo', $strcodigo, PDO::PARAM_STR);
-            $result -> bindParam(':strnombre', $strnombre, PDO::PARAM_STR);
-            $result -> bindParam(':fotprecio', $fotprecio, PDO::PARAM_STR);
-            $result -> bindParam(':fotstock', $fotstock, PDO::PARAM_STR);
-            $result -> bindParam(':strDescripcion', $strDescripcion, PDO::PARAM_STR);
+            $result -> bindParam(':strName', $strName, PDO::PARAM_STR);
+            $result -> bindParam(':strDescription', $strDescription, PDO::PARAM_STR);
+            $result -> bindParam(':blaState', $blaState, PDO::PARAM_STR);
             $sqlsuccess = $result -> execute();
             if($sqlsuccess) // MENSAJE DE EXITO
             {
@@ -89,7 +72,8 @@ class Warehouse extends Conexion
 
     public function getAll(): array
     {
-        $query = "SELECT * FROM almacenes ORDER BY nombre_almacen";
+        //$query = "SELECT * FROM almacenes ORDER BY nombre_almacen";
+        $query = "SELECT * FROM almacenes";
         return $this->ConsultaSimple($query);
     }
     public function getSearch(string $termino): array

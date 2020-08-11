@@ -21,12 +21,13 @@ class warehouse implements MessageComponentInterface {
 
     public function onMessage(ConnectionInterface $from, $msg) {
         $numRecv = count($this->clients) - 1;
-        echo sprintf('Conectado: %d , Enviando mensaje "%s" a %d otra conexion%s' . "\n"
-            , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
-
+        echo sprintf('Conectado: %d , Enviando mensaje "%s" a %d otra conexion%s' . "\n",
+        $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
+        //require_once ('./../models/warehouse.php');
         foreach ($this->clients as $client) {
             if ($from !== $client) {
                 // The sender is not the receiver, send to each client connected
+                // El remitente no es el receptor, envíe a cada cliente conectado
                 $client->send($msg);
             }
         }
