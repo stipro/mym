@@ -143,7 +143,7 @@ $(document).ready(function() {
             alertPrimary+= '</div>';
             $("#respuesta").empty().append(alertPrimary);
         },*/
-        url: './../../controllers/controllerProviders.php',
+        url: './../../controllers/controllerWarehouse.php',
         type: 'POST',
         data: proveedor,
     })
