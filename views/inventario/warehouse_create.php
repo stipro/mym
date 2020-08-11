@@ -31,6 +31,7 @@
 <script>
 $(document).ready(function() {
   //DOM elements
+  let md_cAlmacenes = document.getElementById('md_cAlmacenes');
   let btnCreate = document.getElementById('btn-warehouse-cCreate');
   let btnCancel = document.getElementById('btn-warehouse-cCancel');
   let nameWarehouse = document.getElementById('nombre_almacen');
@@ -38,52 +39,52 @@ $(document).ready(function() {
   let gif = document.getElementById('gif');
   let valorinput = nameWarehouse.value;
     // Socket Server
-  var msg;
-
-  const conn = new WebSocket('ws://192.168.1.122:8080');
+  var jsonData;
+  var text;
+  jsonData = {
+    userId: '15',
+    module: "Almacen",
+    text: "Un usuario REGISTRO un Almacen",
+    status: true,
+  }
+  console.log(jsonData);
+  const conn = new WebSocket('ws://192.168.43.236:8080');
   conn.onopen = function(e) {
     //conn.send(JSON.stringify(msg));
     console.log("Conexion establecida!");
   };
   //CREATE
+  md_cAlmacenes.addEventListener('click', function(){
+    jsonData['text'] = "Un usuario comenzo un REGISTRO un Almacen";
+    //status: TRUE,
+    conn.send(JSON.stringify(jsonData));
+    console.log(jsonData.text);
+  });
+  //CREATE
   btnCreate.addEventListener('click', function(){
-    msg = {
-      userId: '15',
-      module: "Almacen",
-      text: "Un usuario REGISTRO un Almacen",
-      status: TRUE,
-    }
-    console.log('Creado');
+    jsonData['text'] = "Un usuario REGISTRO un Almacen";
+    //status: TRUE,
+    conn.send(JSON.stringify(jsonData));
+    console.log(jsonData.text);
   });
   //CANCEL
   btnCancel.addEventListener('click', function(){
-    msg = {
-      userId: '15',
-      module: "Almacen",
-      text: "Un usuario DEJO registrar un Almacen",
-      status: false,
-    }
-    console.log('Cancelo');
+    jsonData['text'] = "Un usuario DEJO registrar un Almacen";
+    //status: false,
+    conn.send(JSON.stringify(jsonData));
+    console.log(jsonData['text']);
   });
-
-  //conn.send('Se esta escribiendo !!!' + valorjquery);
-  //console.log('Se esta escribiendo !!!' + valorjquery);
+  //DIGITANDO
   nameWarehouse.addEventListener("keyup", function(){
     //alert(this.value);
     //Envia Mensaje
     //conn.send('Un usuario esta registrando un Almacen : ' + this.value);
-    msg = {
-      userId: '15',
-      module: "Almacen",
-      text: "Un usuario esta registrando un Almacen",
-      status: true,
-    }
+    jsonData['text'] = "Un usuario esta registrando un Almacen";
     conn.send(JSON.stringify(msg));
-    console.log(this.value);
   });
   
   //nameWarehouse.addEventListener('keypress', senType);
-  
+  //RECIBE MENSAJE
   conn.onmessage = function (event) { 
     gif.innerHTML = '<img src="./../../assets/gif/typing.gif" alt="Funny image" style="width: 3rem">';
     typing.innerHTML = ' <p><em>' + event.data + '</em></p>';
@@ -100,7 +101,74 @@ $(document).ready(function() {
     conn.send(JSON.stringify(msg));
     console.log(msg)
   }
-
+  $( "#btn-insert" ).click(function() {
+    //OBTENEMOS DATOS
+    let ruc = $('#proveedor_ruc').val();
+    let nombre = $('#proveedor_nombre').val();
+    let direccion = $('#direccion_proveedor').val();
+    let razSocial = $('#razonsoc_proveedor').val();
+    let telefono = $('#telefono_proveedor').val();
+    let celular = $('#celular_proveedor').val();
+    let correo = $('#correo_proveedor').val();
+    let estado;
+    var bolestado = $('#estado_proveedor').is(":checked");
+    //La caja está marcada
+    if(bolestado){
+        bolestad = true;
+        estado = '1';     
+    }
+    //La caja NO está marcada
+    else{
+        bolestad = false;
+        estado = '0';     
+    }
+    let descripcion = $('#descripcion_proveedor').val();
+    //AGRUPAMOS DATOS OBTENIDO
+    var proveedor = {
+      "ruc" : ruc,
+      "nombre" : nombre,
+      "direccion" : direccion,
+      "razSocial" : razSocial,
+      "telefono" : telefono,
+      "celular" : celular,
+      "correo" : correo,
+      "estado" : estado,
+      "descripcion" : descripcion,
+    };
+    var jqxhr = $.ajax({
+        /*
+        beforeSend: function(){
+            alertPrimary = '<div class="alert alert-primary" role="alert">';
+            alertPrimary+= 'A simple primary alert—check it out!';
+            alertPrimary+= '</div>';
+            $("#respuesta").empty().append(alertPrimary);
+        },*/
+        url: './../../controllers/controllerProviders.php',
+        type: 'POST',
+        data: proveedor,
+    })
+    //RECIBIENDO RESPUESTA
+    .done(function(data) {
+        alertPrimary = '<div class="alert alert-primary" role="alert">';
+        alertPrimary+= 'A simple primary alert—check it out!';
+        alertPrimary+= '</div>';
+        $("#respuesta").empty().append(data);
+        console.log( data );
+    })
+    //SI OCURRE UN ERROR
+    .fail(function() {
+        alert( "error" );
+    })
+    //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
+    .always(function() {
+        alert( "completado" );
+    });
+    // Hacer otra cosa aquí ...
+    // Asignar otra función de completado para la petición de más arriba
+    jqxhr.always(function() {
+    alert( "completado segundo" );
+    });
+});
 }); 
 
 

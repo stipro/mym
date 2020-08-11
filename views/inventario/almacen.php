@@ -31,7 +31,7 @@
     <div class="card-header">
         Almacenes
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#md_cAlmacen">
+        <button id="md_cAlmacenes" type="button" class="btn btn-primary" data-toggle="modal" data-target="#md_cAlmacen">
         Nuevo
         </button>
     </div>
