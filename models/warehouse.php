@@ -30,9 +30,7 @@ class Warehouse extends Conexion
             $sqlsuccess = $result -> execute();
             if($sqlsuccess) // MENSAJE DE EXITO
             {
-                echo '<div class="alert alert-success" role="alert">
-                Se realizo correctamente el registro.
-                </div>';
+                return $replys = 'Se realizo correctamente el registro.';
             }
         } catch (PDOException $e) {
             echo '<div class="alert alert-danger" role="alert">

@@ -6,7 +6,7 @@
         <h5 class="modal-title">Creación nuevo Almacen</h5>
       </div>
       <div class="modal-body">
-      <div id="actions"></div>
+      <div id="respuesta"></div>
         <div class="form-row">
           <div class="form-group col-sm">
             <label for="nombre_almacen" class="form-label">Nombre</label>
@@ -44,42 +44,46 @@ $(document).ready(function() {
   let nameWarehouse = document.getElementById('nombre_almacen');
   let typing = document.getElementById('typing');
   let gif = document.getElementById('gif');
+  let reply = document.getElementById('respuesta');
   let valorinput = nameWarehouse.value;
     // Socket Server
   var text;
-  jsonData = {
+  jsonSocket = {
     userId: '15',
     module: 'Almacen',
     text: 'Un usuario REGISTRO un Almacen',
     action: '0',
     status: true,
   }
-  console.log(jsonData);
+  console.log(jsonSocket);
   const conn = new WebSocket('ws://192.168.1.122:8080');
   conn.onopen = function(e) {
     //conn.send(JSON.stringify(msg));
     console.log("Conexion establecida!");
   };
-  //CREATE
+  //OPEN MODAL
   md_cAlmacenes.addEventListener('click', function(){
-    jsonData['text'] = "Un usuario comenzo un REGISTRO un Almacen";
+    jsonSocket['text'] = 'Un usuario comenzo un REGISTRO un Almacen';
+    jsonSocket['action'] = '1';
     //status: TRUE,
-    conn.send(JSON.stringify(jsonData));
-    console.log(jsonData.text);
+    conn.send(JSON.stringify(jsonSocket));
+    console.log(jsonSocket.text);
   });
-  //CREATE
+  //CREATE DATA
   btnCreate.addEventListener('click', function(){
-    jsonData['text'] = "Un usuario REGISTRO un Almacen";
+    jsonSocket['text'] = 'Un usuario REGISTRO un Almacen';
+    jsonSocket['action'] = '2';
     //status: TRUE,
-    conn.send(JSON.stringify(jsonData));
-    console.log(jsonData.text);
+    conn.send(JSON.stringify(jsonSocket));
+    console.log(jsonSocket.text);
   });
-  //CANCEL
+  //CANCEL/CLOSE MODAL
   btnCancel.addEventListener('click', function(){
-    jsonData['text'] = "Un usuario DEJO registrar un Almacen";
+    jsonSocket['text'] = 'Un usuario DEJO registrar un Almacen';
+    jsonSocket['action'] = '3';
     //status: false,
-    conn.send(JSON.stringify(jsonData));
-    console.log(jsonData['text']);
+    conn.send(JSON.stringify(jsonSocket));
+    console.log(jsonSocket['text']);
   });
   //DIGITANDO
 /*
@@ -103,13 +107,19 @@ $(document).ready(function() {
     console.log(msg)
 */
   //RECIBE MENSAJE
-  conn.onmessage = function (event) { 
-    gif.innerHTML = '<img src="./../../assets/gif/typing.gif" alt="Funny image" style="width: 3rem">';
-    typing.innerHTML = ' <p><em>' + event.data + '</em></p>';
+  conn.onmessage = function (event) {
     let msg = event.data;
-    console.log(JSON.parse(msg));
-    //console.log(jsonWareHouse);
-    listar('');
+    jsonMsg = JSON.parse(msg);
+    gif.innerHTML = '<img src="./../../assets/gif/typing.gif" alt="Funny image" style="width: 3rem">';
+    typing.innerHTML = '<div class="alert alert-primary" role="alert"><p><em>' + jsonMsg.text + '</em></p></div>';
+    
+    console.log(jsonMsg);
+    console.log(jsonMsg.action);
+    //COMPROBAMOS INSERT DATA
+    if(jsonMsg.action = 2){
+      listar('');
+    }
+    
   }
   $( "#jsontable" ).click(function() {
     console.log(jsonWareHouse);
@@ -152,11 +162,12 @@ $(document).ready(function() {
     })
     //RECIBIENDO RESPUESTA
     .done(function(data) {
-        alertPrimary = '<div class="alert alert-primary" role="alert">';
-        alertPrimary+= 'A simple primary alert—check it out!';
-        alertPrimary+= '</div>';
-        $("#respuesta").empty().append(data);
-        console.log( data );
+      jsonSql= JSON.parse(data);
+      alert = '<div class="alert alert-success" role="alert">';
+      alert+= jsonSql.rptInsert;
+      alert+= '</div>';
+      //$("#respuesta").empty().append(alert);
+      console.log(jsonSql.rptInsert);
     })
     //SI OCURRE UN ERROR
     .fail(function() {
@@ -170,6 +181,7 @@ $(document).ready(function() {
     // Asignar otra función de completado para la petición de más arriba
     jqxhr.always(function() {
     console.log( "completado segundo" );
+    $("#respuesta").empty().append(alert);
     });
   });
 }); 

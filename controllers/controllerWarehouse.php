@@ -6,12 +6,16 @@ if($_POST){
         require_once ('./../models/warehouse.php');
         //Se instacia la clase
         $warehouse = new Warehouse();
+        //$dataWareHouse = array($data, $viewsTable);
         //Guarda datos en variables
         $strName = $_POST['name'];
         $strDescription = $_POST['description'];
         $blaState = intval($_POST['state']);
-        $warehouse->insert($strName, $strDescription, $blaState);
-        echo 'Se recibio datos';
+        $replyInsert = $warehouse->insert($strName, $strDescription, $blaState);
+        //
+        $dataWareHouse = array("rptInsert" => $replyInsert);
+        echo(json_encode($dataWareHouse));
+        //echo 'Se recibio datos';
     }
     catch (Exception $e) {
         echo "Se ha producion una excepción. Los detalles son los siguientes:";
