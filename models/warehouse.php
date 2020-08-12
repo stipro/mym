@@ -94,15 +94,16 @@ class Warehouse extends Conexion
     {
         $html = '';
         if (count($query)) {
-            $html = '<table class="table table-striped" id="table">
-                        <thead>
-                            <!--<th scope="col">#</th>-->
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Descripción</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Acciones</th>
-                        </thead>
-                        <tbody>';
+            $html = '<div class="table-responsive-md">
+                        <table class="table table-striped" id="table">
+                            <thead>
+                                <!--<th scope="col">#</th>-->
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Descripción</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Acciones</th>
+                            </thead>
+                            <tbody>';
             foreach ($query as $value){
                 $html .= '<tr>
                         <td class="d-none">' . $value['id_almacen'] . '</td>
@@ -122,8 +123,9 @@ class Warehouse extends Conexion
                         </tr>
                          ';
             }
-            $html .= '  </tbody>
-                    </table>';
+            $html .= '      </tbody>
+                        </table>
+                    </div>';
         } else {
             $html = '<h4 class="text-center">No hay datos...</h4>';
         }
