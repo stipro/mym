@@ -33,9 +33,7 @@ class Warehouse extends Conexion
                 return $replys = 'Se realizo correctamente el registro.';
             }
         } catch (PDOException $e) {
-            echo '<div class="alert alert-danger" role="alert">
-            Ocurrio un problema, llamar a sistemas '.$e->getMessage().'
-            </div>';
+            echo 'Ocurrio un problema, llamar a sistemas '.$e->getMessage();
         }
     }
     public function delete(int $id)

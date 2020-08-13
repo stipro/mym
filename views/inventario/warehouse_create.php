@@ -16,7 +16,6 @@
             <label for="descripcion_almacen" class="form-label">Descripcion</label>
             <input type="text" class="form-control" id="descripcion_almacen" placeholder="Descripcion">
           </div>
-          <button id="jsontable" type="button" class="btn btn-primary">TABLA JSON</button>
           <div class="form-group col-sm">
             <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="estado_almacen" checked>
@@ -70,6 +69,7 @@ $(document).ready(function() {
     console.log(jsonSocket.text);
   });
   //CREATE DATA
+  /*
   btnCreate.addEventListener('click', function(){
     jsonSocket['text'] = 'Un usuario REGISTRO un Almacen';
     jsonSocket['action'] = '2';
@@ -77,6 +77,7 @@ $(document).ready(function() {
     conn.send(JSON.stringify(jsonSocket));
     console.log(jsonSocket.text);
   });
+  */
   //CANCEL/CLOSE MODAL
   btnCancel.addEventListener('click', function(){
     jsonSocket['text'] = 'Un usuario DEJO registrar un Almacen';
@@ -168,10 +169,18 @@ $(document).ready(function() {
       alert+= '</div>';
       //$("#respuesta").empty().append(alert);
       console.log(jsonSql.rptInsert);
+      jsonSocket['text'] = 'Un usuario REGISTRO un nuevo Almacen';
+      jsonSocket['action'] = '2';
+      //status: TRUE,
+      conn.send(JSON.stringify(jsonSocket));
     })
     //SI OCURRE UN ERROR
     .fail(function() {
-        console.log( "error" );
+      console.log( "error" );
+      jsonSocket['text'] = 'Un usuario REGISTRO un nuevo Almacen';
+      jsonSocket['action'] = '2';
+      //status: TRUE,
+      conn.send(JSON.stringify(jsonSocket));
     })
     //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
     .always(function() {
@@ -182,6 +191,7 @@ $(document).ready(function() {
     jqxhr.always(function() {
     console.log( "completado segundo" );
     $("#respuesta").empty().append(alert);
+
     });
   });
 }); 
