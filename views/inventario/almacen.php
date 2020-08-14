@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!--Stylesheet [ REQUIRED ]-->
+    <link href="./../../assets/css/base.css" rel="stylesheet">
+    <!--Nifty Premium Icon [ DEMONSTRATION ]-->
+    <link href="./../../libs/nifty/nifty-demo-icons.min.css" rel="stylesheet">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <title>Almacen</title>
@@ -62,7 +66,6 @@
                 <option data-tokens="Papel">Papel</option>
               </select>
             </div>
-
           </div>
         </div>
 
@@ -79,7 +82,6 @@
                 <option data-tokens="Repuestos">Repuestos</option>
               </select>
             </div>
-
           </div>
           <div class="col-sm">
             <!---->
@@ -91,56 +93,57 @@
           </div>
         </div>
       </form>
-
       <hr>
       <div id="div_tabla">
+
       </div>
       <div class="panel">
-					    <div class="panel-heading">
-					        <h3 class="panel-title">Sample Toolbar</h3>
+				<div class="panel-heading">
+				  <h3 class="panel-title">Sample Toolbar</h3>
+				</div>
+				<!--Data Table-->
+				<!--===================================================-->
+				<div class="panel-body">
+					<div class="d-flex row">
+            <div class="col-sm">
+              <div class="col-sm-6 d-flex align-items-center">
+					      <button id="demo-btn-addrow" class="btn btn-primary d-flex align-items-center"><i class="demo-pli-add"></i>Agregar</button>
+					      <button class="btn btn-default"><i class="demo-pli-printer"></i></button>
+					      <div class="btn-group">
+					        <button class="btn btn-default"><i class="demo-pli-exclamation"></i></button>
+					        <button class="btn btn-default"><i class="demo-pli-recycling"></i></button>
+					      </div>
 					    </div>
-					
-					    <!--Data Table-->
-					    <!--===================================================-->
-					    <div class="panel-body">
-					        <div class="pad-btm form-inline">
-					            <div class="row">
-					                <div class="col-sm-6 table-toolbar-left">
-					                    <button id="demo-btn-addrow" class="btn btn-purple"><i class="demo-pli-add"></i> Add</button>
-					                    <button class="btn btn-default"><i class="demo-pli-printer"></i></button>
-					                    <div class="btn-group">
-					                        <button class="btn btn-default"><i class="demo-pli-exclamation"></i></button>
-					                        <button class="btn btn-default"><i class="demo-pli-recycling"></i></button>
-					                    </div>
-					                </div>
-					                <div class="col-sm-6 table-toolbar-right">
-					                    <div class="form-group">
-					                        <input id="demo-input-search2" type="text" placeholder="Search" class="form-control" autocomplete="off">
-					                    </div>
-					                    <div class="btn-group">
-					                        <button class="btn btn-default"><i class="demo-pli-download-from-cloud"></i></button>
-					                        <div class="btn-group dropdown">
-					                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-					                                <i class="demo-pli-gear"></i>
-					                                <span class="caret"></span>
-					                            </button>
-					                            <ul role="menu" class="dropdown-menu dropdown-menu-right">
-					                                <li><a href="#">Action</a></li>
-					                                <li><a href="#">Another action</a></li>
-					                                <li><a href="#">Something else here</a></li>
-					                                <li class="divider"></li>
-					                                <li><a href="#">Separated link</a></li>
-					                            </ul>
-					                        </div>
-					                    </div>
-					                </div>
-					            </div>
+            </div>
+            <div class="col-sm">
+              <div class="d-flex align-items-center justify-content-end">
+					      <div class="form-group mb-0">
+					        <input id="demo-input-search2" type="text" placeholder="Search" class="form-control" autocomplete="off">
+					      </div>
+					      <div class="btn-group">
+					        <button class="btn btn-default"><i class="demo-pli-download-from-cloud"></i></button>
+					          <div class="btn-group dropdown">
+					            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+                        <i class="demo-pli-gear"></i>
+                        <span class="caret"></span>
+					            </button>
+					            <ul role="menu" class="dropdown-menu dropdown-menu-right">
+					              <li><a href="#">Action</a></li>
+					              <li><a href="#">Another action</a></li>
+					              <li><a href="#">Something else here</a></li>
+					              <li class="divider"></li>
+					              <li><a href="#">Separated link</a></li>
+					            </ul>
+					          </div>
 					        </div>
-					        <div class="table-responsive">
-					            <table class="table table-striped">
-					                <thead>
-					                    <tr>
-					                        <th class="text-center">Invoice</th>
+                </div>
+              </div>
+					  </div>
+					  <div class="table-responsive">
+					    <table class="table table-striped">
+					      <thead>
+					        <tr>
+					          <th class="text-center">Invoice</th>
 					                        <th>User</th>
 					                        <th>Order date</th>
 					                        <th>Amount</th>
