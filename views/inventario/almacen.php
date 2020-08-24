@@ -9,9 +9,11 @@
     <!--Stylesheet [ REQUIRED ]-->
     <link href="./../../assets/css/base.css" rel="stylesheet">
     <!--Nifty Premium Icon [ DEMONSTRATION ]-->
-    <link href="./../../libs/nifty/nifty-demo-icons.min.css" rel="stylesheet">
+    <link href="./../../libs/nifty/css/nifty-demo-icons.min.css" rel="stylesheet">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <!--FooTable [ OPTIONAL ]-->
+    <link href="./../../libs/nifty/fooTable/css/footable.core.css" rel="stylesheet">
     <title>Almacen</title>
 </head>
 <body>
@@ -106,39 +108,42 @@
 				<div class="panel-body">
 					<div class="d-flex row">
             <div class="col-sm">
-              <div class="col-sm-6 d-flex align-items-center">
-					      <button id="demo-btn-addrow" class="btn btn-primary d-flex align-items-center"><i class="demo-pli-add"></i>Agregar</button>
-					      <button class="btn btn-default"><i class="demo-pli-printer"></i></button>
-					      <div class="btn-group">
-					        <button class="btn btn-default"><i class="demo-pli-exclamation"></i></button>
-					        <button class="btn btn-default"><i class="demo-pli-recycling"></i></button>
+              <div class="d-flex align-items-center">
+                <div class="bd-highlight">
+                  <button type="button" id="demo-btn-addrow" class="btn btn-primary d-flex align-items-center"><i class="demo-pli-add"></i>Agregar</button>
+                </div>
+                <div class="p-2 bd-highlight">
+                  <button type="button" class="btn btn-outline-secondary"><i class="demo-pli-printer"></i></button>
+                </div>
+                
+					      <div class="btn-group" role="group" aria-label="example">
+					        <button class="btn btn-outline-secondary"><i class="demo-pli-exclamation"></i></button>
+					        <button class="btn btn-outline-secondary"><i class="demo-pli-recycling"></i></button>
 					      </div>
 					    </div>
             </div>
             <div class="col-sm">
               <div class="d-flex align-items-center justify-content-end">
-					      <div class="form-group mb-0">
-					        <input id="demo-input-search2" type="text" placeholder="Search" class="form-control" autocomplete="off">
-					      </div>
-					      <div class="btn-group">
-					        <button class="btn btn-default"><i class="demo-pli-download-from-cloud"></i></button>
-					          <div class="btn-group dropdown">
-					            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-                        <i class="demo-pli-gear"></i>
-                        <span class="caret"></span>
-					            </button>
-					            <ul role="menu" class="dropdown-menu dropdown-menu-right">
-					              <li><a href="#">Action</a></li>
-					              <li><a href="#">Another action</a></li>
-					              <li><a href="#">Something else here</a></li>
-					              <li class="divider"></li>
-					              <li><a href="#">Separated link</a></li>
-					            </ul>
-					          </div>
-					        </div>
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                  <button type="button" class="btn btn-secondary">
+                    <div class="form-group mb-0">
+                      <input id="demo-input-search2" type="text" placeholder="Search" class="form-control" autocomplete="off">
+                    </div>
+                  </button>
+                  <button type="button" class="btn btn-secondary"><i class="demo-pli-download-from-cloud"></i></button>
+
+                  <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="demo-pli-gear"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                      <a class="dropdown-item" href="#">Dropdown link</a>
+                      <a class="dropdown-item" href="#">Dropdown link</a>
+                    </div>
+                  </div>
                 </div>
               </div>
-					  </div>
+            </div>
 					  <div class="table-responsive">
 					    <table class="table table-striped">
 					      <thead>
@@ -210,7 +215,100 @@
 					    <!--End Data Table-->
 					
 					</div>
-    </div>
+      </div>
+      <div class="panel">
+					            <div class="panel-heading">
+					                <h3 class="panel-title">Expand / Collapse All Rows</h3>
+					            </div>
+					
+					            <!-- Foo Table - Expand / Collapse All Rows -->
+					            <!--===================================================-->
+					            <div class="panel-body">
+					                <div class="pad-btm">
+					                    <button id="demo-foo-collapse" class="btn btn-info">Collapse All</button>
+					                    <button id="demo-foo-expand" class="btn btn-warning">Expand All</button>
+					                </div>
+					                <table id="demo-foo-col-exp" class="table toggle-circle">
+					                    <thead>
+					                        <tr>
+					                            <th data-toggle="true">First Name</th>
+					                            <th>Last Name</th>
+					                            <th data-hide="all">Job Title</th>
+					                            <th data-hide="all">DOB</th>
+					                            <th data-hide="all">Status</th>
+					                        </tr>
+					                    </thead>
+					                    <tbody>
+					                        <tr>
+					                            <td>Isidra</td>
+					                            <td>Boudreaux</td>
+					                            <td>Traffic Court Referee</td>
+					                            <td>22 Jun 1972</td>
+					                            <td><span class="label label-table label-success">Active</span></td>
+					                        </tr>
+					                        <tr>
+					                            <td>Shona</td>
+					                            <td>Woldt</td>
+					                            <td>Airline Transport Pilot</td>
+					                            <td>3 Oct 1981</td>
+					                            <td><span class="label label-table label-dark">Disabled</span></td>
+					                        </tr>
+					                        <tr>
+					                            <td>Granville</td>
+					                            <td>Leonardo</td>
+					                            <td>Business Services Sales Representative</td>
+					                            <td>19 Apr 1969</td>
+					                            <td><span class="label label-table label-danger">Suspended</span></td>
+					                        </tr>
+					                        <tr>
+					                            <td>Easer</td>
+					                            <td>Dragoo</td>
+					                            <td>Drywall Stripper</td>
+					                            <td>13 Dec 1977</td>
+					                            <td><span class="label label-table label-success">Active</span></td>
+					                        </tr>
+					                        <tr>
+					                            <td>Maple</td>
+					                            <td>Halladay</td>
+					                            <td>Aviation Tactical Readiness Officer</td>
+					                            <td>30 Dec 1991</td>
+					                            <td><span class="label label-table label-danger">Suspended</span></td>
+					                        </tr>
+					                        <tr>
+					                            <td>Maxine</td>
+					                            <td><a href="#">Woldt</a></td>
+					                            <td><a href="#">Business Services Sales Representative</a></td>
+					                            <td>17 Oct 1987</td>
+					                            <td><span class="label label-table label-dark">Disabled</span></td>
+					                        </tr>
+					                        <tr>
+					                            <td>Lorraine</td>
+					                            <td>Mcgaughy</td>
+					                            <td>Hemodialysis Technician</td>
+					                            <td>11 Nov 1983</td>
+					                            <td><span class="label label-table label-dark">Disabled</span></td>
+					                        </tr>
+					                        <tr>
+					                            <td>Lizzee</td>
+					                            <td><a href="#">Goodlow</a></td>
+					                            <td>Technical Services Librarian</td>
+					                            <td>1 Nov 1961</td>
+					                            <td><span class="label label-table label-danger">Suspended</span></td>
+					                        </tr>
+					                        <tr>
+					                            <td>Judi</td>
+					                            <td>Badgett</td>
+					                            <td>Electrical Lineworker</td>
+					                            <td>23 Jun 1981</td>
+					                            <td><span class="label label-table label-success">Active</span></td>
+					                        </tr>
+					                    </tbody>
+					                </table>
+					            </div>
+					            <!--===================================================-->
+					            <!-- End Foo Table - Expand / Collapse All Rows -->
+					
+					        </div>
     <div class="card-footer text-muted">
     <nav aria-label="Page navigation example">
       <ul class="pagination">
@@ -231,6 +329,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <!--FooTable [ OPTIONAL ]-->
+    <script src="./../../libs/nifty/fooTable/js/footable.all.min.js"></script>
+
+
+    <!--FooTable Example [ SAMPLE ]-->
+    <script src="./../../libs/nifty/fooTable/js/tables-footable.js"></script>
     <?php
     include ("./warehouse_create.php");
     ?>
@@ -278,5 +382,6 @@
         });
       }
     </script>
+
 </body>
 </html>
