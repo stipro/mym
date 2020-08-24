@@ -1,5 +1,5 @@
 <?php
-include('./views/main.php');
+include('./views/index.html');
 /*
 header("Status: 301 Moved Permanently");
 header("Location: ./views/main.php");
