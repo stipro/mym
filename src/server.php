@@ -12,7 +12,7 @@ $server = IoServer::factory(
           new warehouse()
       )
   ),
-  8080
+  80
 );
 
 $server->run();
