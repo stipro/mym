@@ -55,7 +55,7 @@ $(document).ready(function() {
     status: true,
   }
   console.log(jsonSocket);
-  const conn = new WebSocket('ws://192.168.2.6:8080');
+  const conn = new WebSocket('ws://179.43.96.189:8080');
   conn.onopen = function(e) {
     //conn.send(JSON.stringify(msg));
     console.log("Conexion establecida!");
