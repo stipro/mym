@@ -102,122 +102,114 @@
 
       </div>
     <div class="table-responsive-md">
-    <table role="table">
-  <thead role="rowgroup">
-    <tr role="row">
-      <th role="columnheader">First Name</th>
-      <th role="columnheader">Last Name</th>
-      <th role="columnheader">Job Title</th>
-      <th role="columnheader">Favorite Color</th>
-      <th role="columnheader">Wars or Trek?</th>
-      <th role="columnheader">Secret Alias</th>
-      <th role="columnheader">Date of Birth</th>
-      <th role="columnheader">Dream Vacation City</th>
-      <th role="columnheader">GPA</th>
-      <th role="columnheader">Arbitrary Data</th>
-    </tr>
-  </thead>
-  <tbody role="rowgroup">
-    <tr role="row">
-      <td role="cell">James</td>
-      <td role="cell">Matman</td>
-      <td role="cell">Chief Sandwich Eater</td>
-      <td role="cell">Lettuce Green</td>
-      <td role="cell">Trek</td>
-      <td role="cell">Digby Green</td>
-      <td role="cell">January 13, 1979</td>
-      <td role="cell">Gotham City</td>
-      <td role="cell">3.1</td>
-      <td role="cell">RBX-12</td>
-    </tr>
-    <tr role="row">
-      <td role="cell">The</td>
-      <td role="cell">Tick</td>
-      <td role="cell">Crimefighter Sorta</td>
-      <td role="cell">Blue</td>
-      <td role="cell">Wars</td>
-      <td role="cell">John Smith</td>
-      <td role="cell">July 19, 1968</td>
-      <td role="cell">Athens</td>
-      <td role="cell">N/A</td>
-      <td role="cell">Edlund, Ben (July 1996).</td>
-    </tr>
-    <tr role="row">
-      <td role="cell">Jokey</td>
-      <td role="cell">Smurf</td>
-      <td role="cell">Giving Exploding Presents</td>
-      <td role="cell">Smurflow</td>
-      <td role="cell">Smurf</td>
-      <td role="cell">Smurflane Smurfmutt</td>
-      <td role="cell">Smurfuary Smurfteenth, 1945</td>
-      <td role="cell">New Smurf City</td>
-      <td role="cell">4.Smurf</td>
-      <td role="cell">One</td>
-    </tr>
-    <tr role="row">
-      <td role="cell">Cindy</td>
-      <td role="cell">Beyler</td>
-      <td role="cell">Sales Representative</td>
-      <td role="cell">Red</td>
-      <td role="cell">Wars</td>
-      <td role="cell">Lori Quivey</td>
-      <td role="cell">July 5, 1956</td>
-      <td role="cell">Paris</td>
-      <td role="cell">3.4</td>
-      <td role="cell">3451</td>
-    </tr>
-    <tr role="row">
-      <td role="cell">Captain</td>
-      <td role="cell">Cool</td>
-      <td role="cell">Tree Crusher</td>
-      <td role="cell">Blue</td>
-      <td role="cell">Wars</td>
-      <td role="cell">Steve 42nd</td>
-      <td role="cell">December 13, 1982</td>
-      <td role="cell">Las Vegas</td>
-      <td role="cell">1.9</td>
-      <td role="cell">Under the couch</td>
-    </tr>
-  </tbody>
-</table>
+        <table class="table table-hover" role="table">
+            <caption>Tiempo necesario para viajar desde Philadelphia</caption>
+            <thead class="thead-dark" role="rowgroup">
+                <tr role="row">
+                    <th scope="col">#</th>
+                    <th scope="col" role="columnheader">First Name</th>
+                    <th scope="col" role="columnheader">Last Name</th>
+                    <th scope="col" role="columnheader">Job Title</th>
+                    <th scope="col" role="columnheader">Favorite Color</th>
+                    <th scope="col" role="columnheader">Wars or Trek?</th>
+                    <th scope="col" role="columnheader">Secret Alias</th>
+                    <th scope="col" role="columnheader">Date of Birth</th>
+                    <th scope="col" role="columnheader">Dream Vacation City</th>
+                    <th scope="col" role="columnheader">GPA</th>
+                    <th scope="col" role="columnheader">Arbitrary Data</th>
+                </tr>
+            </thead>
+            <tbody role="rowgroup">
+                <tr role="row">
+                    <th scope="row">1</th>
+                    <td role="cell">
+                    <div>
+                    James
+                    </div>
+                    <div>
+                    </div>
+                    </td>
+                    <td role="cell">Matman</td>
+                    <td role="cell">Chief Sandwich Eater</td>
+                    <td role="cell">Lettuce Green</td>
+                    <td role="cell">Trek</td>
+                    <td role="cell">Digby Green</td>
+                    <td role="cell">January 13, 1979</td>
+                    <td role="cell">Gotham City</td>
+                    <td role="cell">3.1</td>
+                    <td role="cell">RBX-12</td>
+                </tr>
+                <tr role="row">
+                    <th scope="row">2</th>
+                    <td role="cell">The</td>
+                    <td role="cell">Tick</td>
+                    <td role="cell">Crimefighter Sorta</td>
+                    <td role="cell">Blue</td>
+                    <td role="cell">Wars</td>
+                    <td role="cell">John Smith</td>
+                    <td role="cell">July 19, 1968</td>
+                    <td role="cell">Athens</td>
+                    <td role="cell">N/A</td>
+                    <td role="cell">Edlund, Ben (July 1996).</td>
+                </tr>
+                <tr role="row">
+                    <th scope="row">3</th>
+                    <td role="cell">Jokey</td>
+                    <td role="cell">Smurf</td>
+                    <td role="cell">Giving Exploding Presents</td>
+                    <td role="cell">Smurflow</td>
+                    <td role="cell">Smurf</td>
+                    <td role="cell">Smurflane Smurfmutt</td>
+                    <td role="cell">Smurfuary Smurfteenth, 1945</td>
+                    <td role="cell">New Smurf City</td>
+                    <td role="cell">4.Smurf</td>
+                    <td role="cell">One</td>
+                </tr>
+                <tr role="row">
+                    <th scope="row">4</th>
+                    <td role="cell">Cindy</td>
+                    <td role="cell">Beyler</td>
+                    <td role="cell">Sales Representative</td>
+                    <td role="cell">Red</td>
+                    <td role="cell">Wars</td>
+                    <td role="cell">Lori Quivey</td>
+                    <td role="cell">July 5, 1956</td>
+                    <td role="cell">Paris</td>
+                    <td role="cell">3.4</td>
+                    <td role="cell">3451</td>
+                </tr>
+                <tr role="row">
+                    <th scope="row">5</th>
+                    <td role="cell">Captain</td>
+                    <td role="cell">Cool</td>
+                    <td role="cell">Tree Crusher</td>
+                    <td role="cell">Blue</td>
+                    <td role="cell">Wars</td>
+                    <td role="cell">Steve 42nd</td>
+                    <td role="cell">December 13, 1982</td>
+                    <td role="cell">Las Vegas</td>
+                    <td colspan="2" role="cell">1.9</td>
+                    <!--<td role="cell">Under the couch</td>-->
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row">4</th>
+                    <th scope="row">Promedio</th>
+                    <th class="pie-elem">1 h 24 min</th>
+                    <th class="pie-elem">1 h 22 min</th>
+                    <th class="pie-elem">6 h 54 min</th>
+                    <th class="pie-elem">1 h 24 min</th>
+                    <th class="pie-elem">1 h 22 min</th>
+                    <th class="pie-elem">6 h 54 min</th>
+                    <th class="pie-elem">1 h 24 min</th>
+                    <th class="pie-elem">1 h 22 min</th>
+                    <th class="pie-elem">6 h 54 min</th>
+                </tr>
+            </tfoot>
+        </table>
     </div>
-<table class="table table-hover">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-    <tbody>
-        <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        </tr>
-        <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        </tr>
-        <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-        </tr>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td class="pie-elem">Pie de tabla 1</td>
-            <td class="pie-elem">Pie de tabla 2</td>
-            <td class="pie-elem">Pie de tabla 3</td>
-            <td class="pie-elem">Pie de tabla 4</td>
-        </tr>
-    </tfoot>
-</table>
+
     <div class="card-footer text-muted">
     <nav aria-label="Page navigation example">
       <ul class="pagination">
