@@ -64,6 +64,16 @@ if(isset($urlobtained)){
             <a class="dropdown-item" href="#">Something else here</a>
             </div>
         </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sunat / OSE
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="<?php echo $transporte."/main.php" ?>">Inicio</a>
+            <a class="dropdown-item" href="#">Validacion Documentos</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
         </li>
