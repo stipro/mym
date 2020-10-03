@@ -1,5 +1,4 @@
 <?php
-//header('Access-Control-Allow-Origin: *');
 //OBTENEMOS URL
 $urlobtained = $_SERVER["REQUEST_URI"];
 //SEPARACION URL
@@ -13,10 +12,9 @@ $urlcurrent = $urlseparate[3];
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+    <!-- Titulo de la pagina / pestaña -->
     <title>Hello, <?php echo $urlcurrent?>!</title>
   </head>
 <body>
@@ -26,57 +24,124 @@ $urlcurrent = $urlseparate[3];
 ?>
     <h1>Hello, <?php echo $urlcurrent?>!</h1>
     <button>Consultar Sunat</button>
-    <input type="file" id="file-input" />
+    <input value="ES" type="file" id="file-input" />
     <h3>Contenido del archivo:</h3>
     <pre id="contenido-archivo"></pre>
     <?php
+    $alsunat = array();
+    $adsunar = array();
+    $c = 0;
+    //URL DEL ARCHIVO
     $ArchivoLeer = "./../../data/NDEBITO01_27092020.txt";
     if(touch($ArchivoLeer)){
       //
       $archivoID = fopen($ArchivoLeer, "r");
-      //
+      //      
       while( !feof($archivoID)){
+        //SUMA EL CONTADOR
+        $c++;
+        //DATO
         $linea = fgets($archivoID, 1024);
-        //
-        print "<p>".$linea."</p>";
+        //SEPARAMOS POR EL SIGNO |
+        $porciones = explode("|", $linea);
+        //QUITAMOS EL SIGNO \n
+        $pmonto = explode("\n", $porciones[5]);
+        //$alsunat[$c]['monto'] = (float) $alsunat[$c]['monto'];
+        $alsunat[$c] = array("numRuc"=>$porciones[0], "codComp"=>$porciones[1],"numeroSerie"=>$porciones[2], "numero"=>$porciones[3], "fechaEmision"=>$porciones[4],"monto"=>$pmonto[0]);
       }
-      //
+      //CERRAMOS
       fclose($archivoID);
     }
-    //CONSULTA SUNAT
-    /*
-$curl = curl_init();
 
-curl_setopt_array($curl, array(
-  CURLOPT_URL => "https://www.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consultaIndividual?numRuc=20370715107&codComp=01&numeroSerie=FF04&numero=124540&codDocRecep&numDocRecep&fechaEmision=26/09/2020&monto=4181.00&codigo=TQFR",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_HTTPHEADER => array(
-    "Cookie: f5avraaaaaaaaaaaaaaaa_session_=DHHDHFEFDOONJJLECCDPKLFCMKHKKBNCEOFFIBOAOEFDMGEJLMCNIOFHEHOBFALGIDIDJLEMNPJNLNFPFFOAFHGBGFLIMMIOELFMMDMKICOEICGCHBIPPOGEFFFLFBKC; TS01d23cbd=019edc9eb84eb1e333cf4dd6fade481d66afaa3b5d536cf5966c444c17f98861e563485b7e621b543fa4e447ee95d4b60240366ee69db63609cefebc4c5c8bb69fb8284e92; ITCONSULTAUNIFICADALIBRESESSION=XbLaeYTGu2lwB8gfd7jWUUVtCJV1GsysgedLvdlB-5jkno1HeOg2ych6vz7sWWH2cchGdVU6Ahbpj2I4QzRTVG4RVBR6IOQihI1MCXQYbcQv-2hd42EdbokEHOrAc_YKRrDpXwYu6SSu-mZdY8TnbHnLPQmSS8Q2C6pbrCVMrlmn0KwAox9MfKaWdRymh1JOrvxXiksKUfwjEP7EKpE11B7HMRJ6ClxpIoDYpAAwvVBhT2pWhIEUikC1leW9O38B!1484195530!1415101546; TS0103674e=019edc9eb8cdf24961109d6e1626d7852700346061c84b2c8a329f64170f8fd30db2999c13def6143bf642c24ddb33f638f4dc6df918ed9cdd24150b2d6bf07bececd809209b5733ae5b0c1ca212430ecf4331bd739e70e398a2e136cd103431fb82aa74a9"
-  ),
-));
-
-$response = curl_exec($curl);
-
-curl_close($curl);
-echo $response;*/
+    $jelsunat = json_encode($alsunat);
+    
     ?>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <div class="csaSunat">
+
+    </div>
+    <!-- JQUERY -->
     <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
     
     <script>
-      var = csunat;
-      fetch('./get_data.php')
-  .then(response => response.json())
-  .then(data => csunat = data);
+      var jpdata
+      var jslsunat = JSON.stringify(<?php echo $jelsunat ?>);
+      var jplsunat = JSON.parse(jslsunat);
+      console.log(jplsunat);
+      var c = 0;
+      for (const property in jplsunat) {
+        
+        //console.log(`${property}: ${jplsunat[property]['numero']}`);
+        console.log(jplsunat[c]);
+        olsunat = jplsunat[c];
+        fetch('./get_data.php', {
+            method: "post",
+            body: olsunat
+        }).then((response) => {
+            /*acciones a realizar*/     
+        }).then((data) => {
+          ++c;
+          console.log(data)
+            /*mas acciones a realizar*/
+        })
+      }
+      var csunat;
+      var jqxhr = $.ajax({
+        /*
+        beforeSend: function(){
+            alertPrimary = '<div class="alert alert-primary" role="alert">';
+            alertPrimary+= 'A simple primary alert—check it out!';
+            alertPrimary+= '</div>';
+            $("#respuesta").empty().append(alertPrimary);
+        },*/
+        url: './get_data.php',
+        type: 'POST',
+        data: jplsunat,
+    })
+    //RECIBIENDO RESPUESTA
+    .done(function(data) {
+      /*
+      jpdata = JSON.parse(data);
+      //var jpdata = JSON.parse(jsdata);
+        console.log(jpdata);
+        //console.log(jdata['data']['estadoCp']);
+        if(jpdata['data']['estadoCp'] == "1"){
+          console.log("Estado: ACEPTADO");
+        }
+        else{
+          console.log("Estado: NO EXISTE");
+        }
+        //console.log(jdata['data']['estadoRuc']);
+        if(jpdata['data']['estadoRuc'] == "00"){
+          console.log("Estado Contribuyente: ACTIVO");
+        }
+        else{
+          console.log("Estado Contribuyente: -");
+        }
+        //console.log(jdata['data']['condDomiRuc']);
+        if(jpdata['data']['estadoRuc'] == "00"){
+          console.log("Estado Contribuyente: HABIDO");
+        }
+        else{
+          console.log("Estado Contribuyente: -");
+        }
+        //console.log(jdata['rpta']);
+        $("#csaSunat").append("<br>texto añadido al final del párrafo.");
+        */
+    })
+    //SI OCURRE UN ERROR
+    .fail(function() {
+        console.log( "error" );
+    })
+    //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
+    .always(function() {
+        console.log( "completado" );
+    });
+    // Hacer otra cosa aquí ...
+    // Asignar otra función de completado para la petición de más arriba
+    jqxhr.always(function() {
+    console.log( "completado segundo" );
+    });
 
-  console.log(csunat);
     /*
     function leerArchivo(e) {
     var archivo = e.target.files[0];
