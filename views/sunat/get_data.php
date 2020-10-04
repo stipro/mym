@@ -1,4 +1,5 @@
-<?php    
+<?php
+print_r($_POST);
     if($_POST){
         //CONSULTA 1 X 1
         $jedcsunat = json_encode($_POST);
