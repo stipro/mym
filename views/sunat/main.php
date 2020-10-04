@@ -83,7 +83,9 @@ $urlcurrent = $urlseparate[3];
       const makeRequests = async (data) => {
         beforeSending();
         for (const prop in data) {
-          const returned = await fetch("./get_data.php", { method: "POST", body: JSON.stringify(data[prop])});
+          const body = new FormData();
+          body.append("data", JSON.stringify(data[prop]));
+          const returned = await fetch("./get_data.php", { method: "POST", body });
           const result = await JSON.parse(returned);
           handleReturnedData(result);
         }
