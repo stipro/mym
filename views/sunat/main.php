@@ -83,15 +83,15 @@ $urlcurrent = $urlseparate[3];
       const makeRequests = async (data) => {
         beforeSending();
         for (const req of  data) {
-          const data = await fetch("./get_data.php", { method: "POST", body: JSON.stringify(req)});
-          const result = await JSON.parse(data);
+          const returned = await fetch("./get_data.php", { method: "POST", body: JSON.stringify(req)});
+          const result = await JSON.parse(returned);
           handleReturnedData(result);
         }
         afterSending();
       };
 
       let adata = <?php echo $jelsunat ?>;
-      makeRequests(adata);
+      makeRequests(JSON.parse(adata));
    
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
