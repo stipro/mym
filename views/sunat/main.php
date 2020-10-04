@@ -65,25 +65,25 @@ $urlcurrent = $urlseparate[3];
       //Si necesitas hacer algo con las respuestas del servidor
       //hacelas aqui.
       const handleReturnedData = (data) => {
-
+        console.log(data);
       };
 
       //Si necesitas hacer algo antes de enviar las
       //consultas, hacelo aqui.
       const beforeSending = () => {
-
+        console.log("before");
       };
 
       //Si necesitas hacer algo despues de que terminen las
       //consultas, hacelas aqui.
       const afterSending = () => {
-
+        console.log("after");
       };
 
       const makeRequests = async (data) => {
         beforeSending();
-        for (const req of  data) {
-          const returned = await fetch("./get_data.php", { method: "POST", body: JSON.stringify(req)});
+        for (const prop in data) {
+          const returned = await fetch("./get_data.php", { method: "POST", body: JSON.stringify(data[prop])});
           const result = await JSON.parse(returned);
           handleReturnedData(result);
         }
@@ -91,6 +91,7 @@ $urlcurrent = $urlseparate[3];
       };
 
       let adata = <?php echo $jelsunat ?>;
+      console.log(adata);
       makeRequests(JSON.parse(adata));
    
     </script>
