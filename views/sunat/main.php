@@ -52,9 +52,8 @@ $urlcurrent = $urlseparate[3];
       //CERRAMOS
       fclose($archivoID);
     }
-
-    $jelsunat = json_encode($alsunat);
-    
+    var_dump($alsunat);
+    $jelsunat = json_encode($alsunat);    
     ?>
     <div class="csaSunat">
 
@@ -62,40 +61,75 @@ $urlcurrent = $urlseparate[3];
     <!-- JQUERY -->
     <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
     
-    <script>
-      var jpdata
-      var jslsunat = JSON.stringify(<?php echo $jelsunat ?>);
-      var jplsunat = JSON.parse(jslsunat);
-      console.log(jplsunat);
+    <script>  
+      var jpdata;
+      let adata = [];
+      gdata = [];
+      //var jslsunat = JSON.stringify(<?php echo $jelsunat ?>);
+      //var jplsunat = JSON.parse(jslsunat);
+      //console.log(jplsunat)
+      //OBTENGO EL OBJETO OBTENIDO DE TXT
+      adata = <?php echo $jelsunat ?>;
+      //IMPRIMO POR CONSOLA EL DATO
+      console.log(adata);
+      //
+      console.log(adata[1]);
+      apdato = adata[1];
+      //DECLARAMOS EL CONTADOR A 0
       var c = 0;
-      for (const property in jplsunat) {
+      //RECORREMOS EL OBJETO
+      //CONSULTA INDIVIDUAL
+      for (const property in adata) {
         
+        console.log(c);
+        c++;
         //console.log(`${property}: ${jplsunat[property]['numero']}`);
-        console.log(jplsunat[c]);
-        olsunat = jplsunat[c];
-        fetch('./get_data.php', {
-            method: "post",
-            body: olsunat
-        }).then((response) => {
-            /*acciones a realizar*/     
-        }).then((data) => {
-          ++c;
-          console.log(data)
-            /*mas acciones a realizar*/
+        gdata = adata[c];
+        console.log(gdata)
+        //console.log(Object.values(adata));
+        //const olsunat = JSON.stringify(jplsunat[1]);
+        var jqxhr = $.ajax({        
+          beforeSend: function(){
+              alertPrimary = '<div class="alert alert-primary" role="alert">';
+              alertPrimary+= 'A simple primary alert—check it out!';
+              alertPrimary+= '</div>';
+              $("#respuesta").empty().append(alertPrimary);
+          },
+          url: './get_data.php',
+          type: 'POST',
+          data: gdata,
         })
+    //RECIBIENDO RESPUESTA
+    .done(function(data) {
+      //jpdata = JSON.parse(data);
+      console.log(data);
+    })
+    //SI OCURRE UN ERROR
+    .fail(function() {
+        console.log( "error" );
+    })
+    //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
+    .always(function() {
+        console.log( "completado" );
+    });
+    // Hacer otra cosa aquí ...
+    // Asignar otra función de completado para la petición de más arriba
+    jqxhr.always(function() {
+    console.log( "completado segundo" );
+    });
       }
-      var csunat;
+      /*
       var jqxhr = $.ajax({
-        /*
+        
         beforeSend: function(){
             alertPrimary = '<div class="alert alert-primary" role="alert">';
             alertPrimary+= 'A simple primary alert—check it out!';
             alertPrimary+= '</div>';
             $("#respuesta").empty().append(alertPrimary);
-        },*/
+        },
         url: './get_data.php',
         type: 'POST',
-        data: jplsunat,
+        data: apdato,
     })
     //RECIBIENDO RESPUESTA
     .done(function(data) {
@@ -126,7 +160,7 @@ $urlcurrent = $urlseparate[3];
         }
         //console.log(jdata['rpta']);
         $("#csaSunat").append("<br>texto añadido al final del párrafo.");
-        */
+        
     })
     //SI OCURRE UN ERROR
     .fail(function() {
@@ -141,7 +175,7 @@ $urlcurrent = $urlseparate[3];
     jqxhr.always(function() {
     console.log( "completado segundo" );
     });
-
+    */
     /*
     function leerArchivo(e) {
     var archivo = e.target.files[0];

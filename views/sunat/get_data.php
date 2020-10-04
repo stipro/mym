@@ -1,6 +1,41 @@
-<?php
-    $curl = curl_init();
+<?php    
     if($_POST){
+        //CONSULTA 1 X 1
+        $jedcsunat = json_encode($_POST);
+        $jddcsunat = json_decode($jedcsunat);
+        //var_dump($jddcsunat);
+        //var_dump($jddcsunat->numRuc);
+        
+        $codigo = 'TQFR';
+        $numRuc = $jddcsunat->numRuc;
+        $codComp = $jddcsunat->codComp;
+        $numeroSerie = $jddcsunat->numeroSerie;
+        $numero = $jddcsunat->numero;
+        $codDocRecep = '';
+        $numDocRecep = '';
+        $fechaEmision = $jddcsunat->fechaEmision;
+        $monto = $jddcsunat->monto;        
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://www.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consultaIndividual?numRuc=$numRuc&codComp=$codComp&numeroSerie=$numeroSerie&numero=$numero&codDocRecep&numDocRecep&fechaEmision=$fechaEmision&monto=$monto&codigo=$codigo",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_HTTPHEADER => array(
+              "Cookie: f5avraaaaaaaaaaaaaaaa_session_=NOKNBPEMKNNFFMLKABJCPPFAPDEFLCPFCINJOBBJBIKLJHMDEMHGCIMNLGMDOBPGCODDNPAHOEGOBFGDIBIAGEPGLAMBOLOPAJFOKHILPCGIKDMHIBBKJNIEDFICGIDC; ITCONSULTAUNIFICADALIBRESESSION=4D70qWgifXDISe_lMN2mc8CsAH1UMsv2t5-mMQEKdCLRaUOVQQWG2hxy9BSBAPZUx8PYzy0qnAPDVCZXySceh8AJ-KEFe_lABH2YWosVeXe0ibnvWg3-xBgGo378x0QdTQCoYgXx5b6r_w5T-_jXPZFY1mmoPTRJEddN32br002RTVkU3Sn1YT2f6PlHDoh7aSi8eWSlRLu6KulMJU0WGcP_JV91i-xS9PBGAQTUNVFqjTuwJ9mTPbkayGmKxKhE!-774181940!1724517599; TS01129fe7=014dc399cb33c455bc76177e2ce75b04cc5ccabf591455b3efd50d700a6f07e3357f9988b16117c51e6fa7b7348d6fa34cc3f4608684337317bcc495d2433fec2128afcb8afaef0829f204743e689cce3ba429f506"
+            ),
+          ));
+          sleep(1);
+          $response = curl_exec($curl);
+          
+          curl_close($curl);
+          $dresponse = json_decode($response);
+          var_dump($dresponse);
+          
         /*
         //ENVIO POR LISTADO
         $alds = array();
@@ -47,6 +82,7 @@
         echo $jelds;*/
         
         //ENVIO UNO * UNO
+        /*
         $numRuc = $_POST[1]['numRuc'];
         $codComp = $_POST[1]['codComp'];
         $numeroSerie = $_POST[1]['numeroSerie'];
@@ -77,7 +113,7 @@
         //CONVERTIMOS JSON A VARIABLE PHP
         $dresponse = json_decode($response);
         echo ($dresponse);
-        
+        */
     }
     else{
         echo 'No se recibio ningun dato';
