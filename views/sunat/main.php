@@ -91,6 +91,7 @@ $urlcurrent = $urlseparate[3];
       };
 
       let adata = <?php echo $jelsunat ?>;
+      console.log(adata);
       makeRequests(JSON.parse(adata));
    
     </script>
