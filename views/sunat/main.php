@@ -90,9 +90,10 @@ $urlcurrent = $urlseparate[3];
         afterSending();
       };
 
-      let adata = <?php echo $jelsunat ?>;
+      let adata = JSON.stringify(<?php echo $jelsunat ?>);
+      adata = JSON.parse(adata);
       console.log(adata);
-      makeRequests(JSON.parse(adata));
+      makeRequests(adata);
    
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
