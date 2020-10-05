@@ -44,15 +44,17 @@ $urlcurrent = $urlseparate[3];
         $linea = fgets($archivoID, 1024);
         //SEPARAMOS POR EL SIGNO |
         $porciones = explode("|", $linea);
-        //QUITAMOS EL SIGNO \n
+        //QUITAMOS EL SIGNO \n, \r
         $pmonto = explode("\n", $porciones[5]);
+        $psmonto = explode("\r", $pmonto[0]);
+        $plmonto = $psmonto[0];
         //$alsunat[$c]['monto'] = (float) $alsunat[$c]['monto'];
-        $alsunat[$c] = array("numRuc"=>$porciones[0], "codComp"=>$porciones[1],"numeroSerie"=>$porciones[2], "numero"=>$porciones[3], "fechaEmision"=>$porciones[4],"monto"=>$pmonto[0]);
+        $alsunat[$c] = array("numRuc"=>$porciones[0], "codComp"=>$porciones[1],"numeroSerie"=>$porciones[2], "numero"=>$porciones[3], "fechaEmision"=>$porciones[4],"monto"=>$plmonto);
       }
       //CERRAMOS
       fclose($archivoID);
     }
-    var_dump($alsunat);
+    //var_dump($alsunat);
     $jelsunat = json_encode($alsunat);    
     ?>
     <div class="csaSunat">
@@ -65,7 +67,7 @@ $urlcurrent = $urlseparate[3];
       //Si necesitas hacer algo con las respuestas del servidor
       //hacelas aqui.
       const handleReturnedData = (data) => {
-        console.log(data);
+        console.log(JSON.parse(data));
       };
 
       //Si necesitas hacer algo antes de enviar las
@@ -86,7 +88,7 @@ $urlcurrent = $urlseparate[3];
           const body = new FormData();
           body.append("data", JSON.stringify(data[prop]));
           const returned = await fetch("./get_data.php", { method: "POST", body });
-          const result = await JSON.parse(returned);
+          const result = await returned.json();//await JSON.parse(returned);
           handleReturnedData(result);
         }
         afterSending();
