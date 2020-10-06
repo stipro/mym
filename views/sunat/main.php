@@ -25,7 +25,8 @@ $urlcurrent = $urlseparate[3];
   include ('../nav.php');
 ?>
   <h1>Hello, <?php echo $urlcurrent?>!</h1>
-  <button type="button" id="btnConSunat" class="btn btn-success">Consultar Sunat</button>
+  <button type="button" id="btnConSunat" class="btn btn-success">Consultar Sunat SERVIDOR</button>
+  <button type="button" id="btnConSunatCli" class="btn btn-success">Consultar Sunat CLIENTE</button>
   <input class="btn btn-success" value="ES" type="file" id="file-input" />
   <h3>Contenido del archivo:</h3>
   <pre id="contenido-archivo"></pre>
@@ -105,37 +106,44 @@ $urlcurrent = $urlseparate[3];
     </div>
     <!-- JQUERY -->
     <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
-    
 <script>
-let prueba = <?php echo $jelsunat ?>;
-console.log(prueba);
-var contenido;
-function leerArchivo(e) {
-  var archivo = e.target.files[0];
-  if (!archivo) {
-    return;
+  let prueba = <?php echo $jelsunat ?>;
+  console.log(prueba);
+  var contenido;
+  var grudoc = [];
+  var ogrudoc;
+  document.getElementById('file-input').addEventListener('change', leerArchivo, false);
+  function leerArchivo(e) {
+    var archivo = e.target.files[0];
+    if (!archivo) {
+      return;
+    }
+    var lector = new FileReader();
+    lector.onload = function(e) {
+      var contenido = e.target.result;
+      mostrarContenido(contenido);
+    };
+    lector.readAsText(archivo);
   }
-  var lector = new FileReader();
-  lector.onload = function(e) {
-    var contenido = e.target.result;
-    mostrarContenido(contenido);
-  };
-  lector.readAsText(archivo);
-}
 
 function mostrarContenido(contenido) {
+  //SEPARADORES
   var dseparador = '\n';
   var detdocsep = '|';
-  var grudoc;
+  //SEPARACION
   var dsunat = contenido.split(dseparador);
-  console.log(typeof dsunat);
+  //console.log(typeof dsunat);
   //console.log(dsunat[5]);
   //var dsunat = contenido.split(separador);  
   for (var i=0; i < dsunat.length; i++) {
     //console.log(dsunat[i]);
     var ditemsunat = dsunat[i].split(detdocsep);
-    console.log(ditemsunat);
-    var documento = {
+    //console.log(ditemsunat);
+    if(ditemsunat == ''){ // do stuff
+      //console.log('es nulo');
+    }
+    else{
+      var documento = {
       codComp: ditemsunat[1],
       fechaEmision: ditemsunat[4],
       monto: ditemsunat[5],
@@ -143,40 +151,55 @@ function mostrarContenido(contenido) {
       numero: ditemsunat[3],
       numeroSerie: ditemsunat[2]
     };
-    console.log(documento);
-    //grudoc[i] = {documento};
-    
+    }
+    grudoc.push(documento);
+    //console.log(documento);   
    }
+   ogrudoc = Object.assign({}, grudoc);
+   console.log(ogrudoc);
    //console.log(grudoc);
   var elemento = document.getElementById('contenido-archivo');
   elemento.innerHTML = contenido;
 }
 
-document.getElementById('file-input').addEventListener('change', leerArchivo, false);
   // Obtener referencia a botón
   // Recuerda: el numeral o # indica id
   const boton = document.querySelector("#btnConSunat");
   // Agregar listener
   boton.addEventListener("click", function(evento){
     // Aquí todo el código que se ejecuta cuando se da click al botón
-    //Si necesitas hacer algo con las respuestas del servidor
-    //hacelas aqui.
-    const handleReturnedData = (data) => {
-      var ecsnat;
-      var ctcsunat;
-      var dcsnat = JSON.parse(data);
-      var codComp;
-      var numeroSerie = dcsnat['data']['numeroSerie'];
-      var numero = dcsnat['data']['numero'];
-      var fechaEmision = dcsnat['data']['fechaEmision'];
-      var monto = dcsnat['data']['monto'];
+    console.log(ogrudoc);
+    //VERIFICACION DE ARCHIVO SELECCION
+      if(ogrudoc == null){
+        let adata = <?php echo $jelsunat ?>;
+        makeRequests(adata);
+      }
+      else{
+        let adata = ogrudoc;
+        makeRequests(adata);
+
+      }
+
+
+  });
+  
+  //Si necesitas hacer algo con las respuestas del servidor
+  //hacelas aqui.
+  const handleReturnedData = (data) => {
+    var ecsnat;
+    var ctcsunat;
+    var dcsnat = JSON.parse(data);
+    var codComp;
+    var numeroSerie = dcsnat['data']['numeroSerie'];
+    var numero = dcsnat['data']['numero'];
+    var fechaEmision = dcsnat['data']['fechaEmision'];
+    var monto = dcsnat['data']['monto'];
       if(dcsnat['data']['codComp'] == "08"){
         codComp = 'N. DEBITO';
       }
       else{
         codComp = 'NO EXISTE';
       }
-
       var estadoCp;
       if(dcsnat['data']['estadoCp'] == "1"){
         estadoCp = 'ACEPTADO';
@@ -230,7 +253,15 @@ document.getElementById('file-input').addEventListener('change', leerArchivo, fa
 
       const makeRequests = async (data) => {
         beforeSending();
+        let ccontador = 0;
+        let climite = 5;
         for (const prop in data) {
+          ++cconsulta;
+          console.log(cconsulta);
+          if(cconsulta == climite){
+            consola.log('llego a 5 consultas');
+            sleep(2000);
+          }
           const body = new FormData();
           body.append("data", JSON.stringify(data[prop]));
           const returned = await fetch("./get_data.php", { method: "POST", body });
@@ -239,14 +270,6 @@ document.getElementById('file-input').addEventListener('change', leerArchivo, fa
         }
         afterSending();
       };
-
-      let adata = <?php echo $jelsunat ?>;
-
-      console.log(adata[1]);
-      //adata = JSON.parse(adata);
-      console.log(typeof adata);
-      makeRequests(adata);
-  });
 
    
     </script>
