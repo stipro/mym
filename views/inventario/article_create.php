@@ -19,7 +19,7 @@
                         <div class="form-group col-sm">
                             <div class="container">
                                 <div class="row pb-2">
-                                    <label for="id_almacen"><strong>Almacen</strong></label>
+                                    <label for="id_almacen"><strong>Almacen *</strong></label>
                                     <div class="col d-flex justify-content-end">
                                         <button id="btn_mdl_cAlmacen" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
@@ -38,7 +38,7 @@
                         <div class="form-group col-sm">
                             <div class="container">
                                 <div class="row pb-2">
-                                    <label for="id_proveedor"><strong>Proveedor</strong></label>
+                                    <label for="id_proveedor"><strong>Proveedor *</strong></label>
                                     <div class="col d-flex justify-content-end">
                                         <button id="btn_mdl_cProveedor" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
@@ -58,7 +58,7 @@
                         <div class="form-group col-sm">
                             <div class="container">
                                 <div class="row pb-2">
-                                    <label for="id_marca"><strong>Marca</strong></label>
+                                    <label for="id_marca"><strong>Marca *</strong></label>
                                     <div class="col d-flex justify-content-end">
                                         <button id="btn_md_cMarca" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
@@ -77,7 +77,7 @@
                         <div class="form-group col-sm">
                             <div class="container">
                                 <div class="row pb-2">
-                                    <label for="id_categoria"><strong>Categoría</strong></label>
+                                    <label for="id_categoria"><strong>Categoría *</strong></label>
                                     <div class="col d-flex justify-content-end">
                                         <button id="btn_md_cCategoria" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
@@ -98,7 +98,7 @@
                             <input type="text" class="form-control" id="codigo_articulo" placeholder="Codigo">
                         </div>
                         <div class="form-group col-sm">
-                            <label for="nombre_articulo" class="form-label">Nombre Articulo</label>
+                            <label for="nombre_articulo" class="form-label">Nombre Articulo *</label>
                             <input type="text" class="form-control" id="nombre_articulo" placeholder="Nombre">
                         </div>
                     </div>
@@ -108,8 +108,31 @@
                             <input type="numeric" class="form-control" id="precio_articulo" placeholder="Precio">
                         </div>                    
                         <div class="form-group col-sm">
-                            <label for="stock_articulo" class="form-label">Stock</label>
+                            <label for="stock_articulo" class="form-label">Stock *</label>
                             <input type="text" class="form-control" id="stock_articulo" placeholder="Stock">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label for="caracteristica_articulo" class="form-label">Caracteristica *</label>
+                            <input type="numeric" class="form-control" id="caracteristica_articulo" placeholder="Caracteristica">
+                        </div>
+                        <div class="form-group col-sm">
+                            <div class="container">
+                                <div class="row pb-2">
+                                    <label for="id_uMedida"><strong>U. Medida *</strong></label>
+                                    <div class="col d-flex justify-content-end">
+                                        <button id="btn_md_uMedida" type="button" class="btn btn-primary p-0">
+                                            <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
+                                        </button>
+                                    </div>                                    
+                                </div>
+                            </div>                                                               
+                            <select id="id_uMedida" class="selectpicker form-control" data-live-search="true">
+                                <option data-tokens="" disabled selected>Selecciona u. Medida</option>
+                                <option data-tokens="Recepción">Recepción</option>
+                                <option data-tokens="Sistemas">Sistemas</option>
+                            </select>
                         </div>
                     </div>
 
@@ -338,6 +361,39 @@ $(document).on('click', '#btn_md_cCategoria', function() {
     .done(function(data) {
         $("#modal-requested").append(data);
         $('#md_cCategory').modal('show');
+    })
+    //SI OCURRE UN ERROR
+    .fail(function() {
+        console.log( "error" );
+    })
+    //EJECUTA AL TERMINAR LA FUNCION YA SEHA ERROR O EXITO
+    .always(function() {
+        console.log( "completado" );
+    });
+    // Hacer otra cosa aquí ...
+    // Asignar otra función de completado para la petición de más arriba
+    jqxhr.always(function() {
+        console.log( "completado segundo" );
+    });
+});
+//MODULO UNIDAD DE MEDIDA
+$(document).on('click', '#btn_md_uMedida', function() {
+    //modal-requested
+    var jqxhr = $.ajax({
+        /*
+        beforeSend: function(){
+        alertPrimary = '<div class="alert alert-primary" role="alert">';
+        alertPrimary+= 'A simple primary alert—check it out!';
+        alertPrimary+= '</div>';
+                $("#respuesta").empty().append(alertPrimary);
+        },*/
+        url: './measurements_create.php',
+        type: 'POST',
+    })
+    //RECIBIENDO RESPUESTA
+    .done(function(data) {
+        $("#modal-requested").append(data);
+        $('#md_uMedida').modal('show');
     })
     //SI OCURRE UN ERROR
     .fail(function() {

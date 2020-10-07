@@ -194,9 +194,9 @@ function mostrarContenido(contenido) {
     var numero = dcsnat['data']['numero'];
     var fechaEmision = dcsnat['data']['fechaEmision'];
     var monto = dcsnat['data']['monto'];
-      if(dcsnat['data']['codComp'] == "08"){
-        codComp = 'N. DEBITO';
-      }
+    if(dcsnat['data']['codComp'] == "08"){
+      codComp = 'N. DEBITO';
+    }
       else{
         codComp = 'NO EXISTE';
       }
