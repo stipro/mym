@@ -249,18 +249,23 @@ function mostrarContenido(contenido) {
       //consultas, hacelas aqui.
       const afterSending = () => {
         console.log("after");
+        //Insertara datos
       };
-
+      function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
       const makeRequests = async (data) => {
         beforeSending();
         let ccontador = 0;
         let climite = 5;
         for (const prop in data) {
-          ++cconsulta;
-          console.log(cconsulta);
-          if(cconsulta == climite){
-            consola.log('llego a 5 consultas');
-            sleep(2000);
+          ccontador++;
+          console.log(ccontador);
+          if(ccontador == climite){
+            climite = (climite + 5);
+            console.log(climite);
+            await sleep(2000);
+            //consola.log('llego a 5 consultas');
           }
           const body = new FormData();
           body.append("data", JSON.stringify(data[prop]));
