@@ -8,6 +8,7 @@ class Warehouse extends Conexion
     {
         parent::__construct();
     }
+    //REGISTRA
     public function insert(string $strName, string $strDescription, int $blaState)
     {
         try 
@@ -36,6 +37,7 @@ class Warehouse extends Conexion
             echo 'Ocurrio un problema, llamar a sistemas '.$e->getMessage();
         }
     }
+    //ELIMINA
     public function delete(int $id)
     {
         error_reporting(0);
@@ -48,6 +50,7 @@ class Warehouse extends Conexion
             echo 'ERROR';
         }
     }
+    //EDITA
     public function edit(int $id, int $ingreso, int $egreso, string $registro, string $factura, string $nombre, string $observacion)
     {
         error_reporting(0);
@@ -65,7 +68,7 @@ class Warehouse extends Conexion
         }
 
     }
-
+    //GET DATA OPTIONS
     public function getAll(): array
     {
         //$query = "SELECT * FROM almacenes ORDER BY nombre_almacen";

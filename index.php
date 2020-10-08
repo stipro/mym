@@ -1,5 +1,7 @@
 <?php
-include('./views/index.html');
+//include('./views');
+header("Location: ./views/");
+echo 'Hola mundo';
 /*
 header("Status: 301 Moved Permanently");
 header("Location: ./views/main.php");

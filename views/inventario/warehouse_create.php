@@ -6,7 +6,16 @@
         <h5 class="modal-title">Creación nuevo Almacen</h5>
       </div>
       <div class="modal-body">
-      <div id="respuesta"></div>
+      <div id="respuesta">
+        <div id="actions" class="container">
+          <div class="row">
+            <div id="gif" class="col-3">
+            </div>
+            <div id="typing" class="col">
+            </div>
+          </div>
+        </div>
+      </div>
         <div class="form-row">
           <div class="form-group col-sm">
             <label for="nombre_almacen" class="form-label">Nombre</label>
@@ -37,7 +46,10 @@
 <script>
 $(document).ready(function() {
   //DOM elements
-  let md_cAlmacenes = document.getElementById('md_cAlmacenes');
+  var iptnameWarehouse = document.getElementById("nombre_almacen");
+  var iptdescWarehouse = document.getElementById("descripcion_almacen");
+  var iptestaWarehouse = document.getElementById("estado_almacen");
+  let md_cAlmacen = document.getElementById('md_cAlmacen');
   let btnCreate = document.getElementById('btn-warehouse-cCreate');
   let btnCancel = document.getElementById('btn-warehouse-cCancel');
   let nameWarehouse = document.getElementById('nombre_almacen');
@@ -55,13 +67,13 @@ $(document).ready(function() {
     status: true,
   }
   console.log(jsonSocket);
-  const conn = new WebSocket('ws://179.43.96.189:8080');
+  const conn = new WebSocket('ws://192.168.1.122:8080');
   conn.onopen = function(e) {
     //conn.send(JSON.stringify(msg));
     console.log("Conexion establecida!");
   };
   //OPEN MODAL
-  md_cAlmacenes.addEventListener('click', function(){
+  md_cAlmacen.addEventListener('click', function(){
     jsonSocket['text'] = 'Un usuario comenzo un REGISTRO un Almacen';
     jsonSocket['action'] = '1';
     //status: TRUE,
@@ -71,11 +83,31 @@ $(document).ready(function() {
   //CREATE DATA
   /*
   btnCreate.addEventListener('click', function(){
+    //PREPARAMOS DATOS
+    var vlenameWarehouse = iptnameWarehouse.value;
+    var vledescWarehouse = iptdescWarehouse.value;
+    if (iptestaWarehouse.checked == true){
+      vleestaWarehouse = "1";
+    } else {
+      vleestaWarehouse = "0";
+    }
+    //AGRUPAMOS DATOS OBTENIDO
+    var almacen = {
+      "nombre" : vlenameWarehouse,
+      "descripcion" : vledescWarehouse,
+      "estado" : vleestaWarehouse,
+    };
+    makeRequests(almacen);
+    //SEND DATA
     jsonSocket['text'] = 'Un usuario REGISTRO un Almacen';
     jsonSocket['action'] = '2';
+ 
     //status: TRUE,
     conn.send(JSON.stringify(jsonSocket));
     console.log(jsonSocket.text);
+    console.log('SE REGISTRAR NUEVO ALMACEN: ');
+    //console.log(almacen);
+
   });
   */
   //CANCEL/CLOSE MODAL
@@ -118,13 +150,14 @@ $(document).ready(function() {
     console.log(jsonMsg.action);
     //COMPROBAMOS INSERT DATA
     if(jsonMsg.action = 2){
-      listar('');
+      //listar('');
     }
     
   }
   $( "#jsontable" ).click(function() {
     console.log(jsonWareHouse);
   });
+  
   $( "#btn-warehouse-cCreate" ).click(function() {
     //OBTENEMOS DATOS
     let name = $('#nombre_almacen').val();
@@ -147,6 +180,7 @@ $(document).ready(function() {
       "description" : description,
       "state" : state,
     };
+    
     //console.log(JSON.stringify(wareHouse));
     //conn.send(JSON.stringify(wareHouse));
     var jqxhr = $.ajax({
@@ -156,7 +190,8 @@ $(document).ready(function() {
             alertPrimary+= 'A simple primary alert—check it out!';
             alertPrimary+= '</div>';
             $("#respuesta").empty().append(alertPrimary);
-        },*/
+        },
+        */
         url: './../../controllers/controllerWarehouse.php',
         type: 'POST',
         data: wareHouse,
@@ -194,5 +229,34 @@ $(document).ready(function() {
 
     });
   });
-}); 
+});
+
+/*
+//Si necesitas hacer algo con las respuestas del servidor
+//hacelas aqui.
+const handleReturnedData = (data) => {
+};
+//Si necesitas hacer algo antes de enviar las
+//consultas, hacelo aqui.
+const beforeSending = () => {
+  console.log("before");
+};
+//Si necesitas hacer algo despues de que terminen las
+//consultas, hacelas aqui.
+const afterSending = () => {
+  console.log("after");
+  //Insertara datos
+};
+function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+}
+const makeRequests = async (data) => {
+  beforeSending();
+  const body = new FormData();
+  body.append("data", JSON.stringify(data[prop]));
+  const returned = await fetch("./get_data.php", { method: "POST", body });
+  const result = await returned.json();//await JSON.parse(returned);
+  handleReturnedData(result);
+  afterSending();
+};*/
 </script>

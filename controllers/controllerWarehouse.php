@@ -11,6 +11,8 @@ if($_POST){
         $strName = $_POST['name'];
         $strDescription = $_POST['description'];
         $blaState = intval($_POST['state']);
+        $strwarehouse = $_POST;
+        //var_dump($strwarehouse);        
         $replyInsert = $warehouse->insert($strName, $strDescription, $blaState);
         //
         $dataWareHouse = array("rptInsert" => $replyInsert);
