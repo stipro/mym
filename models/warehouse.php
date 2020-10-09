@@ -75,11 +75,18 @@ class Warehouse extends Conexion
         $query = "SELECT * FROM almacenes";
         return $this->ConsultaSimple($query);
     }
+    //GET NAME AWAREHOUSE
+    public function getNombre(string $dato, string $tabla): array
+    {
+        $where = "ORDER BY nombre_almacen ASC";
+        $array = array(':nombre' => '%' . $termino . '%', ':factura' => '%' . $termino . '%');
+        return $this->ConsultaCompleja($where, $array, $tabla);
+    }
     public function getSearch(string $termino): array
     {
         $where = "WHERE nombre LIKE :nombre || pais LIKE :factura ORDER BY nombre ASC";
         $array = array(':nombre' => '%' . $termino . '%', ':factura' => '%' . $termino . '%');
-        return $this->ConsultaCompleja($where, $array);
+        return $this->ConsultaCompleja($where, $array, $tabla);
     }
 
     public function getPagination(): array
