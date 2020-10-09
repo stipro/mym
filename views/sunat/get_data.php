@@ -122,5 +122,4 @@
     else{
         echo 'No se recibio ningun dato';
     }
-
 ?>

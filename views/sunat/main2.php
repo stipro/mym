@@ -235,6 +235,10 @@ function mostrarContenido(contenido) {
         //console.log(dcsnat);
 
       };
+      //Respuesta de insercion dato
+      const rptinsert = (data) => {
+        console.log(data)
+      }
       //Si necesitas hacer algo antes de enviar las
       //consultas, hacelo aqui.
       const beforeSending = () => {
@@ -267,8 +271,22 @@ function mostrarContenido(contenido) {
           console.log(data);
           const body = new FormData();
           body.append("data", JSON.stringify(data[prop]));
-          const returned = await fetch("./../../controllers/controllerSunat.php", { method: "POST", body });
+          const returned = await fetch("./get_data.php", { method: "POST", body });
           const result = await returned.json();//await JSON.parse(returned);
+          //console.log(result);
+          obj =  JSON.parse(result);
+          //INSERTA BASE DE DATOS
+          //Preparamos datos
+          const insertDoc = new FormData();
+          insertDoc.append("data",JSON.stringify(result));
+          //Enviamos
+          console.log(obj);
+          console.log(insertDoc);
+          const requestinsert = await fetch("./../../controllers/controllerSunat.php", { method: "POST", insertDoc });
+          const lol = await requestinsert.json();
+          console.log(lol);
+          //console.log(requestinsert);
+          rptinsert(requestinsert);
           handleReturnedData(result);
         }
         afterSending();
