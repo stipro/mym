@@ -12,19 +12,34 @@ if($_POST){
         $rptApiSunat = $sunat->getApiSunat($jedcsunat);
         if($rptApiSunat);
         {
-            //$sunat = new Sunat();
-            $jdrptSunat = json_decode($rptApiSunat, true);
-            $porciones = explode('"', $jdrptSunat);
-            //CONVERT STRING TO ARRAY
-            $arptSunat = array("numRuc"=>$porciones[21], "codComp"=>$porciones[13],"numeroSerie"=>$porciones[9], "numero"=>$porciones[5], "fechaEmision"=>$porciones[17],"monto"=>$porciones[33],"estadoCp"=>$porciones[37], "estadoRuc"=>$porciones[41], "condDomiRuc"=>$porciones[45]);
-            //$jsonlol = json_decode($rptApiSunat);
-            var_dump($arptSunat);
-            //$sunat->insert($arptSunat);
             
-            //var_dump($rptApiSunat);
+            $jdrptSunat = json_decode($rptApiSunat);
+            $porciones = explode('"', $jdrptSunat);
+            //Preparacion Datos
+            $numRuc = $porciones[21];
+            $codComp = $porciones[13];
+            $numSerie = $porciones[9];
+            $numero = intval($porciones[5]);
+            //CAMBIAMOS FORMATO DE FECHA
+            $datepart = explode('/', $porciones[17]);
+            $fechaEmision = $datepart[2].'/'.$datepart[1].'/'.$datepart[0];
+            //DECLAAMOS FLOAT MONTO
+            $monto = floatval($porciones[33]);
+            $estadoCp = $porciones[37];
+            $estadoRuc = $porciones[41];
+            $condDomiRuc = $porciones[45];
+            //CONVERT STRING TO ARRAY
+            $arptSunat = array("numRuc"=>$numRuc, "codComp"=>$codComp, "numeroSerie"=>$numSerie, "numero"=>$numero, "fechaEmision"=>$fechaEmision,"monto"=>$monto,"estadoCp"=>$estadoCp, "estadoRuc"=>$estadoRuc, "condDomiRuc"=>$condDomiRuc);
+            //$jsonlol = json_decode($rptApiSunat);
+            //SEND PARAMETERS
+            $rptInsert = $sunat->insert($numRuc, $codComp, $numSerie, $numero, $fechaEmision, $monto, $estadoCp, $estadoRuc, $condDomiRuc);
+            //echo $rptInsert;
+            if($rptInsert){
+                echo $rptApiSunat;
+                //echo $jdrptSunat;
+            }
             //$strnombre = $jedcsunat['nombre'];
         }
-        //echo $rptApiSunat;
     }
     catch (Exception $e) {
         echo "Se ha producion una excepción. Los detalles son los siguientes:";

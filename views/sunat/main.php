@@ -249,7 +249,7 @@ function mostrarContenido(contenido) {
       };
       function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
-      }
+      };
       const makeRequests = async (data) => {
         beforeSending();
         let ccontador = 0;

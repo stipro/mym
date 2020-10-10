@@ -9,32 +9,81 @@ class Sunat extends Conexion
         parent::__construct();
     }
     //REGISTRA
-    public function insert(string $strName, string $strDescription, int $blaState)
+    public function insert($numRuc, int $codComp, string $numSerie, int $numero, $fechaEmision, float $monto, string $estadoCp, string $estadoRuc, string $condDomiRuc)
     {
-        try 
+                        //COMPROBAR DATOS DUPLICADOS
+                        $existenteCol = $conexion->prepare("SELECT a.*, b.*, tvz.*, tz.NZON
+                        FROM t002col AS a 
+                        LEFT JOIN t00ven AS b
+                        ON a.NIDCOL = b.FIDCOL
+                        LEFT JOIN tasi_ven_zon AS tvz
+                        ON tvz.FIDVEN = b.NIDVEN
+                        LEFT JOIN tzona AS tz
+                        ON tz.NIDZON = tvz.FIDZON
+                        WHERE a.VPNOCOL = :pnombre AND a.VAPACOL = :papellido AND a.VAMACOL = :sapellido");
+                        $existenteCol->bindValue(':papellido',$papellido);
+                        $existenteCol->bindValue(':sapellido',$sapellido);
+                        $existenteCol->bindValue(':pnombre',$pnombre);
+                        $existenteCol->execute();
+                        $resexistenteCol = $existenteCol->fetch();
+        try
         {
-            $alertsuccess = '<div class="alert alert-success" role="alert">            
-            </div>';
-            $query  = "INSERT INTO almacenes(
-                nombre_almacen,
-                descripcion_almacen,
-                estado_almacen
+            $query  = "INSERT INTO validacion_documentos(
+                ruc_documento,
+                tipo_documento,
+                serie_documento,
+                numero_documento,
+                fecemi_documento,
+                nimporte_documento,
+                estcom_documento,
+                estcon_documento,
+                condom_documento
             ) 
             VALUES (
-                :strName, 
-                :strDescription,
-                :blaState);";
+                :numRuc, 
+                :codComp,
+                :numSerie,
+                :numero,
+                :fechaEmision,
+                :monto,
+                :estadoCp,
+                :estadoRuc,
+                :condDomiRuc);";
             $result = $this->db->prepare($query);
-            $result -> bindParam(':strName', $strName, PDO::PARAM_STR);
-            $result -> bindParam(':strDescription', $strDescription, PDO::PARAM_STR);
-            $result -> bindParam(':blaState', $blaState, PDO::PARAM_STR);
+            $result -> bindParam(':numRuc', $numRuc, PDO::PARAM_INT);
+            $result -> bindParam(':codComp', $codComp, PDO::PARAM_STR);
+            $result -> bindParam(':numSerie', $numSerie, PDO::PARAM_STR);
+            $result -> bindParam(':numero', $numero, PDO::PARAM_STR);
+            $result -> bindParam(':fechaEmision', $fechaEmision, PDO::PARAM_STR);
+            $result -> bindParam(':monto', $monto, PDO::PARAM_STR);
+            if($estadoCp = '1'){
+                $estadoCp = 'ACEPTADO';
+            }
+            else{
+                $estadoCp = 'NO EXISTE';
+            }
+            if($estadoRuc = '00'){
+                $estadoRuc = 'ACTIVO';
+            }
+            else{
+                $estadoRuc = 'NO ACTIVO';
+            }
+            if($condDomiRuc = '00'){
+                $condDomiRuc = 'HABIDO';
+            }
+            else{
+                $condDomiRuc = 'NO HABIDO';
+            }
+            $result -> bindParam(':estadoCp', $estadoCp, PDO::PARAM_STR);
+            $result -> bindParam(':estadoRuc', $estadoRuc, PDO::PARAM_STR);
+            $result -> bindParam(':condDomiRuc', $condDomiRuc, PDO::PARAM_STR);
             $sqlsuccess = $result -> execute();
             if($sqlsuccess) // MENSAJE DE EXITO
             {
                 return $replys = 'Se realizo correctamente el registro.';
             }
         } catch (PDOException $e) {
-            echo 'Ocurrio un problema, llamar a sistemas '.$e->getMessage();
+            return 'Ocurrio un problema, llamar a sistemas '.$e->getMessage();
         }
     }
     //ELIMINA
