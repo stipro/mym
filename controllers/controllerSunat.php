@@ -9,18 +9,19 @@ if($_POST){
         //Se instacia la clase
         $sunat = new Sunat();
         $jedcsunat = json_decode($_POST['data']);
-        $array = array();
         $rptApiSunat = $sunat->getApiSunat($jedcsunat);
         if($rptApiSunat);
         {
             //$sunat = new Sunat();
-            $array = json_decode($rptApiSunat, true);
-            //$porciones = explode("|", $prueba);
+            $jdrptSunat = json_decode($rptApiSunat, true);
+            $porciones = explode('"', $jdrptSunat);
             //CONVERT STRING TO ARRAY
-            //$alsunat[$c] = array("numRuc"=>$porciones[0], "codComp"=>$porciones[1],"numeroSerie"=>$porciones[2], "numero"=>$porciones[3], "fechaEmision"=>$porciones[4],"monto"=>$plmonto);
-            $jsonlol = json_decode($rptApiSunat);
-            var_dump($jsonlol);
-            var_dump($array);
+            $arptSunat = array("numRuc"=>$porciones[21], "codComp"=>$porciones[13],"numeroSerie"=>$porciones[9], "numero"=>$porciones[5], "fechaEmision"=>$porciones[17],"monto"=>$porciones[33],"estadoCp"=>$porciones[37], "estadoRuc"=>$porciones[41], "condDomiRuc"=>$porciones[45]);
+            //$jsonlol = json_decode($rptApiSunat);
+            var_dump($arptSunat);
+            //$sunat->insert($arptSunat);
+            
+            //var_dump($rptApiSunat);
             //$strnombre = $jedcsunat['nombre'];
         }
         //echo $rptApiSunat;

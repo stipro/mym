@@ -122,7 +122,7 @@ class Sunat extends Conexion
     {
         $where = "WHERE nombre LIKE :nombre || pais LIKE :factura ORDER BY nombre ASC";
         $array = array(':nombre' => '%' . $termino . '%', ':factura' => '%' . $termino . '%');
-        return $this->ConsultaCompleja($where, $array, $tabla);
+        return $this->ConsultaCompleja($where, $array);
     }
 
     public function getPagination(): array
