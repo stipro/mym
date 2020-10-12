@@ -10,11 +10,14 @@ if($_POST){
         $sunat = new Sunat();
         $jedcsunat = json_decode($_POST['data']);
         $rptApiSunat = $sunat->getApiSunat($jedcsunat);
-        if($rptApiSunat);
+        var_dump($rptApiSunat);
+        if($rptApiSunat)
         {
             
             $jdrptSunat = json_decode($rptApiSunat);
+            //var_dump($jdrptSunat);
             $porciones = explode('"', $jdrptSunat);
+            //var_dump($porciones);
             //Preparacion Datos
             $numRuc = $porciones[21];
             $codComp = $porciones[13];
@@ -39,6 +42,9 @@ if($_POST){
                 //echo $jdrptSunat;
             }
             //$strnombre = $jedcsunat['nombre'];
+        }
+        else{
+            echo 'No responde servidor correctamente';
         }
     }
     catch (Exception $e) {

@@ -11,6 +11,7 @@ class Sunat extends Conexion
     //REGISTRA
     public function insert($numRuc, int $codComp, string $numSerie, int $numero, $fechaEmision, float $monto, string $estadoCp, string $estadoRuc, string $condDomiRuc)
     {
+        /*
                         //COMPROBAR DATOS DUPLICADOS
                         $existenteCol = $conexion->prepare("SELECT a.*, b.*, tvz.*, tz.NZON
                         FROM t002col AS a 
@@ -25,7 +26,7 @@ class Sunat extends Conexion
                         $existenteCol->bindValue(':sapellido',$sapellido);
                         $existenteCol->bindValue(':pnombre',$pnombre);
                         $existenteCol->execute();
-                        $resexistenteCol = $existenteCol->fetch();
+                        $resexistenteCol = $existenteCol->fetch();*/
         try
         {
             $query  = "INSERT INTO validacion_documentos(
@@ -135,7 +136,7 @@ class Sunat extends Conexion
     public function getApiSunat(object $jedcsunat)
     {
         //PREPARAMOS PARAMETROS
-        $codigo = 'LHVY';
+        $codigo = 'FVIH';
         $numRuc = $jedcsunat->numRuc;
         $codComp = $jedcsunat->codComp;
         $numeroSerie = $jedcsunat->numeroSerie;
@@ -157,7 +158,7 @@ class Sunat extends Conexion
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",
           CURLOPT_HTTPHEADER => array(
-            "Cookie: f5avraaaaaaaaaaaaaaaa_session_=PJAAINEPKGIGGOLLCNJNKFHLPHDEBHFODKDGBECDDMPCBJKGEELPHHLINFIOIFAIGOBDLEGFKEHPJKAPDNGAMBAMMEHPCCPFBOGCCIFGEFIFODMGLDPCLKKIADGIIHID; ITCONSULTAUNIFICADALIBRESESSION=_tD5i5ba5rPtB-0C7ewmPD0pPyT7bQgvRHngrqD-1UWgCeEufSSpPpAStQNmkEvItFMLRa6MFD3562-tGj8VmnwSRuLzMvHhvoVdyKssoRM-x-l4WujzHYzP7GlWBi-K-TfCGkM-VQTCnsaeySUZxzOixDNi6im2hGw9DJSZEIdtqMdic9fhi2hNwrtdGAEWu7F7up0iRul8NPSpjo2m0hOGVaPBUs4O73O3qxYZLwF2LVQtGOzCeBOlbifpvpKe!-176522161!2109973514; TS01129fe7=014dc399cbb8c64c0cee054083b3b3ee38b4348af611cfe75518e2102518b31332eb1d249f9030d65c2d846c51791334a733e427dfdc81dbb9b1dc75aa9dfa1ee637aab49b9c7d8400b3f0507ff86a3b172ffce944"
+            "Cookie: f5avraaaaaaaaaaaaaaaa_session_=FIAAFADFJMCIJOEBIGMOEBAMDAJIFDAENDJNBOPLMOPLBOEEHLAHLAEEFLJIBAHCPAMDBEPKBPGFEOPCLCLAMKIPIHAFBAMIJFKKDJFAIFLJDPAJDFFOGKDMGNEHOLPC; ITCONSULTAUNIFICADALIBRESESSION=ZtodmPHbGdHXRSvxiNSwGWPEoo9yOKIrS_coiC5DMzcqhpbqWYT5aXkn4WyozUgtuvZmWCiBNN6SRqhG2LF3IbTOD0sSBZwL-fOPnWaNZY8Q4ShDBV_poHeqnk8iPfZh560JEsOkH7KKc5_BY-mTUxFxWMbI-yd_wg-wlyJWG9JiMtL_WWxwJzg2cEqy7vsKG4jF4o29LaxX9tGMXtHrHZzM8ExW_h5WtRiysgctcYy672tHO6-xcsQYOgznkAid!1771393487!878333934; TS0103674e=019edc9eb86cb7d03b8fee4275b26a1789d5eb3fed45bd783fae70587450ce3fc65e0ca2be331a4a7e3c0eeeebc4d3da148ea735f43dadd84fbf83d0daeac5435dfb622334a8fa104c7655b8de4a26a39121258808"
           ),
         ));
         //EJECUTAMOS CONEXION
