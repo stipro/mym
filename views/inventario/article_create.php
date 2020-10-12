@@ -163,7 +163,52 @@
     </div>
 </div>
 <script>
-//
+    $( document ).ready(function() {
+        console.log( "document loaded" );
+        makeRequests();
+    });
+ 
+    $( window ).on( "load", function() {
+        console.log( "window loaded" );
+    });
+    ////DOM elements
+    var idalmacen = document.getElementById("id_almacen");
+    
+    //Si necesitas hacer algo con las respuestas del servidor
+    //hacelas aqui.
+    const handleReturnedData = (data) => {
+
+    };
+    //Si necesitas hacer algo antes de enviar las
+    //consultas, hacelo aqui.
+    const beforeSending = () => {
+      console.log("before");
+    };
+
+    //Si necesitas hacer algo despues de que terminen las
+    //consultas, hacelas aqui.
+    const afterSending = () => {
+      console.log("after");
+    };
+    const makeRequests = async (data) => {
+        beforeSending();
+        console.log('Se hara una consulta de datos almacen');
+        const returned = await fetch("./../../controllers/controllerWarehouse.php", { method: "POST", body });
+        //RECORRE LISTA
+        /*
+        for (const prop in data) {
+          ccontador++;
+          console.log(ccontador);
+          console.log(data);
+          const body = new FormData();
+          body.append("data", JSON.stringify(data[prop]));
+
+          const result = await returned.json();//await JSON.parse(returned);
+          handleReturnedData(result);
+        }
+        */
+        afterSending();
+    };   
 $( "#btn-insert-collaborator" ).click(function() {
     //OBTENEMOS DATOS
     var id_almacen = document.getElementById('id_almacen');
