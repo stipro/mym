@@ -30,9 +30,9 @@ class Conexion
         return $this->db->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    protected function ConsultaCompleja(string $where, array $array): array
+    protected function ConsultaCompleja(string $where, array $array, string $table): array
     {
-        $query  = "SELECT * FROM $tabla {$where}";
+        $query  = "SELECT nombre_almacen FROM {$table} {$where}";
         $result = $this->db->prepare($query);
         $result->execute($array);
         return $result->fetchAll(PDO::FETCH_ASSOC);

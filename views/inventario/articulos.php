@@ -40,12 +40,9 @@
             <div class="form-row">
                 <div class="col">
                     <!-- Almacen -->
-                    <div class="form-group">                                        
+                    <div id="conprim" class="form-group">                                        
                         <label for="filAlm"><strong>Almacen</strong></label>
                         <select id="filAlm" class="selectpicker form-control" data-live-search="true">
-                            <option data-tokens="">Selecciona un Almacen<option>
-                            <option data-tokens="Recepción">Recepción</option>
-                            <option data-tokens="Sistemas">Sistemas</option>
                         </select>
                     </div>
                 </div>
@@ -89,23 +86,57 @@
         </div>
     </div>
 </div>
-
 <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
-<script src="./../../assets/js/jquery-ui.js" type="text/javascript"></script>
-<script src="./../../libs/bootstrap-select/js/popper.min.js" type="text/javascript"></script>
-<script src="./../../libs/bootstrap-4.5.0/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="./../../libs/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
-<script src="./../../libs/bootstrap-select/js/i18n/defaults-es_ES.min.js" type="text/javascript"></script>
 <?php
     include ("./article_create.php");
 ?>
+
 <div id="modal-requested">
 
 </div>
+
 <script>
+////DOM elements
+//valDAlmacen = idalmacen.dataset.require;
+//Ejecutamos cuando pagina este lista
+$( document ).ready(function() {
+    console.log( "document loaded" );
+    makeRequests('');
+}); 
+//Activamos modal
 $(document).on('click', '#btn_mdl_article', function() {
         $('#md_cArticulo').modal('show');
 });
+//Si necesitas hacer algo con las respuestas del servidor
+//hacelas aqui.
+const handleReturnedData = (data) => {
+    $("#filAlm").html(data).selectpicker('refresh');
+};
+//Si necesitas hacer algo antes de enviar las
+//consultas, hacelo aqui.
+const beforeSending = () => {
+  console.log("before");
+};
+//Si necesitas hacer algo despues de que terminen las
+//consultas, hacelas aqui.
+const afterSending = () => {
+  console.log("after");
+};
+const makeRequests = async (data) => {
+    beforeSending();
+    console.log('Se hara una consulta de datos almacen ' + data);
+    const body = new FormData();
+    body.append("data", data);
+    const returned = await fetch("./../../controllers/controllerWarehouseList.php", { method: "POST", body});
+    const result = await returned.json(); //await JSON.parse(returned);
+    handleReturnedData(result);
+    afterSending();
+};
 </script>
+<script src="./../../assets/js/jquery-ui.js" type="text/javascript"></script>
+<script src="./../../libs/bootstrap-select/js/popper.min.js" type="text/javascript"></script>
+<script src="./../../libs/bootstrap-4.5.0/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="./../../libs/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>-->
+<script src="./../../libs/bootstrap-select/js/i18n/defaults-es_ES.min.js" type="text/javascript"></script>-->
 </body>
 </html>

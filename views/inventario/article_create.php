@@ -16,7 +16,7 @@
                     <div class="form-row">
 
                         <!-- Almacen -->
-                        <div class="form-group col-sm">
+                        <div class="form-group col-sm" id="contAlmacen">
                             <div class="container">
                                 <div class="row pb-2">
                                     <label for="id_almacen"><strong>Almacen *</strong></label>
@@ -26,13 +26,13 @@
                                         </button>
                                     </div>  
                                 </div>
-                            </div>                            
-                            <select id="id_almacen" class="selectpicker form-control" data-live-search="true">
+                            </div> <!--                          
+                            <select id="id_almacen" data-require="nombre" class="selectpicker form-control" data-live-search="true">
                                 <option data-tokens="00" disabled selected>Selecciona o busque un Almacen</option>
-                                <option data-tokens="01">Sistema</option>
-                                <option data-tokens="02">Recepcion</option>
-                                <option data-tokens="03">Transporte</option>
-                            </select>
+                                <option data-id="" data-tokens="01">Sistemaaaaa </option>
+                                <option data-id="" data-tokens="02">Recepcion</option>
+                                <option data-id="" data-tokens="03">Transporte</option>
+                            </select>-->
                         </div>
                         <!-- Proveedor -->
                         <div class="form-group col-sm">
@@ -46,10 +46,10 @@
                                     </div>                                    
                                 </div>
                             </div>                                                               
-                            <select id="id_proveedor" class="selectpicker form-control" data-live-search="true">
+                            <select id="id_proveedor" data-require="nombre" class="selectpicker form-control" data-live-search="true">
                                 <option data-tokens="" disabled selected>Selecciona un Proveedor</option>
-                                <option data-tokens="Recepción">Recepción</option>
-                                <option data-tokens="Sistemas">Sistemas</option>
+                                <option data-id="" data-tokens="Recepción">Recepción</option>
+                                <option data-id="" data-tokens="Sistemas">Sistemas</option>
                             </select>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                                     </div>  
                                 </div>
                             </div>                            
-                            <select id="id_marca" class="selectpicker form-control" data-live-search="true">
+                            <select id="id_marca" data-require="nombre" class="selectpicker form-control" data-live-search="true">
                                 <option data-tokens="" disabled selected>Selecciona o busque un Marca</option>
                                 <option data-tokens="Lapicero">Lapicero</option>
                                 <option data-tokens="Borrador">Borrador</option>
@@ -163,21 +163,24 @@
     </div>
 </div>
 <script>
-    $( document ).ready(function() {
-        console.log( "document loaded" );
-        makeRequests();
-    });
- 
-    $( window ).on( "load", function() {
-        console.log( "window loaded" );
-    });
-    ////DOM elements
-    var idalmacen = document.getElementById("id_almacen");
-    
+////DOM elements
+//let idalmacen = document.getElementById("id_almacen");
+//valDAlmacen = idalmacen.dataset.require;
+$( document ).ready(function() {
+    console.log( "document loaded" );
+    //makeRequests('');
+}); 
+$( window ).on( "load", function() {
+    console.log( "window loaded" );
+});
+/*
     //Si necesitas hacer algo con las respuestas del servidor
     //hacelas aqui.
     const handleReturnedData = (data) => {
-
+        //
+        console.log(data);
+        $("#contAlmacen").append(data);
+        //idalmacen.innerHTML = data;
     };
     //Si necesitas hacer algo antes de enviar las
     //consultas, hacelo aqui.
@@ -192,23 +195,15 @@
     };
     const makeRequests = async (data) => {
         beforeSending();
-        console.log('Se hara una consulta de datos almacen');
-        const returned = await fetch("./../../controllers/controllerWarehouse.php", { method: "POST", body });
-        //RECORRE LISTA
-        /*
-        for (const prop in data) {
-          ccontador++;
-          console.log(ccontador);
-          console.log(data);
-          const body = new FormData();
-          body.append("data", JSON.stringify(data[prop]));
-
-          const result = await returned.json();//await JSON.parse(returned);
-          handleReturnedData(result);
-        }
-        */
+        console.log('Se hara una consulta de datos almacen ' + data);
+        const body = new FormData();
+        body.append("data", data);
+        const returned = await fetch("./../../controllers/controllerWarehouseList.php", { method: "POST", body});
+        const result = await returned.json(); //await JSON.parse(returned);
+        handleReturnedData(result);
         afterSending();
-    };   
+    };
+    */
 $( "#btn-insert-collaborator" ).click(function() {
     //OBTENEMOS DATOS
     var id_almacen = document.getElementById('id_almacen');
@@ -290,7 +285,10 @@ $( "#btn-insert-collaborator" ).click(function() {
     console.log( "completado segundo" );
     });
 });
+//CREAR NUEVO
 $(document).on('click', '#btn_mdl_cAlmacen ', function() {
+    //makeRequests(valDAlmacen);
+    console.log(valDAlmacen)
     //modal-requested
     var jqxhr = $.ajax({
         /*

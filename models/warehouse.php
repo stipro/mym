@@ -75,12 +75,14 @@ class Warehouse extends Conexion
         $query = "SELECT * FROM almacenes";
         return $this->ConsultaSimple($query);
     }
-    //GET NAME AWAREHOUSE
-    public function getNombre(string $dato, string $tabla): array
+    //GET NAME WAREHOUSE
+    public function getNombre(): array
     {
-        $where = "ORDER BY nombre_almacen ASC";
-        $array = array(':nombre' => '%' . $termino . '%', ':factura' => '%' . $termino . '%');
-        return $this->ConsultaCompleja($where, $array, $tabla);
+        $table = 'almacenes';
+        $state = '1';
+        $where = "WHERE estado_almacen = :state";
+        $array = array(':state' =>  $state);
+        return $this->ConsultaCompleja( $where, $array, $table);
     }
     public function getSearch(string $termino): array
     {
@@ -96,6 +98,24 @@ class Warehouse extends Conexion
             'filasTotal'  => intval($this->db->query($query)->fetch(PDO::FETCH_BOTH)[0]),
             'filasPagina' => 5,
         );
+    }
+
+    public function showSelect(array $query): string
+    {
+        $html = '';
+        if (count($query)) {
+            //var_dump($query[5]);
+            //$html = '<button type="button" class="btn btn-primary">Primary</button>';
+            //$html = '<select id="id_almacen" data-require="nombre" class="selectpicker form-control" data-live-search="true">';
+            $html = '<option data-tokens="">Selecciona un Almacen</option>';
+            foreach ($query as $value){
+                $html .= '<option data-id="" data-tokens="01">' . $value['nombre_almacen'] . '</option>';
+            }
+            //$html .= '</select>';
+        } else {
+            $html = '<option data-id="">No hay datos...</option> <h4 class="text-center"></h4>';
+        }
+        return $html;
     }
 
     public function showTable(array $query): string
