@@ -112,6 +112,12 @@ $(document).on('click', '#btn_mdl_article', function() {
 const handleReturnedData = (data) => {
     $("#filAlm").html(data).selectpicker('refresh');
 };
+const dataProvedor = (data) => {
+    $("#filCodNom").html(data).selectpicker('refresh');
+};
+const dataCategoria = (data) => {
+    $("#filcat").html(data).selectpicker('refresh');
+};
 //Si necesitas hacer algo antes de enviar las
 //consultas, hacelo aqui.
 const beforeSending = () => {
@@ -130,6 +136,13 @@ const makeRequests = async (data) => {
     const returned = await fetch("./../../controllers/controllerWarehouseList.php", { method: "POST", body});
     const result = await returned.json(); //await JSON.parse(returned);
     handleReturnedData(result);
+    const returnProvedor = await fetch("./../../controllers/controllerProvidersList.php", { method: "POST", body});
+    const resultProvedor = await returnProvedor.json(); //await JSON.parse(returned);
+    dataProvedor(resultProvedor);
+    handleReturnedData(result);
+    const returnCategoria = await fetch("./../../controllers/controllerCategoriesList.php", { method: "POST", body});
+    const resultCategoria = await returnCategoria.json(); //await JSON.parse(returned);
+    dataCategoria(resultCategoria);
     afterSending();
 };
 </script>

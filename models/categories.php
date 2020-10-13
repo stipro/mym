@@ -2,7 +2,7 @@
 declare (strict_types = 1);
 require_once('./../db/conexion.php');
 
-class Providor extends Conexion
+class Category extends Conexion
 {
     /*
     public $intruc;
@@ -79,9 +79,9 @@ class Providor extends Conexion
     //GET NAME WAREHOUSE
     public function getNombre(): array
     {
-        $table = 'provedores';
+        $table = 'categorias';
         $state = '1';
-        $where = "WHERE estado_provedor = :state";
+        $where = "WHERE estado_categoria = :state";
         $array = array(':state' =>  $state);
         return $this->ConsultaCompleja( $where, $array, $table);
     }
@@ -107,7 +107,7 @@ class Providor extends Conexion
         if (count($query)) {
             $html = '<option data-tokens="">Selecciona un Almacen</option>';
             foreach ($query as $value){
-                $html .= '<option data-id="" data-tokens="01">' . $value['nombre_provedor'] . '</option>';
+                $html .= '<option data-id="" data-tokens="01">' . $value['nombre_categoria'] . '</option>';
             }
         } else {
             $html = '<option data-id="">No hay datos...</option> <h4 class="text-center"></h4>';
