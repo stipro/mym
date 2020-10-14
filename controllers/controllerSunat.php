@@ -10,7 +10,7 @@ if($_POST){
         $sunat = new Sunat();
         $jedcsunat = json_decode($_POST['data']);
         $rptApiSunat = $sunat->getApiSunat($jedcsunat);
-        var_dump($rptApiSunat);
+        //var_dump($rptApiSunat);
         if($rptApiSunat)
         {
             
