@@ -19,26 +19,22 @@
                         <div class="form-group col-sm" id="contAlmacen">
                             <div class="container">
                                 <div class="row pb-2">
-                                    <label for="id_almacen"><strong>Almacen *</strong></label>
+                                    <label for="ciselectAlmacen"><strong>Almacen *</strong></label>
                                     <div class="col d-flex justify-content-end">
                                         <button id="btn_mdl_cAlmacen" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
                                         </button>
                                     </div>  
                                 </div>
-                            </div> <!--                          
-                            <select id="id_almacen" data-require="nombre" class="selectpicker form-control" data-live-search="true">
-                                <option data-tokens="00" disabled selected>Selecciona o busque un Almacen</option>
-                                <option data-id="" data-tokens="01">Sistemaaaaa </option>
-                                <option data-id="" data-tokens="02">Recepcion</option>
-                                <option data-id="" data-tokens="03">Transporte</option>
-                            </select>-->
+                            </div>
+                            <select id="ciselectAlmacen" data-require="nombre" class="selectpicker form-control" data-live-search="true">
+                            </select>
                         </div>
                         <!-- Proveedor -->
                         <div class="form-group col-sm">
                             <div class="container">
                                 <div class="row pb-2">
-                                    <label for="id_proveedor"><strong>Proveedor *</strong></label>
+                                    <label for="ciselectProvedor"><strong>Proveedor *</strong></label>
                                     <div class="col d-flex justify-content-end">
                                         <button id="btn_mdl_cProveedor" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
@@ -46,10 +42,7 @@
                                     </div>                                    
                                 </div>
                             </div>                                                               
-                            <select id="id_proveedor" data-require="nombre" class="selectpicker form-control" data-live-search="true">
-                                <option data-tokens="" disabled selected>Selecciona un Proveedor</option>
-                                <option data-id="" data-tokens="Recepción">Recepción</option>
-                                <option data-id="" data-tokens="Sistemas">Sistemas</option>
+                            <select id="ciselectProvedor" data-require="nombre" class="selectpicker form-control" data-live-search="true">
                             </select>
                         </div>
                     </div>
@@ -58,7 +51,7 @@
                         <div class="form-group col-sm">
                             <div class="container">
                                 <div class="row pb-2">
-                                    <label for="id_marca"><strong>Marca *</strong></label>
+                                    <label for="ciselectMarca"><strong>Marca *</strong></label>
                                     <div class="col d-flex justify-content-end">
                                         <button id="btn_md_cMarca" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
@@ -66,18 +59,14 @@
                                     </div>  
                                 </div>
                             </div>                            
-                            <select id="id_marca" data-require="nombre" class="selectpicker form-control" data-live-search="true">
-                                <option data-tokens="" disabled selected>Selecciona o busque un Marca</option>
-                                <option data-tokens="Lapicero">Lapicero</option>
-                                <option data-tokens="Borrador">Borrador</option>
-                                <option data-tokens="Papel">Papel</option>
+                            <select id="ciselectMarca" data-require="nombre" class="selectpicker form-control" data-live-search="true">
                             </select>
                         </div>
                         <!-- Categoría -->
                         <div class="form-group col-sm">
                             <div class="container">
                                 <div class="row pb-2">
-                                    <label for="id_categoria"><strong>Categoría *</strong></label>
+                                    <label for="ciselecCategoria"><strong>Categoría *</strong></label>
                                     <div class="col d-flex justify-content-end">
                                         <button id="btn_md_cCategoria" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
@@ -85,10 +74,7 @@
                                     </div>                                    
                                 </div>
                             </div>                                                               
-                            <select id="id_categoria" class="selectpicker form-control" data-live-search="true">
-                                <option data-tokens="" disabled selected>Selecciona un Categoría</option>
-                                <option data-tokens="Recepción">Recepción</option>
-                                <option data-tokens="Sistemas">Sistemas</option>
+                            <select id="ciselecCategoria" class="selectpicker form-control" data-live-search="true">
                             </select>
                         </div>
                     </div>
@@ -142,7 +128,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="descripcion_articulo" class="form-label">Descripción</label>
-                        <input type="number" class="form-control" id="descripcion_articulo" placeholder="Descripción">
+                        <textarea class="form-control" id="descripcion_articulo" name="comentarios" rows="3" cols="40">Escribe aquí tus comentarios</textarea>
+                        <!--<input type="number" class="form-control" id="descripcion_articulo" placeholder="Descripción">-->
                     </div> 
                 </div>
             </div>
@@ -288,7 +275,7 @@ $( "#btn-insert-collaborator" ).click(function() {
 //CREAR NUEVO
 $(document).on('click', '#btn_mdl_cAlmacen ', function() {
     //makeRequests(valDAlmacen);
-    console.log(valDAlmacen)
+    //console.log(valDAlmacen)
     //modal-requested
     var jqxhr = $.ajax({
         /*

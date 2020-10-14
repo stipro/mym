@@ -101,22 +101,49 @@
 //Ejecutamos cuando pagina este lista
 $( document ).ready(function() {
     console.log( "document loaded" );
+    //GET DATA ALMACEN
     makeRequests('');
+    //GET DATA PROVIDER
+    //GET DATA CATEGORY
+    
+    //GET DATA BRAND
+    dataMarca('');
 }); 
 //Activamos modal
 $(document).on('click', '#btn_mdl_article', function() {
-        $('#md_cArticulo').modal('show');
+    $('#md_cArticulo').modal('show');
+    dataMarca('');
+    makeRequests('');
 });
 //Si necesitas hacer algo con las respuestas del servidor
 //hacelas aqui.
 const handleReturnedData = (data) => {
     $("#filAlm").html(data).selectpicker('refresh');
+    $("#ciselectAlmacen").html(data).selectpicker('refresh');
 };
 const dataProvedor = (data) => {
     $("#filCodNom").html(data).selectpicker('refresh');
+    $("#ciselectProvedor").html(data).selectpicker('refresh');
 };
 const dataCategoria = (data) => {
     $("#filcat").html(data).selectpicker('refresh');
+    $("#ciselecCategoria").html(data).selectpicker('refresh');
+    
+};
+const dataReceivedBrand = (data) => {
+    $("#ciselectMarca").html(data).selectpicker('refresh');
+    //$("#filcat").html(data).selectpicker('refresh');
+}
+
+const dataMarca = async (data) => {
+    const body = new FormData();
+    body.append("data", data);
+    const returnCategoria = await fetch("./../../controllers/controllerBrandsList.php", { method: "POST", body});
+    const resultCategoria = await returnCategoria.json(); //await JSON.parse(returned);
+    dataReceivedBrand(resultCategoria);
+};
+const dataUMedida = (data) => {
+    //$("#filcat").html(data).selectpicker('refresh');
 };
 //Si necesitas hacer algo antes de enviar las
 //consultas, hacelo aqui.
