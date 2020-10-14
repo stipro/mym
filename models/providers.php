@@ -77,13 +77,13 @@ class Providor extends Conexion
         return $this->ConsultaSimple($query);
     }
     //GET NAME WAREHOUSE
-    public function getNombre(): array
+    public function getNombre($table): array
     {
-        $table = 'provedores';
+        $vtable = 'provedor';
         $state = '1';
         $where = "WHERE estado_provedor = :state";
         $array = array(':state' =>  $state);
-        return $this->ConsultaCompleja( $where, $array, $table);
+        return $this->ConsultaCompleja( $where, $array, $table, $vtable);
     }
     public function getSearch(string $termino): array
     {

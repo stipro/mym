@@ -25,7 +25,7 @@ if ($_POST) {
     if ($termino != '') {
         $data = $providor->getSearch($termino);
     } else {
-        $data = $providor->getNombre();
+        $data = $providor->getNombre('provedores');
         //$data = $providor->getAll($empezarDesde, $filasPagina);
     }
     $result = $providor->showSelect($data);

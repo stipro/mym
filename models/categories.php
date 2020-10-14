@@ -77,13 +77,13 @@ class Category extends Conexion
         return $this->ConsultaSimple($query);
     }
     //GET NAME WAREHOUSE
-    public function getNombre(): array
+    public function getNombre($table): array
     {
-        $table = 'categorias';
+        $vtable = 'categoria';
         $state = '1';
         $where = "WHERE estado_categoria = :state";
         $array = array(':state' =>  $state);
-        return $this->ConsultaCompleja( $where, $array, $table);
+        return $this->ConsultaCompleja( $where, $array, $table, $vtable);
     }
     public function getSearch(string $termino): array
     {

@@ -50,7 +50,7 @@
                     <!-- Producto -->
                     <div class="form-group">                                        
                         <label for="filCodNom"><strong>Proveedor</strong></label>
-                        <select id="filCodNom" class="selectpicker form-control" data-live-search="true">
+                        <select id="filCodNom" data-required='nombre' class="selectpicker form-control" data-live-search="true">
                             <option data-tokens="">Selecciona o busque un Producto</option>
                             <option data-tokens="Lapicero">Lapicero</option>
                             <option data-tokens="Borrador">Borrador</option>
@@ -149,7 +149,7 @@ const makeRequests = async (data) => {
 <script src="./../../assets/js/jquery-ui.js" type="text/javascript"></script>
 <script src="./../../libs/bootstrap-select/js/popper.min.js" type="text/javascript"></script>
 <script src="./../../libs/bootstrap-4.5.0/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="./../../libs/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>-->
-<script src="./../../libs/bootstrap-select/js/i18n/defaults-es_ES.min.js" type="text/javascript"></script>-->
+<script src="./../../libs/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+<script src="./../../libs/bootstrap-select/js/i18n/defaults-es_ES.min.js" type="text/javascript"></script>
 </body>
 </html>

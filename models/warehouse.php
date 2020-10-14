@@ -76,13 +76,13 @@ class Warehouse extends Conexion
         return $this->ConsultaSimple($query);
     }
     //GET NAME WAREHOUSE
-    public function getNombre(): array
+    public function getNombre($table): array
     {
-        $table = 'almacenes';
+        $vtable = 'almacen';
         $state = '1';
         $where = "WHERE estado_almacen = :state";
         $array = array(':state' =>  $state);
-        return $this->ConsultaCompleja( $where, $array, $table);
+        return $this->ConsultaCompleja( $where, $array, $table, $vtable);
     }
     public function getSearch(string $termino): array
     {
@@ -104,14 +104,10 @@ class Warehouse extends Conexion
     {
         $html = '';
         if (count($query)) {
-            //var_dump($query[5]);
-            //$html = '<button type="button" class="btn btn-primary">Primary</button>';
-            //$html = '<select id="id_almacen" data-require="nombre" class="selectpicker form-control" data-live-search="true">';
             $html = '<option data-tokens="">Selecciona un Almacen</option>';
             foreach ($query as $value){
                 $html .= '<option data-id="" data-tokens="01">' . $value['nombre_almacen'] . '</option>';
             }
-            //$html .= '</select>';
         } else {
             $html = '<option data-id="">No hay datos...</option> <h4 class="text-center"></h4>';
         }

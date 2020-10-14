@@ -25,7 +25,7 @@ if ($_POST) {
     if ($termino != '') {
         $data = $warehouse->getSearch($termino);
     } else {
-        $data = $warehouse->getNombre();
+        $data = $warehouse->getNombre('almacenes');
         //$data = $warehouse->getAll($empezarDesde, $filasPagina);
     }
     $result = $warehouse->showSelect($data);

@@ -25,7 +25,7 @@ if ($_POST) {
     if ($termino != '') {
         $data = $category->getSearch($termino);
     } else {
-        $data = $category->getNombre();
+        $data = $category->getNombre('categorias');
         //$data = $category->getAll($empezarDesde, $filasPagina);
     }
     $result = $category->showSelect($data);
