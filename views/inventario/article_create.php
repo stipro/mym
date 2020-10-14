@@ -14,7 +14,6 @@
                 </div>
                 <div class="container-fluid">
                     <div class="form-row">
-
                         <!-- Almacen -->
                         <div class="form-group col-sm" id="contAlmacen">
                             <div class="container">
@@ -106,7 +105,7 @@
                         <div class="form-group col-sm">
                             <div class="container">
                                 <div class="row pb-2">
-                                    <label for="id_uMedida"><strong>U. Medida *</strong></label>
+                                    <label for="ciselecUMedida"><strong>U. Medida *</strong></label>
                                     <div class="col d-flex justify-content-end">
                                         <button id="btn_md_uMedida" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
@@ -114,17 +113,12 @@
                                     </div>                                    
                                 </div>
                             </div>                                                               
-                            <select id="id_uMedida" class="selectpicker form-control" data-live-search="true">
+                            <select id="ciselecUMedida" class="selectpicker form-control" data-live-search="true">
                                 <option data-tokens="" disabled selected>Selecciona u. Medida</option>
                                 <option data-tokens="Recepción">Recepción</option>
                                 <option data-tokens="Sistemas">Sistemas</option>
                             </select>
                         </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="caracteristica_articulo" class="form-label">Caracteristica</label>
-                        <input type="text" class="form-control" id="caracteristica_articulo" placeholder="Caracteristica">
                     </div>
                     <div class="mb-3">
                         <label for="descripcion_articulo" class="form-label">Descripción</label>
@@ -138,7 +132,7 @@
                 <!--ICONO-->
                 <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="16" height="16" title="Cerrar">    
                 Cerrar</button>
-                <button id="btn-insert-collaborator" type="button" class="btn btn-primary">
+                <button id="articlebtnInsert" type="button" class="btn btn-primary">
                 <!--ICONO-->
                 <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil.svg" alt="" width="16" height="16" title="Guardar">
                 Guardar</button>
@@ -150,9 +144,6 @@
     </div>
 </div>
 <script>
-////DOM elements
-//let idalmacen = document.getElementById("id_almacen");
-//valDAlmacen = idalmacen.dataset.require;
 $( document ).ready(function() {
     console.log( "document loaded" );
     //makeRequests('');
@@ -160,42 +151,40 @@ $( document ).ready(function() {
 $( window ).on( "load", function() {
     console.log( "window loaded" );
 });
+//DOM elements select
+var ciselectAlmacen = document.getElementById('ciselectAlmacen');
+var ciselectProvedor = document.getElementById('ciselectProvedor');
+var ciselectMarca = document.getElementById('ciselectMarca');
+var ciselecCategoria = document.getElementById('ciselecCategoria');
+var ciselecUMedida = document.getElementById('ciselecUMedida');
+//DOM element Boton
+var articlebtnInsert = document.getElementById('articlebtnInsert');
+//DOM eventos
+articlebtnInsert.addEventListener("click", function(evento){
+    //OBTENEMOS DATA ID
+    var dtidAlmacen = ciselectAlmacen.options[ciselectAlmacen.selectedIndex].getAttribute('data-id');
+    var dtidProvedor = ciselectProvedor.options[ciselectProvedor.selectedIndex].getAttribute('data-id');
+    var dtidMarca = ciselectMarca.options[ciselectMarca.selectedIndex].getAttribute('data-id');
+    var dtidCategoria = ciselecCategoria.options[ciselecCategoria.selectedIndex].getAttribute('data-id');
+    var dtidUMedida = ciselecUMedida.options[ciselecUMedida.selectedIndex].getAttribute('data-id');
+    //TEXTO
+    var dttxtalmacen = ciselectAlmacen.options[ciselectAlmacen.selectedIndex].text;
+    console.log(dtidAlmacen);
+    actionnArticulo('');
+});
 /*
-    //Si necesitas hacer algo con las respuestas del servidor
-    //hacelas aqui.
-    const handleReturnedData = (data) => {
-        //
-        console.log(data);
-        $("#contAlmacen").append(data);
-        //idalmacen.innerHTML = data;
-    };
-    //Si necesitas hacer algo antes de enviar las
-    //consultas, hacelo aqui.
-    const beforeSending = () => {
-      console.log("before");
-    };
-
-    //Si necesitas hacer algo despues de que terminen las
-    //consultas, hacelas aqui.
-    const afterSending = () => {
-      console.log("after");
-    };
-    const makeRequests = async (data) => {
-        beforeSending();
-        console.log('Se hara una consulta de datos almacen ' + data);
-        const body = new FormData();
-        body.append("data", data);
-        const returned = await fetch("./../../controllers/controllerWarehouseList.php", { method: "POST", body});
-        const result = await returned.json(); //await JSON.parse(returned);
-        handleReturnedData(result);
-        afterSending();
-    };
-    */
-$( "#btn-insert-collaborator" ).click(function() {
+const actionnArticulo = async (data) => {
+    const body = new FormData();
+    body.append("data", data);
+    const returnMarca = await fetch("./../../controllers/controllerBrandsList.php", { method: "POST", body});
+    const resultMarca = await returnMarca.json(); //await JSON.parse(returned);
+    dataReceivedBrand(resultMarca);
+};
+*/
+$( "#articlebtnInsert" ).click(function() {
     //OBTENEMOS DATOS
     var id_almacen = document.getElementById('id_almacen');
-    //TEXTO
-    var txt_almacen = id_almacen.options[id_almacen.selectedIndex].text;
+    
     //DATA-TOKENS
     var dt_almacen = id_almacen.options[id_almacen.selectedIndex].getAttribute('data-tokens');
     var id_proveedor = document.getElementById('id_proveedor');

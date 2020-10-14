@@ -64,7 +64,7 @@
                     <div class="col-sm">
                         <!---->
                         <div class="form-group">                                        
-                            <label for="filcat"><strong>Filtrar por categoria</strong></label>
+                            <label for="filcat"><strong>Categoria</strong></label>
                             <select id="filcat" class="selectpicker form-control" data-live-search="true">
                                 <option data-tokens="">Selecciona una categoría</option>
                                 <option data-tokens="Accesorios">Accesorios</option>
@@ -85,6 +85,8 @@
             <hr>
         </div>
     </div>
+    <div id="idtableArticle">
+    </div>
 </div>
 <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
 <?php
@@ -96,25 +98,37 @@
 </div>
 
 <script>
-////DOM elements
 //valDAlmacen = idalmacen.dataset.require;
 //Ejecutamos cuando pagina este lista
 $( document ).ready(function() {
+
+    
     console.log( "document loaded" );
     //GET DATA ALMACEN
     makeRequests('');
     //GET DATA PROVIDER
     //GET DATA CATEGORY
-    
+    //GET DATA TABLE
+    dtableArticle('');    
     //GET DATA BRAND
     dataMarca('');
-}); 
+});
+////DOM elements
+var itableArticle = document.getElementById("idtableArticle");
 //Activamos modal
 $(document).on('click', '#btn_mdl_article', function() {
     $('#md_cArticulo').modal('show');
     dataMarca('');
     makeRequests('');
 });
+//Obtenemos datos de la tabla
+const dtableArticle = async (data) => {
+    const body = new FormData();
+    body.append("data", data);
+    const returnArticulo = await fetch("./../../controllers/controllerArticleList.php", { method: "POST", body});
+    const resultArticulo = await returnArticulo.json(); //await JSON.parse(returned);
+    dataReceivedArticle(resultArticulo);
+};
 //Si necesitas hacer algo con las respuestas del servidor
 //hacelas aqui.
 const handleReturnedData = (data) => {
@@ -134,13 +148,18 @@ const dataReceivedBrand = (data) => {
     $("#ciselectMarca").html(data).selectpicker('refresh');
     //$("#filcat").html(data).selectpicker('refresh');
 }
+const dataReceivedArticle = (data) => {
+    
+    itableArticle.innerHTML = data;
+    //$( "#idtableArticle" ).append( data );
+}
 
 const dataMarca = async (data) => {
     const body = new FormData();
     body.append("data", data);
-    const returnCategoria = await fetch("./../../controllers/controllerBrandsList.php", { method: "POST", body});
-    const resultCategoria = await returnCategoria.json(); //await JSON.parse(returned);
-    dataReceivedBrand(resultCategoria);
+    const returnMarca = await fetch("./../../controllers/controllerBrandsList.php", { method: "POST", body});
+    const resultMarca = await returnMarca.json(); //await JSON.parse(returned);
+    dataReceivedBrand(resultMarca);
 };
 const dataUMedida = (data) => {
     //$("#filcat").html(data).selectpicker('refresh');

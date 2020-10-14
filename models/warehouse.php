@@ -106,7 +106,7 @@ class Warehouse extends Conexion
         if (count($query)) {
             $html = '<option data-tokens="">Selecciona un Almacen</option>';
             foreach ($query as $value){
-                $html .= '<option data-id="" data-tokens="01">' . $value['nombre_almacen'] . '</option>';
+                $html .= '<option data-id="'.$value['id_almacen'].'" data-tokens="01">' . $value['nombre_almacen'] . '</option>';
             }
         } else {
             $html = '<option data-id="">No hay datos...</option> <h4 class="text-center"></h4>';

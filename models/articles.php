@@ -2,7 +2,7 @@
 declare (strict_types = 1);
 require_once('./../db/conexion.php');
 
-class Producto extends Conexion
+class Article extends Conexion
 {
     /*
     public $intruc;
@@ -87,9 +87,9 @@ class Producto extends Conexion
 
     }
 
-    public function getAll(int $desde, int $filas): array
+    public function getAll(): array
     {
-        $query = "SELECT * FROM productos ORDER BY nombre_producto";
+        $query = "SELECT * FROM articulos ORDER BY nombre_articulo";
         return $this->ConsultaSimple($query);
     }
     public function getSearch(string $termino): array
@@ -121,24 +121,25 @@ class Producto extends Conexion
                             <th scope="col">stock</th>
                             <th scope="col">caracteristica</th>
                             <th scope="col">descripcion</th>
+                            <th scope="col">Acciones</th>
                         </thead>
                         <tbody>';
             foreach ($array as $value){
-                $html .= '<tr>
-                        <td class="d-none">' . $value['nIdAlm'] . '</td>
-                        <td>' . $value['nCodAlm'] . '</td>
-                        <td>' . $value['nIngAlm'] . '</td>
-                        <td>' . $value['nEgrAlm'] . '</td>
-                        <td>' . $value['fRegAlm'] . '</td>
-                        <td>' . $value['nNFacAlm'] . '</td>
-                        <td>' . $value['cNomAlm'] . '</td>
-                        <td>' . $value['cObsAlm'] . '</td>
+                $html .='<tr>
+                            <td class="d-none">' . $value['id_articulo'] . '</td>
+                            <td>1</td>
+                            <td>' . $value['codigo_articulo'] . '</td>
+                            <td>' . $value['nombre_articulo'] . '</td>
+                            <td>' . $value['precio_articulo'] . '</td>
+                            <td>' . $value['stock_articulo'] . '</td>
+                            <td>' . $value['caracteristica_articulo'] . '</td>
+                            <td>' . $value['descripcion_articulo'] . '</td>
                         <td class="text-center">
-                            <button title="Editar este usuario" class="editar btn btn-secondary" data-toggle="modal" data-target="#ventanaModal">
+                            <button title="Editar este articulo" class="editar btn btn-secondary" data-toggle="modal" data-target="#ventanaModal">
                                  <i class="fa fa-pencil-square-o"></i>
                             </button>
 
-                            <button title="Eliminar este usuario" type="button" class="eliminar btn btn-danger" data-toggle="modal" data-target="#ventanaModal">
+                            <button title="Eliminar este articulo" type="button" class="eliminar btn btn-danger" data-toggle="modal" data-target="#ventanaModal">
                                 <i class="fa fa-trash-o"></i>
                             </button>
                         </td>
