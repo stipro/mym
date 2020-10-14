@@ -25,11 +25,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button id="btn-warehouse-cCancel" type="button" class="btn btn-secondary" data-dismiss="modal">
+        <button id="btn-measurements-cCancel" type="button" class="btn btn-secondary" data-dismiss="modal">
         <!--ICONO-->
         <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="16" height="16" title="Cerrar">    
         Cerrar</button>
-        <button id="btn-warehouse-cCreate" type="button" class="btn btn-primary">Registrar</button>
+        <button id="btn-measurements-cCreate" type="button" class="btn btn-primary">Registrar</button>
       </div>
     </div>
   </div>

@@ -6,7 +6,7 @@
         <h5 class="modal-title">Creación nuevo Almacen</h5>
       </div>
       <div class="modal-body">
-      <div id="respuesta">
+      <div id="residmdlWarehouse"><!--respuesta-->
         <div id="actions" class="container">
           <div class="row">
             <div id="gif" class="col-3">
@@ -225,7 +225,7 @@ $(document).ready(function() {
     // Asignar otra función de completado para la petición de más arriba
     jqxhr.always(function() {
     console.log( "completado segundo" );
-    $("#respuesta").empty().append(alert);
+    $("#residmdlWarehouse").empty().append(alert);
 
     });
   });
