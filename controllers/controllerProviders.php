@@ -6,7 +6,7 @@ if($_POST){
     //VALIDAMOS EL RUC
     if(strlen($_POST['ruc']) == 11)
     {
-        $proveedor = new Proveedor();
+        $providor = new Providor();
         $intruc  = intval($_POST['ruc']);
         $strnombre = $_POST['nombre'];
         $strDireccion = $_POST['direccion'];
@@ -14,9 +14,10 @@ if($_POST){
         $intTelefono = intval($_POST['telefono']);
         $intCelular = intval($_POST['celular']);
         $strCorreo = $_POST['correo'];
-        $bolestad = $_POST['estado'];
         $strDescripcion = $_POST['descripcion'];
-        $proveedor->insert($intruc,
+        $strLogoUrl = 'none';
+        $bolestad = $_POST['estado'];
+        $providor->insert($intruc,
                             $strnombre,
                             $strRazSocial,
                             $strDireccion,
@@ -24,6 +25,7 @@ if($_POST){
                             $intCelular,
                             $strCorreo,
                             $strDescripcion,
+                            $strLogoUrl,
                             $bolestad);
         
     }

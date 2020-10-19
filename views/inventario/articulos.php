@@ -85,7 +85,7 @@
             <hr>
         </div>
     </div>
-    <div id="idtableArticle">
+    <div class="table-responsive" id="idtableArticle">
     </div>
 </div>
 <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
@@ -167,12 +167,12 @@ const dataUMedida = (data) => {
 //Si necesitas hacer algo antes de enviar las
 //consultas, hacelo aqui.
 const beforeSending = () => {
-  console.log("before");
+  //console.log("before");
 };
 //Si necesitas hacer algo despues de que terminen las
 //consultas, hacelas aqui.
 const afterSending = () => {
-  console.log("after");
+  //console.log("after");
 };
 const makeRequests = async (data) => {
     beforeSending();

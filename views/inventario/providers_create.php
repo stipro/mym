@@ -11,8 +11,16 @@
             </button>
         </div>
         <div class="modal-body">
-        <div id="respuesta">
-        </div>
+            <div id="residmdlProvider"><!--respuesta-->
+                <div id="actions" class="container">
+                    <div class="row">
+                        <div id="gif" class="col-3">
+                        </div>
+                        <div id="typing" class="col">
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="row">
             <div class="col-sm-3 text-center">
                 <div class="kv-avatar">
@@ -37,7 +45,7 @@
                     </div>
                     <div class="col-sm">
                         <div class="form-group">
-                            <label for="proveedor_nombre" class="form-label">Nombre</label>
+                            <label for="proveedor_nombre" class="form-label">Nombre *</label>
                             <input type="text" class="form-control" id="proveedor_nombre" placeholder="Nombre">
                         </div>
                     </div>
@@ -60,13 +68,13 @@
                 <div class="form-row">
                     <div class="col-sm">
                         <div class="form-group">
-                            <label for="telefono_proveedor" class="form-label">Telefono*</label>
+                            <label for="telefono_proveedor" class="form-label">Telefono</label>
                             <input type="number" class="form-control" id="telefono_proveedor" placeholder="Telefono">
                         </div>
                     </div>
                     <div class="col-sm">
                         <div class="form-group">
-                            <label for="celular_proveedor" class="form-label">Celular*</label>
+                            <label for="celular_proveedor" class="form-label">Celular</label>
                             <input type="number" class="form-control" id="celular_proveedor" placeholder="Celular">
                         </div>
                     </div>
@@ -76,9 +84,7 @@
                             <input type="email" class="form-control" id="correo_proveedor" placeholder="Correo">
                         </div>
                     </div>
-                    
     
-
 <!--CORREO
                             <div class="col-sm">
                                 <div class="form-group">
@@ -118,17 +124,10 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
         <!--ICONO-->
-        <svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-        <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
-        <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
-        </svg>
+        <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="16" height="16" title="Cerrar">
         Cerrar</button>
-        <button id="btn-insert" type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmacion_modal">
-        <svg class="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" d="M11.293 1.293a1 1 0 0 1 1.414 0l2 2a1 1 0 0 1 0 1.414l-9 9a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"/>
-        <path fill-rule="evenodd" d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 0 0 .5.5H4v.5a.5.5 0 0 0 .5.5H5v.5a.5.5 0 0 0 .5.5H6v-1.5a.5.5 0 0 0-.5-.5H5v-.5a.5.5 0 0 0-.5-.5H3z"/>
-        </svg>
+        <button id="providerbtnInsert" type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmacion_modal">
+        <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil.svg" alt="" width="16" height="16" title="Guardar">
         Guardar</button>
         <button id="btn-limpiar" type="button" class="btn btn-primary">
         Limpiar
@@ -156,12 +155,12 @@ $( "#btn-limpiar" ).click(function() {
     alertPrimary+= '</div>';
     $("#respuesta").empty().append(alertPrimary);
 });
-$( "#btn-insert" ).click(function() {
+$( "#providerbtnInsert" ).click(function() {
     //OBTENEMOS DATOS
     let ruc = $('#proveedor_ruc').val();
     let nombre = $('#proveedor_nombre').val();
-    let direccion = $('#direccion_proveedor').val();
     let razSocial = $('#razonsoc_proveedor').val();
+    let direccion = $('#direccion_proveedor').val();
     let telefono = $('#telefono_proveedor').val();
     let celular = $('#celular_proveedor').val();
     let correo = $('#correo_proveedor').val();
@@ -182,8 +181,8 @@ $( "#btn-insert" ).click(function() {
     var proveedor = {
       "ruc" : ruc,
       "nombre" : nombre,
-      "direccion" : direccion,
       "razSocial" : razSocial,
+      "direccion" : direccion,
       "telefono" : telefono,
       "celular" : celular,
       "correo" : correo,
@@ -207,7 +206,7 @@ $( "#btn-insert" ).click(function() {
         alertPrimary = '<div class="alert alert-primary" role="alert">';
         alertPrimary+= 'A simple primary alert—check it out!';
         alertPrimary+= '</div>';
-        $("#respuesta").empty().append(data);
+        $("#residmdlProvider").empty().append(data);
         console.log( data );
     })
     //SI OCURRE UN ERROR

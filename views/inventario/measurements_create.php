@@ -9,12 +9,12 @@
       <div id="respuesta"></div>
         <div class="form-row">
           <div class="form-group col-sm">
-            <label for="nombre_measurements" class="form-label">Número de RUC del emisor * </label>
+            <label for="nombre_measurements" class="form-label">Nombre *</label>
             <input type="text" class="form-control" id="nombre_measurements" placeholder="Nombre" value="">
           </div>
           <div class="form-group col-sm">
             <label for="abreviatura_measurements" class="form-label">Abreviatura</label>
-            <input type="text" class="form-control" id="abreviatura_measurements" placeholder="Descripcion">
+            <input type="text" class="form-control" id="abreviatura_measurements" placeholder="Abr.">
           </div>
           <div class="form-group col-sm">
             <div class="form-check form-switch">

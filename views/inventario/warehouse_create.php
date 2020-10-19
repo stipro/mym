@@ -6,19 +6,19 @@
         <h5 class="modal-title">Creación nuevo Almacen</h5>
       </div>
       <div class="modal-body">
-      <div id="residmdlWarehouse"><!--respuesta-->
-        <div id="actions" class="container">
-          <div class="row">
-            <div id="gif" class="col-3">
-            </div>
-            <div id="typing" class="col">
+        <div id="residmdlWarehouse"><!--respuesta-->
+          <div id="actions" class="container">
+            <div class="row">
+              <div id="gif" class="col-3">
+              </div>
+              <div id="typing" class="col">
+              </div>
             </div>
           </div>
         </div>
-      </div>
         <div class="form-row">
           <div class="form-group col-sm">
-            <label for="nombre_almacen" class="form-label">Nombre</label>
+            <label for="nombre_almacen" class="form-label">Nombre *</label>
             <input type="text" class="form-control" id="nombre_almacen" placeholder="Nombre" value="">
           </div>
           <div class="form-group col-sm">
@@ -28,7 +28,7 @@
           <div class="form-group col-sm">
             <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="estado_almacen" checked>
-            <label class="form-check-label" for="estado_almacen">Estado</label>
+            <label class="form-check-label" for="estado_almacen">Estado *</label>
           </div>
         </div>
         </div>
@@ -38,7 +38,10 @@
         <!--ICONO-->
         <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="16" height="16" title="Cerrar">    
         Cerrar</button>
-        <button id="btn-warehouse-cCreate" type="button" class="btn btn-primary">Registrar</button>
+        <button id="btn-warehouse-cCreate" type="button" class="btn btn-primary">
+        <!--ICONO-->
+        <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil.svg" alt="" width="16" height="16" title="Guardar">
+        Registrar</button>
       </div>
     </div>
   </div>

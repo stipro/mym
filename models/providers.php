@@ -19,16 +19,13 @@ class Providor extends Conexion
     {
         parent::__construct();
     }
-    public function insert(int $intruc, string $strnombre, string $strRazSocial, string $strDireccion, int $intTelefono, int $intCelular, string $strCorreo, string $strDescripcion, string $bolestad)
+    public function insert(int $intruc, string $strnombre, string $strRazSocial, string $strDireccion, int $intTelefono, int $intCelular, string $strCorreo, string $strDescripcion, string $strLogoUrl, string $bolestad)
     {
         try 
         {
-            $alertsuccess = '<div class="alert alert-success" role="alert">
-            
-            </div>';
-            $query  = "INSERT INTO provedores VALUES (null, :intruc, :strnombre, :strRazSocial, :strDireccion, :intTelefono, :intCelular, :strCorreo, :strDescripcion, :bolestad);";
+            $query  = "INSERT INTO provedores VALUES (NULL, :intruc, :strnombre, :strRazSocial, :strDireccion, :intTelefono, :intCelular, :strCorreo, :strDescripcion, :strLogoUrl, :bolestad);";
             $result = $this->db->prepare($query);
-            $sqlsuccess = $result -> execute(array(':intruc' => $intruc, ':strnombre' => $strnombre, ':strRazSocial' => $strRazSocial, ':strDireccion' => $strDireccion, ':intTelefono' => $intTelefono, ':intCelular' => $intCelular,':strCorreo' => $strCorreo, ':strDescripcion' => $strDescripcion, ':bolestad' => $bolestad));
+            $sqlsuccess = $result -> execute(array(':intruc' => $intruc, ':strnombre' => $strnombre, ':strRazSocial' => $strRazSocial, ':strDireccion' => $strDireccion, ':intTelefono' => $intTelefono, ':intCelular' => $intCelular,':strCorreo' => $strCorreo, ':strDescripcion' => $strDescripcion, ':strLogoUrl' => $strLogoUrl, ':bolestad' => $bolestad));
             if($sqlsuccess) // MENSAJE DE EXITO
             {
                 echo '<div class="alert alert-success" role="alert">
