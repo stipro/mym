@@ -13,7 +13,7 @@
   <body>
   <?php
         //LLamo a mi nav
-        include('./views/nav.php');
+        include('./nav.php');
     ?>
     <div class="container-fluid">
     <h3>Sistema complementario, le da la Bienvenida</h3>
@@ -27,7 +27,7 @@
                     <p class="card-text">
                     Modulo para generar, modificar, eliminar y subir las comisiones de los Vendedores
                     </p>
-                    <a href=".//comision/main.php" class="btn btn-primary">Ir Comisiones</a>
+                    <a href="./comision/main.php" class="btn btn-primary">Ir Comisiones</a>
                 </div>
             </div>
             <!-- CARD 2 -->
@@ -38,10 +38,10 @@
                     <p class="card-text">
                     Modulo Inventario, sirve para inventariar los items de la corporativa CorpM&M
                     </p>
-                    <a href=".//inventario/main.php" class="btn btn-primary">Ir Inventarios</a>
+                    <a href="./inventario/main.php" class="btn btn-primary">Ir Inventarios</a>
                 </div>
             </div>
-            <!-- CARD 2 -->
+            <!-- CARD 3 -->
             <div class="card">
                 <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
                 <div class="card-body">
@@ -49,7 +49,18 @@
                     <p class="card-text">
                     Modulo Inventario, sirve para inventariar los items de la corporativa CorpM&M
                     </p>
-                    <a href=".//transporte/main.php" class="btn btn-primary">Ir Inventarios</a>
+                    <a href="./transporte/main.php" class="btn btn-primary">Ir Inventarios</a>
+                </div>
+            </div>
+            <!-- CARD 4 -->
+            <div class="card">
+                <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">Sunat/OSE</h4>
+                    <p class="card-text">
+                    Modulo Inventario, sirve para inventariar los items de la corporativa CorpM&M
+                    </p>
+                    <a href="./sunat/main.php" class="btn btn-primary">Ir Inventarios</a>
                 </div>
             </div>
         </div>

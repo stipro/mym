@@ -5,6 +5,7 @@ $menu = array(
     "comision" => "comision",
     "inventario" => "inventario",
     "transporte" => "transporte",
+    "sunat" => "sunat",
 );
 //COMPRUEBO URL OBTENIDA ESTA VACIA
 if(isset($urlobtained)){
@@ -13,6 +14,7 @@ if(isset($urlobtained)){
     $comision = "../".$menu["comision"];
     $inventario = "../".$menu["inventario"];
     $transporte = "../".$menu["transporte"];
+    $sunat = "../".$menu["sunat"];
 
 }else{
     //COMUTAR
@@ -20,6 +22,7 @@ if(isset($urlobtained)){
     $comision = "./".$menu["comision"];
     $inventario = "./".$menu["inventario"];
     $transporte = "./".$menu["transporte"];
+    $sunat = "./".$menu["sunat"];
 }
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -39,7 +42,7 @@ if(isset($urlobtained)){
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="<?php echo $comision."/main.php" ?>">Inicio</a>
-            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Reportes</a>
             <a class="dropdown-item" href="#">Something else here</a>
             </div>
         </li>
@@ -49,6 +52,8 @@ if(isset($urlobtained)){
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="<?php echo $inventario."/main.php" ?>">Inicio</a>
+            <a class="dropdown-item" href="<?php echo $inventario."/articulos.php" ?>">Articulo</a>
+            <a class="dropdown-item" href="<?php echo $inventario."/almacen.php" ?>">Almacen</a>
             <a class="dropdown-item" href="<?php echo $inventario."/products.php" ?>">Producto</a>
             <a class="dropdown-item" href="<?php echo $inventario."/providers.php" ?>">Proveedor</a>
             <a class="dropdown-item" href="#">Something else here</a>
@@ -69,7 +74,7 @@ if(isset($urlobtained)){
             Sunat / OSE
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="<?php echo $transporte."/main.php" ?>">Inicio</a>
+            <a class="dropdown-item" href="<?php echo $sunat."/main.php" ?>">Inicio</a>
             <a class="dropdown-item" href="#">Validacion Documentos</a>
             <a class="dropdown-item" href="#">Something else here</a>
             </div>
