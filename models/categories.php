@@ -105,7 +105,7 @@ class Category extends Conexion
     {
         $html = '';
         if (count($query)) {
-            $html = '<option data-tokens="">Selecciona un Categoria</option>';
+            $html = '<option data-id="">Selecciona un Categoria</option>';
             foreach ($query as $value){
                 $html .= '<option data-id="" data-tokens="01">' . $value['nombre_categoria'] . '</option>';
             }

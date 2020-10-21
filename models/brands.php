@@ -104,7 +104,7 @@ class Brand extends Conexion
     {
         $html = '';
         if (count($query)) {
-            $html = '<option data-tokens="">Selecciona un Marca</option>';
+            $html = '<option data-id="">Selecciona un Marca</option>';
             foreach ($query as $value){
                 $html .= '<option data-id="'.$value['id_marca'].'" data-tokens="01">' . $value['nombre_marca'] . '</option>';
             }

@@ -133,21 +133,22 @@ const dtableArticle = async (data) => {
 //hacelas aqui.
 const handleReturnedData = (data) => {
     $("#filAlm").html(data).selectpicker('refresh');
-    $("#ciselectAlmacen").html(data).selectpicker('refresh');
+    $("#cArticle_idselectWarehouse").html(data).selectpicker('refresh');
 };
 const dataProvedor = (data) => {
     $("#filCodNom").html(data).selectpicker('refresh');
-    $("#ciselectProvedor").html(data).selectpicker('refresh');
-};
-const dataCategoria = (data) => {
-    $("#filcat").html(data).selectpicker('refresh');
-    $("#ciselecCategoria").html(data).selectpicker('refresh');
-    
+    $("#cArticle_idselectProvider").html(data).selectpicker('refresh');
 };
 const dataReceivedBrand = (data) => {
-    $("#ciselectMarca").html(data).selectpicker('refresh');
+    $("#cArticle_idselectBrand").html(data).selectpicker('refresh');
     //$("#filcat").html(data).selectpicker('refresh');
 }
+const dataCategoria = (data) => {
+    $("#filcat").html(data).selectpicker('refresh');
+    $("#cArticle_idselectCategory").html(data).selectpicker('refresh');
+    
+};
+
 const dataReceivedArticle = (data) => {
     
     itableArticle.innerHTML = data;
