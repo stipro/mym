@@ -114,9 +114,9 @@
                                 </div>
                             </div>                                                               
                             <select id="cArticle_idSelectUMeasurement" class="selectpicker form-control" data-live-search="true">
-                                <option data-tokens="" disabled selected>Selecciona u. Medida</option>
-                                <option data-tokens="Recepción">Recepción</option>
-                                <option data-tokens="Sistemas">Sistemas</option>
+                                <option data-id="0" disabled selected>Selecciona u. Medida</option>
+                                <option data-id="1">Recepción</option>
+                                <option data-id="2">Sistemas</option>
                             </select>
                         </div>
                     </div>
@@ -193,13 +193,13 @@ $( "#articlebtnInsert" ).click(function() {
     var dt_provedor = id_provedor.options[id_provedor.selectedIndex].getAttribute('data-id');
     var dt_marca = id_marca.options[id_marca.selectedIndex].getAttribute('data-id');
     var dt_categoria = id_categoria.options[id_categoria.selectedIndex].getAttribute('data-id');
+    var dt_umedida = id_umedida.options[id_umedida.selectedIndex].getAttribute('data-id');
     //DATA VALUE
     var dt_codigo = id_codigo.value;
     var dt_nombre = id_nombre.value;
     var dt_precio = id_precio.value;
     var dt_stock = id_stock.value;
     var dt_caracteristica = id_caracteristica.value;
-    var dt_umedida = id_umedida.value;
     var dt_descripcion = id_descripcion.value;
     /*
     //VALIDACION
@@ -233,12 +233,15 @@ $( "#articlebtnInsert" ).click(function() {
     let year = date.getFullYear()
     //Convertimos en Formato deseado
     if(month < 10){
-        var dateformate = `${day}-0${month}-${year}`;
+        var dateformate = `${year}-0${month}-${day}`;
     }else{
-        var dateformate = `${day}-${month}-${year}`;
+        var dateformate = `${year}-${month}-${day}`;
     }
-    var hora = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-    var dateRegistro = dateformate + hora;
+    dateRegistro = dateformate;
+    //var hora = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    //var dateRegistro = dateformate + ' ' + hora;
+    console.log(dateRegistro);
+    console.log(Date());
     //AGRUPAMOS DATOS OBTENIDO
     var colaborador = {
         "dt_almacen" : dt_almacen,
@@ -254,6 +257,7 @@ $( "#articlebtnInsert" ).click(function() {
         "dt_descripcion" : dt_descripcion,
         "dateRegistro" : dateRegistro,
     };
+    console.log(colaborador);
     var jqxhr = $.ajax({        
         beforeSend: function(){
             alertPrimary = '<div class="alert alert-primary" role="alert">';

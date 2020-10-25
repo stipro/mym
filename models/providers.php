@@ -104,7 +104,7 @@ class Providor extends Conexion
         if (count($query)) {
             $html = '<option data-id="">Selecciona un Provedor</option>';
             foreach ($query as $value){
-                $html .= '<option data-id="" data-tokens="01">' . $value['nombre_provedor'] . '</option>';
+                $html .= '<option data-id="' . $value['id_provedor'] . '" data-tokens="01">' . $value['nombre_provedor'] . '</option>';
             }
         } else {
             $html = '<option data-id="">No hay datos...</option> <h4 class="text-center"></h4>';

@@ -19,32 +19,51 @@ class Article extends Conexion
     {
         parent::__construct();
     }
-    public function insert(string $strcodigo, string $strnombre, string $fotprecio, string $fotstock, string $strDescripcion)
+    public function insert(int $strprovedor, int $strcategoria, int $strmarca, string $strcodigo, string $strnombre, float $fotprecio, int $fotstock, string $strcaracteristica, string $strdescripcion, int $strumedida, $strdateregistro)
     {
+        //return $strdateregistro;
         try 
         {
-            $alertsuccess = '<div class="alert alert-success" role="alert">
-            
-            </div>';
-            $query  = "INSERT INTO productos(
-                codigo_producto,
-                nombre_producto,
-                precio_producto,
-                stock_producto,
-                descripcion_producto
-            ) 
-            VALUES (:strcodigo, 
-            :strnombre, 
-            :fotprecio, 
-            :fotstock, 
-            :strDescripcion);";
+            $null = null;
+            $query = "INSERT INTO articulos(
+                id_provedor,
+                id_categoria,
+                id_marca,
+                codigo_articulo,
+                nombre_articulo,
+                precio_articulo,
+                stock_articulo,
+                caracteristica_articulo,
+                descripcion_articulo,
+                id_uniMedida,
+                registro_articulo) 
+            VALUES (
+                :strprovedor,
+                :strcategoria,
+                :strmarca,
+                :strcodigo,
+                :strnombre, 
+                :fotprecio, 
+                :fotstock, 
+                :strcaracteristica,
+                :strdescripcion,
+                :null,
+                :strdateregistro);";
             $result = $this->db->prepare($query);
+            $result -> bindParam(':strprovedor', $strprovedor, PDO::PARAM_INT);
+            $result -> bindParam(':strcategoria', $strcategoria, PDO::PARAM_INT);
+            $result -> bindParam(':strmarca', $strmarca, PDO::PARAM_INT);
             $result -> bindParam(':strcodigo', $strcodigo, PDO::PARAM_STR);
             $result -> bindParam(':strnombre', $strnombre, PDO::PARAM_STR);
             $result -> bindParam(':fotprecio', $fotprecio, PDO::PARAM_STR);
-            $result -> bindParam(':fotstock', $fotstock, PDO::PARAM_STR);
-            $result -> bindParam(':strDescripcion', $strDescripcion, PDO::PARAM_STR);
+            $result -> bindParam(':fotstock', $fotstock, PDO::PARAM_INT);
+            $result -> bindParam(':strcaracteristica', $strcaracteristica, PDO::PARAM_STR);
+            $result -> bindParam(':strdescripcion', $strdescripcion, PDO::PARAM_STR);
+            $result -> bindParam(':null', $null, PDO::PARAM_NULL);
+            $result -> bindParam(':strdateregistro', $strdateregistro, PDO::PARAM_STR);
             $sqlsuccess = $result -> execute();
+            //OBTENEMOS ID
+            //$lastvenIdsql = $db->lastInsertId();
             if($sqlsuccess) // MENSAJE DE EXITO
             {
                 echo '<div class="alert alert-success" role="alert">
