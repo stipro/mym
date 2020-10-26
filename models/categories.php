@@ -110,7 +110,8 @@ class Category extends Conexion
                 $html .= '<option data-id="' . $value['id_categoria'] . '" data-tokens="01">' . $value['nombre_categoria'] . '</option>';
             }
         } else {
-            $html = '<option data-id="">No hay datos...</option> <h4 class="text-center"></h4>';
+            $html = '<option data-id="" selected="true" disabled="disabled">Selecciona un Categoría</option>';
+            $html .= '<option data-id="">No hay datos...</option>';
         }
         return $html;
     }

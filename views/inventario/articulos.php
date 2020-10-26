@@ -168,8 +168,8 @@ const handleReturnedDataWarehouse = (data) => {
     $("#cArticle_idselectWarehouse").html(data).selectpicker('refresh');
 };
 const handleReturnedDataProvider = (data) => {
-    $("#filCodNom").html(data).selectpicker('refresh');
-    $("#cArticle_idselectProvider").html(data).selectpicker('refresh');
+    $("#filCodNom").html(data).selectpicker('render').selectpicker('refresh');
+    $("#cArticle_idselectProvider").html(data).selectpicker('render').selectpicker('refresh');
 };
 const handleReturnedDataCategory = (data) => {
     $("#filcat").html(data).selectpicker('refresh');
