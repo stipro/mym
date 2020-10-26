@@ -76,9 +76,9 @@ class Providor extends Conexion
     //GET NAME WAREHOUSE
     public function getNombre($table): array
     {
-        $vtable = 'provedor';
+        $vtable = 'proveedor';
         $state = '1';
-        $where = "WHERE estado_provedor = :state";
+        $where = "WHERE estado_proveedor = :state";
         $array = array(':state' =>  $state);
         return $this->ConsultaCompleja( $where, $array, $table, $vtable);
     }

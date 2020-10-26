@@ -92,35 +92,35 @@
 <?php
     include ("./article_create.php");
 ?>
-
 <div id="modal-requested">
 
 </div>
-
 <script>
 //valDAlmacen = idalmacen.dataset.require;
 //Ejecutamos cuando pagina este lista
 $( document ).ready(function() {
-
-    
     console.log( "document loaded" );
-    //GET DATA ALMACEN
-    makeRequests('');
-    //GET DATA PROVIDER
-    //GET DATA CATEGORY
     //GET DATA TABLE
-    dtableArticle('');    
+    dtableArticle('');
+    //GET DATA ALMACEN
+    dataWarehouse('');
+    //GET DATA PROVIDER
+    dataProvider('');
+    //GET DATA CATEGORY
+    dataCategory('');
     //GET DATA BRAND
-    dataMarca('');
+    databrand('');
+
 });
 ////DOM elements
 var itableArticle = document.getElementById("idtableArticle");
 //Activamos modal
 $(document).on('click', '#btn_mdl_article', function() {
     $('#md_cArticulo').modal('show');
-    dataMarca('');
-    makeRequests('');
+    databrand('');
+    
 });
+
 //Obtenemos datos de la tabla
 const dtableArticle = async (data) => {
     const body = new FormData();
@@ -129,39 +129,56 @@ const dtableArticle = async (data) => {
     const resultArticulo = await returnArticulo.json(); //await JSON.parse(returned);
     dataReceivedArticle(resultArticulo);
 };
-//Si necesitas hacer algo con las respuestas del servidor
-//hacelas aqui.
-const handleReturnedData = (data) => {
-    $("#filAlm").html(data).selectpicker('refresh');
-    $("#cArticle_idselectWarehouse").html(data).selectpicker('refresh');
+const dataWarehouse = async (data) => {
+    const body = new FormData();
+    body.append("data", data);
+    const returnWarehouse = await fetch("./../../controllers/controllerWarehouseList.php", { method: "POST", body});
+    const resultWarehouse = await returnWarehouse.json(); //await JSON.parse(returned);
+    handleReturnedDataWarehouse(resultWarehouse);
 };
-const dataProvedor = (data) => {
-    $("#filCodNom").html(data).selectpicker('refresh');
-    $("#cArticle_idselectProvider").html(data).selectpicker('refresh');
+const dataProvider = async (data) => {
+    const body = new FormData();
+    body.append("data", data);
+    const returnProvider = await fetch("./../../controllers/controllerProvidersList.php", { method: "POST", body});
+    const resultProvider = await returnProvider.json(); //await JSON.parse(returned);
+    handleReturnedDataProvider(resultProvider);
 };
-const dataReceivedBrand = (data) => {
-    $("#cArticle_idselectBrand").html(data).selectpicker('refresh');
-    //$("#filcat").html(data).selectpicker('refresh');
-}
-const dataCategoria = (data) => {
-    $("#filcat").html(data).selectpicker('refresh');
-    $("#cArticle_idselectCategory").html(data).selectpicker('refresh');
-    
+const dataCategory = async (data) => {
+    const body = new FormData();
+    body.append("data", data);
+    const returnCategory= await fetch("./../../controllers/controllerCategoriesList.php", { method: "POST", body});
+    const resultCategory= await returnCategory.json(); //await JSON.parse(returned);
+    handleReturnedDataCategory(resultCategory);
 };
-
-const dataReceivedArticle = (data) => {
-    
-    itableArticle.innerHTML = data;
-    //$( "#idtableArticle" ).append( data );
-}
-
-const dataMarca = async (data) => {
+const databrand = async (data) => {
     const body = new FormData();
     body.append("data", data);
     const returnMarca = await fetch("./../../controllers/controllerBrandsList.php", { method: "POST", body});
     const resultMarca = await returnMarca.json(); //await JSON.parse(returned);
-    dataReceivedBrand(resultMarca);
+    handleReturnedDataBrand(resultMarca);
 };
+//Si necesitas hacer algo con las respuestas del servidor
+//hacelas aqui.
+const dataReceivedArticle = (data) => {
+    itableArticle.innerHTML = data;
+    //$( "#idtableArticle" ).append( data );
+}
+const handleReturnedDataWarehouse = (data) => {
+    $("#filAlm").html(data).selectpicker('refresh');
+    $("#cArticle_idselectWarehouse").html(data).selectpicker('refresh');
+};
+const handleReturnedDataProvider = (data) => {
+    $("#filCodNom").html(data).selectpicker('refresh');
+    $("#cArticle_idselectProvider").html(data).selectpicker('refresh');
+};
+const handleReturnedDataCategory = (data) => {
+    $("#filcat").html(data).selectpicker('refresh');
+    $("#cArticle_idselectCategory").html(data).selectpicker('refresh');  
+};
+const handleReturnedDataBrand = (data) => {
+    $("#cArticle_idselectBrand").html(data).selectpicker('refresh');
+    //$("#filcat").html(data).selectpicker('refresh');
+}
 const dataUMedida = (data) => {
     //$("#filcat").html(data).selectpicker('refresh');
 };
@@ -174,23 +191,6 @@ const beforeSending = () => {
 //consultas, hacelas aqui.
 const afterSending = () => {
   //console.log("after");
-};
-const makeRequests = async (data) => {
-    beforeSending();
-    console.log('Se hara una consulta de datos almacen ' + data);
-    const body = new FormData();
-    body.append("data", data);
-    const returned = await fetch("./../../controllers/controllerWarehouseList.php", { method: "POST", body});
-    const result = await returned.json(); //await JSON.parse(returned);
-    handleReturnedData(result);
-    const returnProvedor = await fetch("./../../controllers/controllerProvidersList.php", { method: "POST", body});
-    const resultProvedor = await returnProvedor.json(); //await JSON.parse(returned);
-    dataProvedor(resultProvedor);
-    handleReturnedData(result);
-    const returnCategoria = await fetch("./../../controllers/controllerCategoriesList.php", { method: "POST", body});
-    const resultCategoria = await returnCategoria.json(); //await JSON.parse(returned);
-    dataCategoria(resultCategoria);
-    afterSending();
 };
 </script>
 <script src="./../../assets/js/jquery-ui.js" type="text/javascript"></script>
