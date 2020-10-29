@@ -29,6 +29,7 @@ if($_POST){
                             $bolestad);
         
     }
+
     else{
         echo "ruc invalido";
     }

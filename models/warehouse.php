@@ -109,8 +109,8 @@ class Warehouse extends Conexion
                 $html .= '<option data-id="'.$value['id_almacen'].'" data-tokens="01">' . $value['nombre_almacen'] . '</option>';
             }
         } else {
-            $html = '<option data-id="" selected="true" disabled="disabled">Selecciona un Almacén</option>';
-            $html .= '<option data-id="">No hay datos...</option>';
+            $html = '<option data-id="" disabled selected>Selecciona un Almacén</option>';
+            $html .= '<option data-id="1">No hay datos...</option>';
         }
         return $html;
     }

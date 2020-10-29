@@ -117,6 +117,15 @@ var itableArticle = document.getElementById("idtableArticle");
 //Activamos modal
 $(document).on('click', '#btn_mdl_article', function() {
     $('#md_cArticulo').modal('show');
+    //GET DATA TABLE
+    dtableArticle('');
+    //GET DATA ALMACEN
+    dataWarehouse('');
+    //GET DATA PROVIDER
+    dataProvider('');
+    //GET DATA CATEGORY
+    dataCategory('');
+    //GET DATA BRAND
     databrand('');
     
 });

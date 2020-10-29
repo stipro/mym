@@ -89,12 +89,12 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-sm">
-                            <label for="cArticle_idinputPrice" class="form-label">Precio</label>
-                            <input type="numeric" class="form-control" id="cArticle_idinputPrice" placeholder="Precio">
-                        </div>                    
-                        <div class="form-group col-sm">
                             <label for="cArticle_idinputStock" class="form-label">Stock *</label>
                             <input type="text" class="form-control" id="cArticle_idinputStock" placeholder="Stock">
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="cArticle_idinputPrice" class="form-label">Precio</label>
+                            <input type="numeric" class="form-control" id="cArticle_idinputPrice" placeholder="Precio">
                         </div>
                     </div>
                     <div class="form-row">
@@ -114,7 +114,7 @@
                                 </div>
                             </div>                                                               
                             <select id="cArticle_idSelectUMeasurement" class="selectpicker form-control" data-live-search="true">
-                                <option data-id="0" disabled selected>Selecciona u. Medida</option>
+                                <option data-id="" disabled selected>Selecciona u. Medida</option>
                                 <option data-id="1">Recepción</option>
                                 <option data-id="2">Sistemas</option>
                             </select>
@@ -242,6 +242,7 @@ $( "#articlebtnInsert" ).click(function() {
     //var dateRegistro = dateformate + ' ' + hora;
     console.log(dateRegistro);
     console.log(Date());
+    console.log('Proveedor' + dt_provedor);
     //AGRUPAMOS DATOS OBTENIDO
     var colaborador = {
         "dt_almacen" : dt_almacen,

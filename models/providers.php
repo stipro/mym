@@ -107,8 +107,8 @@ class Providor extends Conexion
                 $html .= '<option data-id="' . $value['id_provedor'] . '" data-tokens="01">' . $value['nombre_provedor'] . '</option>';
             }
         } else {
-            $html = '<option data-id="" selected="true" disabled="disabled">Selecciona un Provedor</option>';
-            $html .= '<option data-id="">No hay datos...</option>';
+            $html = '<option data-id="" disabled selected>Selecciona un Provedor</option>';
+            $html .= '<option data-id="1">No hay datos...</option>';
         }
         return $html;
     }

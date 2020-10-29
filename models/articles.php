@@ -19,12 +19,11 @@ class Article extends Conexion
     {
         parent::__construct();
     }
-    public function insert(int $strprovedor, int $strcategoria, int $strmarca, string $strcodigo, string $strnombre, float $fotprecio, int $fotstock, string $strcaracteristica, string $strdescripcion, int $strumedida, $strdateregistro)
+    public function insert($strprovedor, $strcategoria, $strmarca, string $strcodigo, string $strnombre, float $fotprecio, int $fotstock, string $strcaracteristica, string $strdescripcion, $strumedida, $strdateregistro)
     {
         //return $strdateregistro;
         try 
         {
-            $null = null;
             $query = "INSERT INTO articulos(
                 id_provedor,
                 id_categoria,
@@ -47,7 +46,7 @@ class Article extends Conexion
                 :fotstock, 
                 :strcaracteristica,
                 :strdescripcion,
-                :null,
+                :strumedida,
                 :strdateregistro);";
             $result = $this->db->prepare($query);
             $result -> bindParam(':strprovedor', $strprovedor, PDO::PARAM_INT);
@@ -59,7 +58,7 @@ class Article extends Conexion
             $result -> bindParam(':fotstock', $fotstock, PDO::PARAM_INT);
             $result -> bindParam(':strcaracteristica', $strcaracteristica, PDO::PARAM_STR);
             $result -> bindParam(':strdescripcion', $strdescripcion, PDO::PARAM_STR);
-            $result -> bindParam(':null', $null, PDO::PARAM_NULL);
+            $result -> bindParam(':strumedida', $strumedida, PDO::PARAM_STR);
             $result -> bindParam(':strdateregistro', $strdateregistro, PDO::PARAM_STR);
             $sqlsuccess = $result -> execute();
             //OBTENEMOS ID

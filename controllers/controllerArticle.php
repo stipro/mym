@@ -18,24 +18,28 @@ if($_POST){
         $errores = array();
         $rpt;
         $stralmacen = isset($_POST['dt_almacen']) ? $_POST['dt_almacen'] : null;
-        $strmarca = isset($_POST['dt_marca']) ? $_POST['dt_marca'] : null;
+        //$strmarca = isset($_POST['dt_marca']) ? $_POST['dt_marca'] : null;
         $strnombre = isset($_POST['dt_nombre']) ? $_POST['dt_nombre'] : null;
         $fotstock = isset($_POST['dt_stock']) ? $_POST['dt_stock'] : null;
-        $strprovedor = intval($_POST['dt_provedor']);
-        $strcategoria = $_POST['dt_categoria'];
+        $strprovedor = empty($_POST['dt_provedor']) ? null : intval($_POST['dt_provedor']);
+        $strmarca = empty($_POST['dt_marca']) ? null : intval($_POST['dt_marca']);
+        $strcategoria = empty($_POST['dt_categoria']) ? null : intval($_POST['dt_categoria']);
         $strcodigo = $_POST['dt_codigo'];
         $fotprecio = floatval($_POST['dt_precio']);
         $strcaracteristica = $_POST['dt_caracteristica'];
         $strdescripcion = $_POST['dt_descripcion'];
-        $strumedida = $_POST['dt_umedida'];
+        $strumedida = empty($_POST['dt_umedida']) ? null : intval($_POST['dt_umedida']);
         $strdateregistro = $_POST['dateRegistro'];
+        var_dump($strumedida);
         //
         if (!validar_requerido($stralmacen)) {
             $errores[] = 'El campo <strong>Almacen</strong> es obligatorio.';
         }
+        //
+        /*
         if (!validar_requerido($strmarca)) {
             $errores[] = 'El campo <strong>Marca</strong> es obligatorio.';
-        }
+        }*/
         if (!validar_requerido($strnombre)) {
             $errores[] = 'El campo <strong>Nombre</strong> es obligatorio.';
         }
@@ -57,15 +61,15 @@ if($_POST){
         else{
             $rptInsert = $articulo->insert(
                 $strprovedor, 
-                intval($strcategoria), 
-                intval($strmarca), 
+                $strcategoria, 
+                $strmarca, 
                 $strcodigo, 
                 $strnombre, 
                 $fotprecio, 
                 intval($fotstock), 
                 $strcaracteristica, 
                 $strdescripcion, 
-                intval($strumedida),
+                $strumedida,
                 $strdateregistro);
         }
     }
