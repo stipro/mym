@@ -10,8 +10,9 @@
                 </h5>
             </div>
             <div class="modal-body">
-                <div id="respuesta">
+                <div id="respuesta" class="respuesta_servi">
                 </div>
+                <form action="" id="miForm">
                 <div class="container-fluid">
                     <div class="form-row">
                         <!-- Almacen -->
@@ -33,7 +34,7 @@
                         <div class="form-group col-sm">
                             <div class="container">
                                 <div class="row pb-2">
-                                    <label for="cArticle_idselectProvider"><strong>Proveedor *</strong></label>
+                                    <label for="cArticle_idselectProvider"><strong>Proveedor</strong></label>
                                     <div class="col d-flex justify-content-end">
                                         <button id="btn_mdl_cProveedor" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
@@ -50,7 +51,7 @@
                         <div class="form-group col-sm">
                             <div class="container">
                                 <div class="row pb-2">
-                                    <label for="cArticle_idselectBrand"><strong>Marca *</strong></label>
+                                    <label for="cArticle_idselectBrand"><strong>Marca</strong></label>
                                     <div class="col d-flex justify-content-end">
                                         <button id="btn_md_cMarca" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
@@ -65,7 +66,7 @@
                         <div class="form-group col-sm">
                             <div class="container">
                                 <div class="row pb-2">
-                                    <label for="cArticle_idselectCategory"><strong>Categoría *</strong></label>
+                                    <label for="cArticle_idselectCategory"><strong>Categoría</strong></label>
                                     <div class="col d-flex justify-content-end">
                                         <button id="btn_md_cCategoria" type="button" class="btn btn-primary p-0">
                                             <img src="./../../assets/icons/icons-1.0.0-alpha5/plus.svg" alt="" width="32" height="32" title="Bootstrap">
@@ -126,9 +127,16 @@
                         <!--<input type="number" class="form-control" id="descripcion_articulo" placeholder="Descripción">-->
                     </div> 
                 </div>
+                </form>
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button id="articlebtnReset" type="button" class="btn btn-primary">
+                <!--ICONO-->
+                <img src="./../../assets/icons/icons-1.0.0-alpha5/trash2.svg" alt="" width="16" height="16" title="Guardar">
+                Resetear
+                </button>
+                <button id="articlebtnClose"type="button" class="btn btn-secondary" data-dismiss="modal">
                 <!--ICONO-->
                 <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="16" height="16" title="Cerrar">    
                 Cerrar</button>
@@ -136,7 +144,9 @@
                 <!--ICONO-->
                 <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil.svg" alt="" width="16" height="16" title="Guardar">
                 Guardar</button>
-                <button id="btn-limpiar" type="button" class="btn btn-primary">
+                <button id="articlebtnClean" type="button" class="btn btn-primary">
+                <!--ICONO-->
+                <img src="./../../assets/icons/icons-1.0.0-alpha5/trash2.svg" alt="" width="16" height="16" title="Guardar">
                 Limpiar
                 </button>
             </div>
@@ -146,6 +156,45 @@
 <script>
 $( document ).ready(function() {
     console.log( "document loaded" );
+
+    // Creamos variable que almacenara el ID a borrar
+    var inputfocused = "";
+
+    // Le añadimos función de borrar al botón
+    document.getElementById("articlebtnClean").onclick = limpiaCampo;
+
+    // Le añadimos función de borrar al botón
+    document.getElementById("articlebtnReset").onclick = resetForm;
+
+    // En este caso concreto seleccionamos todos los input text y password
+    // para una selección más precisa se puede usa una clase
+    // para una selección más general, se puede usar solo 'input'
+    var elements = document.querySelectorAll("input[type='text'],input[type='password']");
+    // Por cada input field le añadimos una funcion 'onFocus'
+    for (var i = 0; i < elements.length; i++) {
+    elements[i].addEventListener("focus", function() {
+        // Guardamos la ID del elemento al que hacemos 'focus'
+        inputfocused = this;
+    });
+    }
+    function resetForm(){
+        document.getElementById("miForm").reset();
+        console.log('Resetearas Formulario');
+        $("#cArticle_idselectWarehouse").val('default');
+        $("#cArticle_idselectWarehouse").selectpicker("refresh");
+        $("#cArticle_idselectProvider").val('default');
+        $("#cArticle_idselectProvider").selectpicker("refresh");
+        $("#cArticle_idselectBrand").val('default');
+        $("#cArticle_idselectBrand").selectpicker("refresh");
+        $("#cArticle_idselectCategory").val('default');
+        $("#cArticle_idselectCategory").selectpicker("refresh");
+        $("#cArticle_idSelectUMeasurement").val('default');
+        $("#cArticle_idSelectUMeasurement").selectpicker("refresh");
+    }
+    function limpiaCampo() {
+    //Utilizamos el elemento al que hacemos focus para borrar el campo.
+    inputfocused.value = "";
+    }
     //makeRequests('');
 }); 
 $( window ).on( "load", function() {

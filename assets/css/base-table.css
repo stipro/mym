@@ -1,0 +1,74 @@
+.kv-avatar .krajee-default.file-preview-frame,.kv-avatar .krajee-default.file-preview-frame:hover {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+}
+.kv-avatar {
+    display: inline-block;
+}
+.kv-avatar .file-input {
+    display: table-cell;
+    width: 213px;
+}
+.kv-reqd {
+    color: red;
+    font-family: monospace;
+    font-weight: normal;
+}
+/* 320px Celular VGA*/
+@media screen and (max-width: 20rem)
+{
+  body{
+    background: yellow;
+  }
+}
+/* 321px y 640px CELULARES HD*/
+@media only screen and (min-width: 20.0625rem) and (max-width: 40rem)
+{
+  body{
+    /*background: green;*/
+  }
+  th{
+    display: none;
+  }
+  td{
+    display: none;
+  }
+  .info{
+    display: table-cell;
+  }
+  .data-table:hover{
+
+  }
+  .import-0{
+    width: 10%;
+  }
+  .import-1{
+    width: 30%;
+  }
+  .import-2{
+    width: 60%;
+  }
+  .grupo-btn{
+    display: flex;
+  }
+}
+/*  641px y 1024px CELULARES FULL HD*/
+@media only screen and (min-width: 40.0625rem) and (max-width: 64rem)
+{
+  body{
+    background: red;
+  }
+}
+/* 1025px a mas */
+@media only screen and (min-width: 64.0625rem)
+{
+  body{
+    background: rebeccapurple;
+  }
+  .tabla{
+    border-collapse: collapse;
+  }
+}

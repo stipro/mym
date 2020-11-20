@@ -122,11 +122,11 @@
       </div>
       
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <button id="btn-modal-cancel-provider" type="button" class="btn btn-secondary" data-dismiss="modal">
         <!--ICONO-->
         <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="16" height="16" title="Cerrar">
         Cerrar</button>
-        <button id="providerbtnInsert" type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmacion_modal">
+        <button id="btn-modal-create-provider" type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmacion_modal">
         <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil.svg" alt="" width="16" height="16" title="Guardar">
         Guardar</button>
         <button id="btn-limpiar" type="button" class="btn btn-primary">
@@ -143,7 +143,11 @@
 
 <!-- the fileinput plugin initialization -->
 <script>
-
+//CONSULTA DATO
+$(document).on('click', '#btn-modal-cancel-provider ', function() {
+    //GET DATA PROVIDER
+    dataProvider('');
+});
 //ESCUCHAMOS CHECKBOX
 $("#estado_proveedor").change(function(){
   alert("Se esta cambiando estado de proveedor");
@@ -155,7 +159,7 @@ $( "#btn-limpiar" ).click(function() {
     alertPrimary+= '</div>';
     $("#respuesta").empty().append(alertPrimary);
 });
-$( "#providerbtnInsert" ).click(function() {
+$( "#btn-modal-create-provider" ).click(function() {
     //OBTENEMOS DATOS
     let ruc = $('#proveedor_ruc').val();
     let nombre = $('#proveedor_nombre').val();

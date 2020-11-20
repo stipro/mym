@@ -1,53 +1,37 @@
-.kv-avatar .krajee-default.file-preview-frame,.kv-avatar .krajee-default.file-preview-frame:hover {
-    margin: 0;
-    padding: 0;
-    border: none;
-    box-shadow: none;
-    text-align: center;
-}
-.kv-avatar {
-    display: inline-block;
-}
-.kv-avatar .file-input {
-    display: table-cell;
-    width: 213px;
-}
-.kv-reqd {
-    color: red;
-    font-family: monospace;
-    font-weight: normal;
-}
+
 /* 320px Celular VGA*/
 @media screen and (max-width: 20rem)
 {
-  
-}
-/* Celulares VGA y HD */
-@media screen and (min-width: 20rem) and (max-width: 40rem)
-{
-
+  body{
+    background: blueviolet;
+  }
 }
 /* 321px y 640px CELULARES HD*/
 @media only screen and (min-width: 20.0625rem) and (max-width: 40rem)
 {
   body{
-    background: green;
+    background: yellow;
+  }
+  .respuesta_servi{
+    position: fixed;
+    z-index: 100;
+    top: 1rem;
+    right: 0;
+    left: 0;
+    margin: 0 1rem;
   }
 }
 /*  641px y 1024px CELULARES FULL HD*/
-@media only screen and (min-width: 641px) and (max-width: 1024px)
+@media only screen and (min-width: 40.0625rem) and (max-width: 64rem)
 {
   body{
-    background: gray;
+    background: green;
   }
 }
 /* 1025px a mas */
-@media only screen and (min-width: 1025px)
+@media only screen and (min-width: 64.0625rem)
 {
   body{
-    background: lightskyblue;
-  }
-  .tabla{
-    border-collapse: collapse;
+    background: maroon;
   }
 }

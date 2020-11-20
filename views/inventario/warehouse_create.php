@@ -34,11 +34,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button id="btn-warehouse-cCancel" type="button" class="btn btn-secondary" data-dismiss="modal">
+        <button id="btn-modal-cancel-warehouse" type="button" class="btn btn-secondary" data-dismiss="modal">
         <!--ICONO-->
         <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="16" height="16" title="Cerrar">    
         Cerrar</button>
-        <button id="btn-warehouse-cCreate" type="button" class="btn btn-primary">
+        <button id="btn-modal-create-warehouse" type="button" class="btn btn-primary">
         <!--ICONO-->
         <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil.svg" alt="" width="16" height="16" title="Guardar">
         Registrar</button>
@@ -53,8 +53,8 @@ $(document).ready(function() {
   var iptdescWarehouse = document.getElementById("descripcion_almacen");
   var iptestaWarehouse = document.getElementById("estado_almacen");
   let md_cAlmacen = document.getElementById('md_cAlmacen');
-  let btnCreate = document.getElementById('btn-warehouse-cCreate');
-  let btnCancel = document.getElementById('btn-warehouse-cCancel');
+  let btnCreate = document.getElementById('btn-modal-create-warehouse');
+  let btnCancel = document.getElementById('btn-modal-cancel-warehouse');
   let nameWarehouse = document.getElementById('nombre_almacen');
   let typing = document.getElementById('typing');
   let gif = document.getElementById('gif');
@@ -120,6 +120,8 @@ $(document).ready(function() {
     //status: false,
     conn.send(JSON.stringify(jsonSocket));
     console.log(jsonSocket['text']);
+        //GET DATA ALMACEN
+        dataWarehouse('');
   });
   //DIGITANDO
 /*

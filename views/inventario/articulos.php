@@ -10,6 +10,8 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
     <!--Bootstrap Stylesheet [ REQUIRED ]-->
     <link rel="stylesheet" href="./../../libs/bootstrap-4.5.0/css/bootstrap.min.css">
+    <!--Stylesheet [ REQUIRED ]-->
+    <link href="./../../assets/css/base.css" rel="stylesheet">
     <title>Articulos - Inventario</title>
 </head>
 <body>

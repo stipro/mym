@@ -30,7 +30,6 @@ if($_POST){
         $strdescripcion = $_POST['dt_descripcion'];
         $strumedida = empty($_POST['dt_umedida']) ? null : intval($_POST['dt_umedida']);
         $strdateregistro = $_POST['dateRegistro'];
-        var_dump($strumedida);
         //
         if (!validar_requerido($stralmacen)) {
             $errores[] = 'El campo <strong>Almacen</strong> es obligatorio.';
@@ -48,8 +47,18 @@ if($_POST){
         }
         //VALIDADOR
         if(count($errores) != 0){
-            $rpt = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <h4 class="alert-heading">Datos requeridos!</h4>
+            $rpt = '
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                    <h4 class="alert-heading">Datos requeridos!</h4>
+                    </div>
+                    <div class="col-1 col-lg-2 d-flex justify-content-end d-flex align-items-center">
+                    <img src="./../../assets/icons/icons-1.0.0-alpha5/info-circle.svg" alt="" width="16" height="16" title="Cerrar">
+                    </div>
+                </div>
+            </div>
             <hr>
             <ul>'; foreach ($errores as $error) { $rpt .= '<li>' . $error . '</li>'; } $rpt .='</ul>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

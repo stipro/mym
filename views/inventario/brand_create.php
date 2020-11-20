@@ -58,11 +58,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <button id="btn-modal-cancel-brand" type="button" class="btn btn-secondary" data-dismiss="modal">
         <!--ICONO-->
         <img src="./../../assets/icons/icons-1.0.0-alpha5/x-circle.svg" alt="" width="16" height="16" title="Cerrar">    
         Cerrar</button>
-        <button id="brandbtnInsert" type="button" class="btn btn-primary">
+        <button id="btn-modal-create-brand" type="button" class="btn btn-primary">
         <!--ICONO-->
         <img src="./../../assets/icons/icons-1.0.0-alpha5/pencil.svg" alt="" width="16" height="16" title="Guardar">
         Guardar</button>
@@ -73,3 +73,12 @@
     </div>
   </div>
 </div>
+<script>
+//CONSULTA DATO
+$(document).on('click', '#btn-modal-cancel-brand ', function() {
+
+});
+//CONSULTA DATO
+$(document).on('click', '#btn-modal-create-brand ', function() {
+});
+</script>

@@ -2,7 +2,7 @@
 declare (strict_types = 1);
 require_once('./../db/conexion.php');
 
-class Article extends Conexion
+class Measurements extends Conexion
 {
     /*
     public $intruc;
@@ -19,47 +19,23 @@ class Article extends Conexion
     {
         parent::__construct();
     }
-    public function insert($strprovedor, $strsubcategoria, $strmarca, string $strcodigo, string $strnombre, float $fotprecio, int $fotstock, string $strcaracteristica, string $strdescripcion, $strumedida, $strdateregistro)
+    public function insert($strnombre, $strabreviatura, $blnestado)
     {
         //return $strdateregistro;
         try 
         {
-            $query = "INSERT INTO articulos(
-                id_provedor,
-                id_subcategoria,
-                id_marca,
-                codigo_articulo,
-                nombre_articulo,
-                precio_articulo,
-                stock_articulo,
-                caracteristica_articulo,
-                descripcion_articulo,
-                id_uniMedida,
-                registro_articulo) 
+            $query = "INSERT INTO unidades_medida(
+                nombre_uniMedida,
+                abreviatura_uniMedida,
+                estado_uniMedida) 
             VALUES (
-                :strprovedor,
-                :strsubcategoria,
-                :strmarca,
-                :strcodigo,
-                :strnombre, 
-                :fotprecio, 
-                :fotstock, 
-                :strcaracteristica,
-                :strdescripcion,
-                :strumedida,
-                :strdateregistro);";
+                :strnombre,
+                :strabreviatura,
+                :blnestado);";
             $result = $this->db->prepare($query);
-            $result -> bindParam(':strprovedor', $strprovedor, PDO::PARAM_INT);
-            $result -> bindParam(':strsubcategoria', $strsubcategoria, PDO::PARAM_INT);
-            $result -> bindParam(':strmarca', $strmarca, PDO::PARAM_INT);
-            $result -> bindParam(':strcodigo', $strcodigo, PDO::PARAM_STR);
-            $result -> bindParam(':strnombre', $strnombre, PDO::PARAM_STR);
-            $result -> bindParam(':fotprecio', $fotprecio, PDO::PARAM_STR);
-            $result -> bindParam(':fotstock', $fotstock, PDO::PARAM_INT);
-            $result -> bindParam(':strcaracteristica', $strcaracteristica, PDO::PARAM_STR);
-            $result -> bindParam(':strdescripcion', $strdescripcion, PDO::PARAM_STR);
-            $result -> bindParam(':strumedida', $strumedida, PDO::PARAM_STR);
-            $result -> bindParam(':strdateregistro', $strdateregistro, PDO::PARAM_STR);
+            $result -> bindParam(':strnombre', $strnombre, PDO::PARAM_INT);
+            $result -> bindParam(':strabreviatura', $strabreviatura, PDO::PARAM_INT);
+            $result -> bindParam(':blnestado', $blnestado, PDO::PARAM_INT);
             $sqlsuccess = $result -> execute();
             //OBTENEMOS ID
             //$lastvenIdsql = $db->lastInsertId();
@@ -92,7 +68,7 @@ class Article extends Conexion
     {
         error_reporting(0);
         try {
-            $query  = "DELETE FROM provedores WHERE nIdAlm=:id;";
+            $query  = "DELETE FROM unidades_medida WHERE nIdAlm=:id;";
             $result = $this->db->prepare($query);
             $result->execute(array(':id' => $id));
             echo 'BIEN';
@@ -104,7 +80,7 @@ class Article extends Conexion
     {
         error_reporting(0);
         try {
-            $query  = "UPDATE provedores SET nCodAlm=:codigo, nIngAlm=:ingreso, nEgrAlm=:egreso, fRegAlm=:fecha, nNFactAlm=:factura, cNomAlm=nombre, cObsAlm=:observacion WHERE nIdAlm=:id;";
+            $query  = "UPDATE unidades_medida SET nCodAlm=:codigo, nIngAlm=:ingreso, nEgrAlm=:egreso, fRegAlm=:fecha, nNFactAlm=:factura, cNomAlm=nombre, cObsAlm=:observacion WHERE nIdAlm=:id;";
             $result = $this->db->prepare($query);
             $result->execute(array(':id' => $id, ':codigo' => $ingreso, ':ingreso' => $ingreso, ':egreso' => $egreso, ':fecha' => $registro, ':factura' => $factura, 'nombre' => $nombre, ':observacion' => $observacion));
             if ($result->rowCount()) {
@@ -120,7 +96,7 @@ class Article extends Conexion
 
     public function getAll(): array
     {
-        $query = "SELECT * FROM articulos ORDER BY nombre_articulo";
+        $query = "SELECT * FROM unidades_medida ORDER BY nombre_articulo";
         return $this->ConsultaSimple($query);
     }
     public function getSearch(string $termino): array
@@ -137,6 +113,21 @@ class Article extends Conexion
             'filasTotal'  => intval($this->db->query($query)->fetch(PDO::FETCH_BOTH)[0]),
             'filasPagina' => 5,
         );
+    }
+
+    public function showSelect(array $query): string
+    {
+        $html = '';
+        if (count($query)) {
+            $html = '<option data-id="">Selecciona un Unidad Medida</option>';
+            foreach ($query as $value){
+                $html .= '<option data-id="'.$value['id_uniMedida'].'" data-tokens="01">' . $value['nombre_uniMedida'] . '</option>';
+            }
+        } else {
+            $html = '<option data-id="" selected="true" disabled="disabled">Selecciona un Unidad Medida</option>';
+            $html .= '<option data-id="">No hay datos...</option>';
+        }
+        return $html;
     }
 
     public function showTable(array $array): string
