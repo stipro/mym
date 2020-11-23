@@ -1,6 +1,18 @@
 <?php
 declare (strict_types = 1);
 require_once('./../db/conexion.php');
+require_once('./../db/pgsql.php');
+class Sunat extends ConexionPgsql
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    public function dataSunatConsulta(){
+        $query = "SELECT * from comprobante_emitido where dfecemi='2020-11-20";
+        return $this->ConsultaSimple($query);
+    }
+}
 
 class Sunat extends Conexion
 {

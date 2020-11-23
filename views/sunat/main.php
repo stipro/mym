@@ -27,7 +27,7 @@ $urlcurrent = $urlseparate[3];
   <h1>Hello, <?php echo $urlcurrent?>!</h1>
   <button type="button" id="btnConSunat" class="btn btn-success">Consultar Sunat SERVIDOR</button>
   <button type="button" id="btnConSunatCli" class="btn btn-success">Consultar Sunat CLIENTE</button>
-  <input class="btn btn-success" value="ES" type="file" id="file-input" />
+  <input class="btn btn-success" value="es" type="file" id="file-input" />
   <h3>Contenido del archivo:</h3>
   <pre id="contenido-archivo"></pre>
 <?php

@@ -1,22 +1,38 @@
 <?php
+/*
+$contraseña = "promefar20149";
+$usuario = "pgpromefardistribuidora";
+$nombreBaseDeDatos = "distribuidora";
+# Puede ser 127.0.0.1 o el nombre de tu equipo; o la IP de un servidor remoto
+$rutaServidor = "192.168.1.4";
+$puerto = "5432";
+try {
+    $base_de_datos = new PDO("pgsql:host=$rutaServidor;port=$puerto;dbname=$nombreBaseDeDatos", $usuario, $contraseña);
+    $base_de_datos->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo 'Conexion correcta';
+} catch (Exception $e) {
+    echo "Ocurrió un error con la base de datos: " . $e->getMessage();
+}
+*/
+///---------------------------------------------------------------------
+
 declare (strict_types = 1);
-class Conexion
+class ConexionPgsql
 {
     protected $db;
     public function __construct()
     {
         $this->db = $this->conectar();
-        $this->dbsql = $this->conectarPgsql();
     }
     private function conectar()
     {
         try
         {
-            $HOST   = '127.0.0.1';
-            $DBNAME = 'corpmym';
-            $USER   = 'root';
-            $PASS   = '';
-            $con    = new PDO("mysql:host={$HOST}; dbname={$DBNAME}", $USER, $PASS);
+            $HOST   = '192.168.1.8';
+            $DBNAME = 'distribuidora';
+            $USER   = 'pgpromefardistribuidora';
+            $PASS   = 'promefar2014';
+            $con    = new PDO("pgsql:host={$HOST}; dbname={$DBNAME}", $USER, $PASS);
             $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $con->exec('SET CHARACTER SET UTF8');
         }
@@ -38,24 +54,5 @@ class Conexion
         $result->execute($array);
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
-    //POSTGREST
-    private function conectarPgsql()
-    {
-        try
-        {
-            $HOST   = '127.0.0.1';
-            $DBNAME = 'corpmym';
-            $USER   = 'root';
-            $PASS   = '';
-            $con    = new PDO("mysql:host={$HOST}; dbname={$DBNAME}", $USER, $PASS);
-            $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $con->exec('SET CHARACTER SET UTF8');
-        }
-        catch (PDOException $e)
-        {
-            echo "No se pudo conectar a la BD: " . $e->getMessage();
-        }
-        return $con;
-    }
-
 }
+?>
