@@ -7,7 +7,8 @@ class Conexion
     {
         //Conexion MySql
         $this->db = $this->conectar();
-        //Conexion Postgrest        $this->dbsql = $this->conectarPgsql();
+        //Conexion Postgrest        
+        $this->dbsql = $this->conectarPgsql();
     }
     private function conectar()
     {
@@ -39,7 +40,7 @@ class Conexion
         $result->execute($array);
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
-    /*POSTGREST
+    /*POSTGREST*/
     private function conectarPgsql()
     {
         try
@@ -57,5 +58,5 @@ class Conexion
             echo "No se pudo conectar a la BD: " . $e->getMessage();
         }
         return $con;
-    }*/
+    }
 }

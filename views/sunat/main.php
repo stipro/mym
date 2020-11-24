@@ -12,8 +12,10 @@ $urlcurrent = $urlseparate[3];
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!--Estilo Tabla [ REQUIRED ]-->
-    <link href="./../../assets/css/table.css" rel="stylesheet">
+    <!--Estilo Tabla [ REQUIRED ]
+    <link href="./../../assets/css/table.css" rel="stylesheet">-->
+    <!-- Fecha -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- Titulo de la pagina / pestaña -->
@@ -139,7 +141,37 @@ $urlcurrent = $urlseparate[3];
     </div>
     <!-- JQUERY -->
     <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
+  $(function() {
+    $('input[name="daterange"]').daterangepicker({
+      opens: 'left'
+    }, function(start, end, label) {
+      dateStart = start.format('YYYY-MM-DD');
+      dateEnd = end.format('YYYY-MM-DD');
+      console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      //GET DATA TABLE
+      dtableDEmitidos(dateStart, dateEnd);
+    });
+  });
+  const dtableDEmitidos = async (datauno, datados) => {
+    console.log('Se hara consulta con este rango de fecha : ' + datauno + 'Fecha Fin ' + datados);
+    /*
+    const body = new FormData();
+    body.append("data", data);
+    const returnArticulo = await fetch("./../../controllers/controllerArticleList.php", { method: "POST", body});
+    const resultArticulo = await returnArticulo.json(); //await JSON.parse(returned);
+    dataReceivedArticle(resultArticulo);
+    */
+  };
+    //DOM ELEMENTS
+    let btnConBDatos = document.getElementById('btnConBDatos');
+  //
+  btnConBDatos.addEventListener('click', function(){
+    
+    console.log('Hola Fecha seleccionado es : ' + dateStart + ' hasta' +  dateEnd);
+  });
   let prueba = <?php echo $jelsunat ?>;
   //console.log(prueba);
   var contenido;
