@@ -7,8 +7,7 @@ class Conexion
     {
         //Conexion MySql
         $this->db = $this->conectar();
-        //Conexion Postgrest
-        $this->dbsql = $this->conectarPgsql();
+        //Conexion Postgrest        $this->dbsql = $this->conectarPgsql();
     }
     private function conectar()
     {
@@ -40,7 +39,7 @@ class Conexion
         $result->execute($array);
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
-    //POSTGREST
+    /*POSTGREST
     private function conectarPgsql()
     {
         try
@@ -58,17 +57,5 @@ class Conexion
             echo "No se pudo conectar a la BD: " . $e->getMessage();
         }
         return $con;
-    }
-    protected function ConsultaSimple(string $query): array
-    {
-        return $this->dbsql->query($query)->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    protected function ConsultaCompleja(string $where, array $array, string $table, string $vtabla): array
-    {
-        $query  = "SELECT id_{$vtabla}, nombre_{$vtabla} FROM {$table} {$where}";
-        $result = $this->db->prepare($query);
-        $result->execute($array);
-        return $result->fetchAll(PDO::FETCH_ASSOC);
-    }
+    }*/
 }
