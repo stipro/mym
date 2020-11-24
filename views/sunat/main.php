@@ -24,10 +24,44 @@ $urlcurrent = $urlseparate[3];
   //Llamo Nav
   include ('../nav.php');
 ?>
-  <h1>Hello, <?php echo $urlcurrent?>!</h1>
-  <button type="button" id="btnConSunat" class="btn btn-success">Consultar Sunat SERVIDOR</button>
-  <button type="button" id="btnConSunatCli" class="btn btn-success">Consultar Sunat CLIENTE</button>
-  <input class="btn btn-success" value="es" type="file" id="file-input" />
+  <h1>Hello, <?php echo $urlcurrent?>!</h1><div class="container-fluid">
+  <div class="row justify-content-md-center ">
+    <div class="col-sm ">      
+      <fieldset>
+        <legend>Consulta Directo Base Datos</legend>
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Elegir Fecha</label>
+            <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
+            <small id="emailHelp" class="form-text text-muted">Puedes seleccionar un dia o un rango de dias</small>
+          </div>
+          <button type="button" id="btnConBDatos" class="btn btn-success">Consultar</button>
+        </form>
+      </fieldset>      
+    </div>
+    <div class="col-sm">
+      <fieldset>
+        <legend>Consulta por Archivo de carpeta en el Servidor</legend>
+        <form>
+          <button type="button" id="btnConSunat" class="btn btn-success">Consultar</button>
+        </form>
+      </fieldset>      
+    </div>
+    <div class="col-sm">
+      <fieldset>
+        <legend>Consulta por selección de Archivo</legend>
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Seleccione Archivo</label>
+            <input class="btn btn-success" value="ES" type="file" id="file-input" style=" width: 132px; overflow:hidden;"/>
+            <small id="emailHelp" class="form-text text-muted">Solo con archivos TXT</small>
+          </div>
+          <button type="button" id="btnConSunatCli" class="btn btn-success">Consultar</button>
+        </form>
+      </fieldset>
+    </div>
+  </div>
+</div>
   <h3>Contenido del archivo:</h3>
   <pre id="contenido-archivo"></pre>
 <?php

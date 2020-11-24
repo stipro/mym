@@ -1,4 +1,5 @@
 <?php
+include('./../../db/pgsql.php');
 //OBTENEMOS URL
 $urlobtained = $_SERVER["REQUEST_URI"];
 //SEPARACION URL
@@ -12,8 +13,10 @@ $urlcurrent = $urlseparate[3];
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!--Estilo Tabla [ REQUIRED ]-->
-    <link href="./../../assets/css/table.css" rel="stylesheet">
+    <!--Estilo Tabla [ REQUIRED ]
+    <link href="./../../assets/css/table.css" rel="stylesheet">-->
+    <!-- Fecha -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- Titulo de la pagina / pestaña -->
@@ -25,9 +28,44 @@ $urlcurrent = $urlseparate[3];
   include ('../nav.php');
 ?>
   <h1>Hello, <?php echo $urlcurrent?>!</h1>
-  <button type="button" id="btnConSunat" class="btn btn-success">Consultar Sunat SERVIDOR</button>
-  <button type="button" id="btnConSunatCli" class="btn btn-success">Consultar Sunat CLIENTE</button>
-  <input class="btn btn-success" value="ES" type="file" id="file-input" />
+<div class="container-fluid">
+  <div class="row justify-content-md-center ">
+    <div class="col-sm ">      
+      <fieldset>
+        <legend>Consulta Directo Base Datos</legend>
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Elegir Fecha</label>
+            <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
+            <small id="emailHelp" class="form-text text-muted">Puedes seleccionar un dia o un rango de dias</small>
+          </div>
+          <button type="button" id="btnConBDatos" class="btn btn-success">Consultar</button>
+        </form>
+      </fieldset>      
+    </div>
+    <div class="col-sm">
+      <fieldset>
+        <legend>Consulta por Archivo de carpeta en el Servidor</legend>
+        <form>
+          <button type="button" id="btnConSunat" class="btn btn-success">Consultar</button>
+        </form>
+      </fieldset>      
+    </div>
+    <div class="col-sm">
+      <fieldset>
+        <legend>Consulta por selección de Archivo</legend>
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Seleccione Archivo</label>
+            <input class="btn btn-success" value="ES" type="file" id="file-input" style=" width: 132px; overflow:hidden;"/>
+            <small id="emailHelp" class="form-text text-muted">Solo con archivos TXT</small>
+          </div>
+          <button type="button" id="btnConSunatCli" class="btn btn-success">Consultar</button>
+        </form>
+      </fieldset>
+    </div>
+  </div>
+</div>
   <h3>Contenido del archivo:</h3>
   <pre id="contenido-archivo"></pre>
 <?php
@@ -60,9 +98,43 @@ $urlcurrent = $urlseparate[3];
     //var_dump($alsunat);
     $jelsunat = json_encode($alsunat);
     ?>
+    		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th>RUC</th>
+						<th>T. COMPROBANTE</th>
+						<th>SERIE</th>
+            <th>N° COMPROBANDO</th>
+            <th>FECHA EMISION</th>
+						<th>IMPORTE TOTAL</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--
+					Atención aquí, sólo esto cambiará
+					Pd: no ignores las llaves de inicio y cierre {}
+					-->
+					<?php foreach($mascotas as $mascota){ ?>
+						<tr>
+							<td><?php echo '20370715107' ?></td>
+							<td><?php echo '01' ?></td>
+							<td><?php echo $mascota->cserie ?></td>
+              <td><?php echo $mascota->cnumero ?></td>
+              <td><?php echo $mascota->dfecemi ?></td>
+              <td><?php echo $mascota->nimporte ?></td>
+							<td><a class="btn btn-warning">Consultar 📝</a>
+              <a class="btn btn-warning">Enviar a Sunat 📨</a></td>
+						</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+		</div>
     <div class="csaSunat">
 
     </div>
+    <!--
     <div class="table-responsive-md">
         <table class="table table-hover" role="table">
             <caption>Consulta a Sunat</caption>
@@ -103,9 +175,29 @@ $urlcurrent = $urlseparate[3];
             </tfoot>
         </table>
     </div>
-    <!-- JQUERY -->
-    <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    -->
+        <!-- JQUERY -->
+        <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 <script>
+  $(function() {
+    $('input[name="daterange"]').daterangepicker({
+      opens: 'left'
+    }, function(start, end, label) {
+      dateStart = start.format('YYYY-MM-DD');
+      dateEnd = end.format('YYYY-MM-DD');
+      console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+    });
+  });
+  //DOM ELEMENTS
+  let btnConBDatos = document.getElementById('btnConBDatos');
+  //
+  btnConBDatos.addEventListener('click', function(){
+    
+    console.log('Hola Fecha seleccionado es : ' + dateStart + ' hasta' +  dateEnd);
+  });
   let prueba = <?php echo $jelsunat ?>;
   //console.log(prueba);
   var contenido;

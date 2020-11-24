@@ -1,6 +1,6 @@
 <?php
-/*
-$contraseña = "promefar20149";
+
+$contraseña = "promefar2014";
 $usuario = "pgpromefardistribuidora";
 $nombreBaseDeDatos = "distribuidora";
 # Puede ser 127.0.0.1 o el nombre de tu equipo; o la IP de un servidor remoto
@@ -9,13 +9,17 @@ $puerto = "5432";
 try {
     $base_de_datos = new PDO("pgsql:host=$rutaServidor;port=$puerto;dbname=$nombreBaseDeDatos", $usuario, $contraseña);
     $base_de_datos->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sentencia = $base_de_datos->query("select * FROM public.comprobante_emitido where dfecemi between '2020-10-11' and '2020-10-20' order by dfecemi desc limit 20");
+    $mascotas = $sentencia->fetchAll(PDO::FETCH_OBJ);
+    //var_dump($mascotas);
+    
     echo 'Conexion correcta';
 } catch (Exception $e) {
     echo "Ocurrió un error con la base de datos: " . $e->getMessage();
 }
-*/
-///---------------------------------------------------------------------
 
+///---------------------------------------------------------------------
+/*
 declare (strict_types = 1);
 class ConexionPgsql
 {
@@ -28,7 +32,7 @@ class ConexionPgsql
     {
         try
         {
-            $HOST   = '192.168.1.8';
+            $HOST   = '192.168.1.4';
             $DBNAME = 'distribuidora';
             $USER   = 'pgpromefardistribuidora';
             $PASS   = 'promefar2014';
@@ -55,4 +59,5 @@ class ConexionPgsql
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 }
+*/
 ?>

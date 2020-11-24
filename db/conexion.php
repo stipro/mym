@@ -5,7 +5,9 @@ class Conexion
     protected $db;
     public function __construct()
     {
+        //Conexion MySql
         $this->db = $this->conectar();
+        //Conexion Postgrest
         $this->dbsql = $this->conectarPgsql();
     }
     private function conectar()
@@ -57,5 +59,16 @@ class Conexion
         }
         return $con;
     }
+    protected function ConsultaSimple(string $query): array
+    {
+        return $this->dbsql->query($query)->fetchAll(PDO::FETCH_ASSOC);
+    }
 
+    protected function ConsultaCompleja(string $where, array $array, string $table, string $vtabla): array
+    {
+        $query  = "SELECT id_{$vtabla}, nombre_{$vtabla} FROM {$table} {$where}";
+        $result = $this->db->prepare($query);
+        $result->execute($array);
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
