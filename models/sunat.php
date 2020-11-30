@@ -126,25 +126,31 @@ class Sunat extends Conexion
         return $this->ConsultaSimple($query);
     }
     //GET NAME AWAREHOUSE
-    /*
-    public function getNombre(string $dato, string $tabla): array
-    {
-        $where = "ORDER BY nombre_almacen ASC";
-        $array = array(':nombre' => '%' . $termino . '%', ':factura' => '%' . $termino . '%');
-        return $this->ConsultaCompleja($where, $array, $tabla);
-    }*/
-    public function getApiSunat(object $jedcsunat)
+    
+    public function getdateSunat($dateone, $datetwo): array
+    {   /*
+        echo ' PRIMER FECHA '.$dateone;
+        echo ' SEGUNDO FECHA '.$datetwo.' ';*/
+        //var_dump($dateone);
+        //"select * FROM public.comprobante_emitido where dfecemi between '2020-10-11' and '2020-10-20' order by dfecemi desc limit 20"
+        $columns = "cserie, cnumero, dfecemi, nimporte, benviado";
+        $where = "WHERE dfecemi BETWEEN :dateone AND :datetwo ORDER BY dfecemi DESC LIMIT 10";
+        $array = array(':dateone' => $dateone, ':datetwo' => $datetwo);
+        return $this->ConsultaComplejaPgsql($columns, $where, $array);
+    }
+    public function getApiSunat(array $jedcsunat)
     {
         //PREPARAMOS PARAMETROS
         $codigo = 'FVIH';
-        $numRuc = $jedcsunat->numRuc;
-        $codComp = $jedcsunat->codComp;
-        $numeroSerie = $jedcsunat->numeroSerie;
-        $numero = $jedcsunat->numero;
+        $numRuc = $jedcsunat['numRuc'];
+        $codComp = $jedcsunat['codComp'];
+        $numeroSerie = $jedcsunat['numeroSerie'];
+        $numero = $jedcsunat['numero'];
         $codDocRecep = '';
         $numDocRecep = '';
-        $fechaEmision = $jedcsunat->fechaEmision;
-        $monto = $jedcsunat->monto;        
+        $fechaEmision = $jedcsunat['fechaEmision'];
+        $monto = $jedcsunat['monto'];
+        
         $curl = curl_init();
         curl_setopt_array($curl, array(
           CURLOPT_URL => "https://www.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consultaIndividual?numRuc=$numRuc&codComp=$codComp&numeroSerie=$numeroSerie&numero=$numero&codDocRecep&numDocRecep&fechaEmision=$fechaEmision&monto=$monto",//&codigo=$codigo

@@ -9,7 +9,7 @@ $puerto = "5432";
 try {
     $base_de_datos = new PDO("pgsql:host=$rutaServidor;port=$puerto;dbname=$nombreBaseDeDatos", $usuario, $contraseña);
     $base_de_datos->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sentencia = $base_de_datos->query("select * FROM public.comprobante_emitido where dfecemi between '2020-10-11' and '2020-10-20' order by dfecemi desc limit 20");
+    $sentencia = $base_de_datos->query("select cserie, cnumero, dfecemi, nimporte FROM public.comprobante_emitido where dfecemi between '2020-10-11' and '2020-10-20' order by dfecemi desc limit 20");
     $mascotas = $sentencia->fetchAll(PDO::FETCH_OBJ);
     //var_dump($mascotas);
     

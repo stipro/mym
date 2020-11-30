@@ -34,7 +34,7 @@ $urlcurrent = $urlseparate[3];
         <form>
           <div class="form-group">
             <label for="exampleInputEmail1">Elegir Fecha</label>
-            <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
+            <input type="text" name="daterange" value="10/11/2020 - 10/20/2020" />
             <small id="emailHelp" class="form-text text-muted">Puedes seleccionar un dia o un rango de dias</small>
           </div>
           <button type="button" id="btnConBDatos" class="btn btn-success">Consultar</button>
@@ -155,16 +155,59 @@ $urlcurrent = $urlseparate[3];
       dtableDEmitidos(dateStart, dateEnd);
     });
   });
-  const dtableDEmitidos = async (datauno, datados) => {
-    console.log('Se hara consulta con este rango de fecha : ' + datauno + 'Fecha Fin ' + datados);
-    /*
+  const dtableDEmitidos = async (dateuno, datedos) => {
+    console.log('Se hara consulta con este rango de fecha : ' + dateuno + 'Fecha Fin ' + datedos);
     const body = new FormData();
-    body.append("data", data);
-    const returnArticulo = await fetch("./../../controllers/controllerArticleList.php", { method: "POST", body});
-    const resultArticulo = await returnArticulo.json(); //await JSON.parse(returned);
-    dataReceivedArticle(resultArticulo);
-    */
+    var data = {
+      "accion" : '1',
+      "dateuno" : dateuno,
+      "datedos" : datedos,
+    };
+    body.append("data", JSON.stringify(data));  
+    const returnSunat = await fetch("./../../controllers/controllerSunat.php", { method: "POST", body});
+    const resultSunat = await returnSunat.json(); //await JSON.parse(returned);
+    handleReturnedDocEmiSunat(resultSunat);
   };
+  const handleReturnedDocEmiSunat = (data) => {
+    //rJParse = JSON.parse(data);
+    createTable(data);
+    //console.log(data);
+    //$("#cArticle_idselectBrand").html(data).selectpicker('refresh');
+    //$("#filcat").html(data).selectpicker('refresh');
+  }
+  //GENERANDO CUERPO DE TABLA
+  function createTable(tableData) {
+    let tableBody = document.getElementById('drcsunat');
+    var tipCom = '01';
+    c = 0;
+    tableData.forEach(function(obj) {
+      var row = document.createElement('tr');
+      c++;
+      var celld = document.createElement('td');
+      var celldtipdoc = document.createElement('td');
+      celld.appendChild(document.createTextNode(c));
+      celldtipdoc.appendChild(document.createTextNode(tipCom));
+      row.appendChild(celld);
+      row.appendChild(celldtipdoc);
+      Object.keys(obj).forEach(function(key) {
+        var cell = document.createElement('td');
+        
+        console.log(c);
+        element = key, obj[key];
+        elementdos = obj[key];
+        //console.log(element);
+        
+        cell.appendChild(document.createTextNode(elementdos));
+        //celld.appendChild(cell);
+        row.appendChild(cell);
+        //console.log(key, obj[key]);
+        console.log(obj[key]);
+      });
+      
+      tableBody.appendChild(row);
+    });
+  }
+
     //DOM ELEMENTS
     let btnConBDatos = document.getElementById('btnConBDatos');
   //
@@ -316,12 +359,12 @@ function mostrarContenido(contenido) {
       function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
       };
-      const makeRequests = async (data) => {
+      const makeRequests = async (doc) => {
         beforeSending();
         let ccontador = 0;
         let climite = 5;
         //RECORRE LISTA
-        for (const prop in data) {
+        for (const prop in doc) {
           ccontador++;
           console.log(ccontador);
           if(ccontador == climite){
@@ -330,9 +373,16 @@ function mostrarContenido(contenido) {
             await sleep(2000);
             //consola.log('llego a 5 consultas');
           }
-          console.log(data);
+          console.log(doc);
           const body = new FormData();
-          body.append("data", JSON.stringify(data[prop]));
+          
+          var data = {
+            "accion" : '0',
+            "doc" : doc[prop]
+          };
+          console.log(data);
+          //body.append("data", JSON.stringify(data[prop]));
+          body.append("data", JSON.stringify(data));
           const returned = await fetch("./../../controllers/controllerSunat.php", { method: "POST", body });
           const result = await returned.json();//await JSON.parse(returned);
           handleReturnedData(result);
