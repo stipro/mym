@@ -267,7 +267,7 @@ function toggle(source) {
   //GENERANDO CUERPO DE TABLA
   function createTable(tableData) {
     
-    let tableBody = document.getElementById('drcsunat');
+    //let tableBody = document.getElementById('drcsunat');
     let tableBody = document.getElementById('drcsunat');
     var numruc = '20370715107';
     var numruc = '20370715107';
@@ -277,7 +277,7 @@ function toggle(source) {
     var consultSunat = 'Consultar 📝';
     var sendSunat = 'Enviar a Sunat 📨';
     c = 0;
-    tableBody.parentNode.removeChild(tableBody);
+    //tableBody.parentNode.removeChild(tableBody);
     console.log(tableData);
     //tableBody.removeChild(primerParrafo);
     tableData.forEach(function(obj) {
