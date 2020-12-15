@@ -37,7 +37,7 @@ $urlcurrent = $urlseparate[3];
         <form>
           <div class="form-group">
             <label for="exampleInputEmail1">Elegir Fecha</label>
-            <input type="text" name="daterange" value="12/01/2020 - 12/12/2020" />
+            <input type="text" name="daterange" value="10/11/2020 - 10/20/2020" />
             <small id="emailHelp" class="form-text text-muted">Puedes seleccionar un dia o un rango de dias</small>
           </div>
           <button type="button" id="btnConBDatos" class="btn btn-success">Consultar</button>
@@ -105,24 +105,21 @@ $urlcurrent = $urlseparate[3];
     
   <div>
     <div>
-      Mostrar
-      <select name="sizeTable" id="sizeTable">
-        <option value="10" selected>10</option> 
-        <option value="25">25</option>
-        <option value="50">50</option>
-      </select>
-      Entradas
+      <input type="checkbox" onClick="toggle(this)" /> Seleccionar/Deseleccionar todos
     </div>
     <div>
-      <button type="button" id="" class="btn btn-success">Consultar SUNAT</button>
-    </div>
-    <div>
-      <button type="button" id="" class="btn btn-success">Registrar</button>
+    Mostrar
+    <select name="sizeTable" id="sizeTable">
+      <option value="10" selected>10</option> 
+      <option value="25">25</option>
+      <option value="50">50</option>
+    </select>
+    Entradas
     </div>
   </div>
 
     <div class="table-responsive-md">
-        <table id="table-Sunat"class="table table-hover table table-bordered" role="table">
+        <table class="table table-hover table table-bordered" role="table">
             <caption>Consulta a Sunat</caption>
             <thead class="thead-dark" role="rowgroup">
               <tr role="row">
@@ -132,11 +129,10 @@ $urlcurrent = $urlseparate[3];
                 <th scope="col" role="columnheader"><div class="celltable">T. COMPROBANTE</div></th>
                 <th scope="col" role="columnheader"><div class="celltable">SERIE</div></th>
                 <th scope="col" role="columnheader"><div class="celltable">N° COMPROBANDO</div></th>
-                <th scope="col" role="columnheader"><div class="celltable">F. EMISION</div></th>
-                <th scope="col" role="columnheader"><div class="celltable">I. TOTAL</div></th>
+                <th scope="col" role="columnheader"><div class="celltable">FECHA EMISION</div></th>
+                <th scope="col" role="columnheader"><div class="celltable">IMPORTE TOTAL</div></th>
                 <th scope="col" role="columnheader"><div class="celltable">E. ENVIO</div></th>
-                <th scope="col" role="columnheader"><div class="celltable">E. SUNAT</div></th>
-                <th scope="col" role="columnheader"><div class="celltable">E. REGISTRO</div></th>
+                <th scope="col" role="columnheader"><div class="celltable">ESTADO</div></th>
                 <th scope="col" role="columnheader">ACCIONES</th>
                     <!--
                     <th scope="col" role="columnheader"><div class="celltable">Estado del comprobante a la fecha de la consulta</div></th>
@@ -158,7 +154,6 @@ $urlcurrent = $urlseparate[3];
                     <td role="cell">Chief Sandwich Eater</td>
                 </tr>-->
             </tbody>
-            <!--
             <tfoot>
                 <tr>
                     <th scope="row">4</th>
@@ -169,7 +164,7 @@ $urlcurrent = $urlseparate[3];
                     <th class="pie-elem">1 h 24 min</th>
                     <th class="pie-elem">1 h 22 min</th>
                 </tr>
-            </tfoot>-->
+            </tfoot>
         </table>
     </div>
     <!-- JQUERY -->
@@ -226,7 +221,7 @@ function toggle(source) {
         }
     });
 });
-// FECHA
+//
   $(function() {
     $('input[name="daterange"]').daterangepicker({
       opens: 'left'
@@ -268,31 +263,23 @@ function toggle(source) {
   function createTable(tableData) {
     
     let tableBody = document.getElementById('drcsunat');
-    let tableBody = document.getElementById('drcsunat');
     var numruc = '20370715107';
     var numruc = '20370715107';
     var tipCom = '01';
-    var stateSunat = '-';
-    var stateBD = '-';
+    var stateSunat = 'ACEPTADO';
     var consultSunat = 'Consultar 📝';
     var sendSunat = 'Enviar a Sunat 📨';
     c = 0;
-    tableBody.parentNode.removeChild(tableBody);
-    console.log(tableData);
-    //tableBody.removeChild(primerParrafo);
     tableData.forEach(function(obj) {
       c++;
       //CREAMOS ETIQUETA
-      const cellCheck = document.createElement('td'); 
       const ipt = document.createElement('input');  
       const row = document.createElement('tr');      
       const celld = document.createElement('td');
       const cellnumruc = document.createElement('td');
       const celldtipdoc = document.createElement('td');
       const celldastateSunat = document.createElement('td');
-      const celldastateDb = document.createElement('td');
       const spanConsult = document.createElement('span');
-      const spanBD = document.createElement('span');
       const spanSend = document.createElement('span');
       const celldacciones = document.createElement('td');
       const btnaconsult = document.createElement('a');
@@ -303,21 +290,16 @@ function toggle(source) {
       ipt.name = "dinamico";
       //c=c-1;
       btnaconsult.setAttribute("data-json", c);
-      btnaconsult.setAttribute("data-nComprobante", c);
       //AGREGAMOS CLASE A ETIQUETA
       btnaconsult.className = "btn btn-warning btnConsul";
       btnaSendSunat.className = "btn btn-warning";
       spanConsult.className = "label label-table label-success";
-      spanBD.className = "btn btn-warning";
       //AGREGARMOS TEXTO O CONTENIDO A LA ETIQUETA
       celld.appendChild(document.createTextNode(c));
       cellnumruc.appendChild(document.createTextNode(numruc));
       celldtipdoc.appendChild(document.createTextNode(tipCom));
       spanConsult.appendChild(document.createTextNode(stateSunat));
-      spanBD.appendChild(document.createTextNode(stateBD));
       celldastateSunat.appendChild(spanConsult);
-      celldastateDb.appendChild(spanBD);
-      cellCheck.appendChild(ipt);
       btnaconsult.appendChild(document.createTextNode(consultSunat+c));
       btnaSendSunat.appendChild(document.createTextNode(sendSunat));
       celldacciones.appendChild(btnaconsult);
@@ -329,86 +311,25 @@ function toggle(source) {
         //OBTENEMOS VALOR DATA
         dataJson = btnaconsult.getAttribute('data-json');
         id = dataJson - 1; 
-        //console.log('Usted esta en la funcion ' + id);
-        //console.log(tableData);
+        console.log('Usted esta en la funcion ' + id);
         console.log(tableData[id]);
-        docConsultaIndividual = tableData[id];
-          cserie = docConsultaIndividual['cserie']
-          /*
-          console.log(cserie);
-          console.log(cserie.charAt(1));
-          */
-          var validatorDoc = cserie.charAt(1);
-          var codcomp;
-          var numRuc = '20370715107';
-          //VALIDADOR TIPO DE DOCUMENTO
-          switch (validatorDoc) {
-            case 'F':
-              console.log('FACTURA');
-              codcomp = '01';
-              break;
-            case 'B':
-              console.log('BOLETA');
-              codcomp = '03';
-              break;
-            case 'C':
-              console.log('NOTA DE CREDITO');
-              codcomp = '07';
-              break;
-            case 'D':
-              console.log('NOTA DE DEBITO');
-              codcomp = '08';
-              break;
-            default:
-              console.log('Lo lamentamos, por el momento no disponemos de ' + validatorDoc + '.');
-          }
-          var fechaEmision = convertDateFormat(docConsultaIndividual['dfecemi']);
-          var numero = docConsultaIndividual['cnumero'].trim()
-          var queryformatSunat = {
-            "1" : {
-              "codComp" : codcomp,
-              "fechaEmision" : fechaEmision,
-              "monto" : docConsultaIndividual['nimporte'],
-              "numRuc" : numRuc,
-              "numero" : numero,
-              "numeroSerie" : docConsultaIndividual['cserie'],
-            },
-          };
-          console.log(queryformatSunat);
-        makeRequests(queryformatSunat);
     }
-    //
-    function convertDateFormat(string) {
-        var info = string.split('-').reverse().join('/');
-        return info;
-   }
       //AGREGAMOS A LA ETIQUETA MADRE
-      //row.appendChild(ipt);
-      row.appendChild(cellCheck);
+      row.appendChild(ipt);
       row.appendChild(celld);
       row.appendChild(cellnumruc);
       row.appendChild(celldtipdoc);
-      console.log(obj);
       Object.keys(obj).forEach(function(key) {
         var cell = document.createElement('td');
         //console.log(c);
         element = key, obj[key];
         elementdos = obj[key];
-        console.log(element);
-        console.log(elementdos);
+        //console.log(element);
         if(element == 'benviado'){
           //console.log('si');
-          //elementdos = '';
+          elementdos = 'ENVIADO';
           //cell.appendChild(document.createTextNode(elementdos));
-          if(elementdos){
-            spanSend.className = "label label-table label-success";
-            elementdos = 'ENVIADO';
-            console.log('verdad');
-          }else{
-            spanSend.className = "label label-table label-danger";
-            console.log('falso');
-            elementdos = 'NO ENVIADO';
-          }
+          spanSend.className = "label label-table label-success";
           spanSend.appendChild(document.createTextNode(elementdos));
           cell.appendChild(spanSend);
           row.appendChild(cell);
@@ -423,7 +344,6 @@ function toggle(source) {
         }
       });
       row.appendChild(celldastateSunat);
-      row.appendChild(celldastateDb);
       row.appendChild(celldacciones);
       tableBody.appendChild(row);
     });
@@ -506,15 +426,13 @@ function mostrarContenido(contenido) {
       else{
         let adata = ogrudoc;
         makeRequests(adata);
+
       }
   });
   
   //Si necesitas hacer algo con las respuestas del servidor
   //hacelas aqui.
   const handleReturnedData = (data) => {
-    var drcsunat = document.getElementById('drcsunat');
-    var tableSunat = document.getElementById('table-Sunat');
-
     var ecsnat;
     var ctcsunat;
     var dcsnat = JSON.parse(data);
@@ -523,32 +441,12 @@ function mostrarContenido(contenido) {
     var numero = dcsnat['data']['numero'];
     var fechaEmision = dcsnat['data']['fechaEmision'];
     var monto = dcsnat['data']['monto'];
-    var validatorDocnum = dcsnat['data']['codComp']
-    console.log(validatorDocnum);
-    codComp = validatorDocnum;
-    /*
-    switch (validatorDocnum) {
-            case '01':
-              console.log('FACTURA');
-              codComp = 'FACTURA';
-              break;
-            case '03':
-              console.log('BOLETA');
-              codComp = 'BOLETA';
-              break;
-            case '07':
-              console.log('NOTA DE CREDITO');
-              codComp = 'N° CREDITO';
-              break;
-            case '08':
-              console.log('N° DEBITO');
-              codComp = 'N° DEBITO';
-              break;
-            default:
-              console.log('Lo lamentamos, por el momento no disponemos de ' + validatorDoc + '.');
-      }*/
-      console.log('se convertio');
-      console.log(codComp);
+    if(dcsnat['data']['codComp'] == "08"){
+      codComp = 'N. DEBITO';
+    }
+      else{
+        codComp = 'NO EXISTE';
+      }
       var estadoCp;
       if(dcsnat['data']['estadoCp'] == "1"){
         estadoCp = 'ACEPTADO';
@@ -561,8 +459,7 @@ function mostrarContenido(contenido) {
       ecsnat = '<tr ' + ctcsunat + ' role="row">';
       ecsnat+='<th scope="row">1</th>';
       ecsnat+='<td role="cell">' + codComp + '</td>';
-      ecsnat+='<td role="cell">' + numeroSerie + '</td>';
-      ecsnat+='<td role="cell">' + numero + '</td>';
+      ecsnat+='<td role="cell">' + numeroSerie + ' - ' + numero + '</td>';
       ecsnat+='<td role="cell">' + fechaEmision + '</td>';
       ecsnat+='<td role="cell">' + monto + '</td>';
       ecsnat+='<td role="cell">' + estadoCp + '</td>';
@@ -603,49 +500,28 @@ function mostrarContenido(contenido) {
       function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
       };
-      const makeRequests = async (requestSunat) => {
+      const makeRequests = async (doc) => {
         beforeSending();
         let ccontador = 0;
         let climite = 5;
-        
-        console.log(requestSunat);
-        /*
-        console.log(requestSunat['type']);
-        requestType = requestSunat['type'];
-        requestData = requestSunat['data'];
-        if(requestType == 1){
-          console.log('Individual');
-          requestDocument = requestData;
-        }
-        else{
-          console.log('Masivo');
-          requestDocument = requestData;
-        }
-        
-        //INDICO EL TAMAÑO DEL OBJETO
-        
-        console.log(Object.keys(requestSunat).length);
-        */
         //RECORRE LISTA
-        for (const prop in requestSunat) {
+        for (const prop in doc) {
           ccontador++;
-          //console.log(ccontador);
+          console.log(ccontador);
           if(ccontador == climite){
             climite = (climite + 5);
-            //console.log(climite);
+            console.log(climite);
             await sleep(2000);
             //consola.log('llego a 5 consultas');
           }
-          //console.log(requestSunat);
+          console.log(doc);
           const body = new FormData();
           
           var data = {
             "accion" : '0',
-            "doc" : requestSunat[prop]
+            "doc" : doc[prop]
           };
-
           console.log(data);
-          
           //body.append("data", JSON.stringify(data[prop]));
           body.append("data", JSON.stringify(data));
           const returned = await fetch("./../../controllers/controllerSunat.php", { method: "POST", body });

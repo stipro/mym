@@ -127,20 +127,21 @@ class Sunat extends Conexion
     }
     //GET NAME AWAREHOUSE
     
-    public function getdateSunat($dateone, $datetwo): array
+    public function getdateSunat($dateone, $datetwo, $sizeTable): array
     {   /*
         echo ' PRIMER FECHA '.$dateone;
         echo ' SEGUNDO FECHA '.$datetwo.' ';*/
         //var_dump($dateone);
         //"select * FROM public.comprobante_emitido where dfecemi between '2020-10-11' and '2020-10-20' order by dfecemi desc limit 20"
         $columns = "cserie, cnumero, dfecemi, nimporte, benviado";
-        $where = "WHERE dfecemi BETWEEN :dateone AND :datetwo ORDER BY dfecemi DESC LIMIT 10";
-        $array = array(':dateone' => $dateone, ':datetwo' => $datetwo);
+        $where = "WHERE dfecemi BETWEEN :dateone AND :datetwo ORDER BY dfecemi DESC LIMIT :sizeTable";
+        $array = array(':dateone' => $dateone, ':datetwo' => $datetwo, ':sizeTable' => $sizeTable);
         return $this->ConsultaComplejaPgsql($columns, $where, $array);
     }
     public function getApiSunat(array $jedcsunat)
     {
         //PREPARAMOS PARAMETROS
+        //var_dump($jedcsunat);
         $codigo = 'FVIH';
         $numRuc = $jedcsunat['numRuc'];
         $codComp = $jedcsunat['codComp'];

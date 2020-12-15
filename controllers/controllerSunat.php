@@ -73,8 +73,14 @@ if($_POST){
             else{
                 $dateone = date('Y-m-d', strtotime($dataSunat['dateuno']));
                 $datetwo = date('Y-m-d', strtotime($dataSunat['datedos']));
-                $rptConsulta = $sunat->getdateSunat($dateone, $datetwo);
-                echo  json_encode($rptConsulta);
+                $sizeTable = $dataSunat['size'];
+                $rptConsulta = $sunat->getdateSunat($dateone, $datetwo, $sizeTable);
+                if($rptConsulta){
+                    echo json_encode($rptConsulta);
+                }
+                else{
+                    echo json_encode('No hay datos');
+                }   
             }
         }
     }

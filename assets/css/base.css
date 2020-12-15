@@ -1,4 +1,25 @@
-
+.label{
+  border-radius: 0.3rem;
+  font-weight: 600;
+  color: #fff;
+}
+.label-table{
+  display: inline-block;
+  width: 80%;
+  min-width: 8em;
+}
+.label-success{
+  background-color: #8bc34a;
+}
+.label-danger{
+  background-color: #f44336;
+}
+tbody{
+  font-size: 0.75rem;
+}
+.btn{
+  font-size: 0.75rem;
+}
 /* 320px Celular VGA*/
 @media screen and (max-width: 20rem)
 {
@@ -27,11 +48,26 @@
   body{
     background: green;
   }
+  .celltable{
+    /*width: 8rem;*/
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 }
 /* 1025px a mas */
 @media only screen and (min-width: 64.0625rem)
 {
   body{
-    background: maroon;
+    background: #f8f9fa;
+  }
+  table{
+    text-align: center;
+  }
+  .celltable{
+    /*width: 8rem;*/
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }

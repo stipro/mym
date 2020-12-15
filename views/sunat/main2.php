@@ -116,7 +116,7 @@ $urlcurrent = $urlseparate[3];
 					Atención aquí, sólo esto cambiará
 					Pd: no ignores las llaves de inicio y cierre {}
 					-->
-					<?php foreach($mascotas as $mascota){ ?>
+					<?php /*foreach($mascotas as $mascota){*/ ?>
 						<tr>
 							<td><?php echo '20370715107' ?></td>
 							<td><?php echo '01' ?></td>
@@ -127,7 +127,7 @@ $urlcurrent = $urlseparate[3];
 							<td><a class="btn btn-warning">Consultar 📝</a>
               <a class="btn btn-warning">Enviar a Sunat 📨</a></td>
 						</tr>
-					<?php } ?>
+          <?php /* } */?>
 				</tbody>
 			</table>
 		</div>

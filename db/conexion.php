@@ -46,10 +46,10 @@ class Conexion
     {
         try
         {
-            $HOST   = '192.168.1.4';
+            $HOST   = '192.168.1.6';
             $DBNAME = 'distribuidora';
             $USER   = 'pgpromefardistribuidora';
-            $PASS   = 'promefar2014';
+            $PASS   = 'promefar2016';
             $PORT   = '5432';
             $conpgsql    = new PDO("pgsql:host=$HOST; port=$PORT; dbname=$DBNAME", $USER, $PASS);
             $conpgsql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -61,11 +61,16 @@ class Conexion
         }
         return $conpgsql;
     }
-    protected function ConsultaComplejaPgsql(string $columns, string $where, array $array): array
+    protected function ConsultaComplejaPgsql(string $columns, string $where, array $array):array
     {
         $query  = "SELECT {$columns} FROM public.comprobante_emitido {$where}";
         $result = $this->dbsql->prepare($query);
         $result->execute($array);
-        return $result->fetchAll(PDO::FETCH_ASSOC);
+        $resultConsult = $result->fetchAll(PDO::FETCH_ASSOC);
+        $cantResult = count($resultConsult);
+        return $resultArray = [
+            "result" => $resultConsult,
+            "cant" => $cantResult,
+        ];
     }
 }
