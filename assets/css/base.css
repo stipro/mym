@@ -1,19 +1,24 @@
-.label{
-  border-radius: 0.3rem;
-  font-weight: 600;
-  color: #fff;
-}
-.label-table{
-  display: inline-block;
-  width: 80%;
-  min-width: 8em;
-}
 .label-success{
   background-color: #8bc34a;
 }
 .label-danger{
   background-color: #f44336;
 }
+.label-warning{
+  background-color: #ffb300;
+}
+.label{
+  border-radius: 0.3rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+}
+.label-table{
+  display: inline-block;
+  width: 80%;
+  min-width: 8em;
+}
+
 tbody{
   font-size: 0.75rem;
 }

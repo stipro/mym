@@ -24,7 +24,6 @@ if($_POST){
             //$jdrptSunat = json_decode($rptApiSunat);
             //var_dump($jdrptSunat);
             //var_dump($rptApiSunat);
-            
             if($rptApiSunat)
             {
                     $jdrptSunat = json_decode($rptApiSunat);
@@ -57,7 +56,12 @@ if($_POST){
                 //$strnombre = $jedcsunat['nombre'];
             }
             else{
-                echo 'No responde servidor correctamente';
+                $rptServidor = array(
+                    "rpta" => "0",
+                    "text" => "No responde servidor correctamente",
+                );
+                
+                echo json_encode($rptServidor);
             }
         }
         else{

@@ -19,6 +19,8 @@ $urlcurrent = $urlseparate[3];
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!--Estilo Boton Animado [ REQUIRED ]-->
+    <link href="./../../assets/css/btn-animado.css" rel="stylesheet">
     <!--Estilo Tabla [ REQUIRED ]-->
     <link href="./../../assets/css/base.css" rel="stylesheet">
     <!-- Titulo de la pagina / pestaña -->
@@ -114,10 +116,10 @@ $urlcurrent = $urlseparate[3];
       Entradas
     </div>
     <div>
-      <button type="button" id="" class="btn btn-success">Consultar SUNAT</button>
+      <button type="button" id="btnSCM" class="btn btn-success">Consultar MASIVO SUNAT</button>
     </div>
     <div>
-      <button type="button" id="" class="btn btn-success">Registrar</button>
+      <button type="button" id="" class="btn btn-success">Registrar MASIVO BDATOS</button>
     </div>
   </div>
 
@@ -146,17 +148,19 @@ $urlcurrent = $urlseparate[3];
               </tr>
             </thead>
             <tbody id="drcsunat" role="rowgroup">
-            <!--
+            
                 <tr role="row">
-                    <th scope="row">1</th>
-                    <td role="cell">James</td>
-                    <td role="cell">Matman</td>
-                    <td role="cell">Chief Sandwich Eater</td>
-                    <td role="cell">James</td>
-                    <td role="cell">Matman</td>
-                    <td role="cell">Chief Sandwich Eater</td>
-                    <td role="cell">Chief Sandwich Eater</td>
-                </tr>-->
+                    <th scope="row">-</th>
+                    <td role="cell">-</td>
+                    <td role="cell">-</td>
+                    <td role="cell">-</td>
+                    <td role="cell">-</td>
+                    <td role="cell">-</td>
+                    <td role="cell">-</td>
+                    <td role="cell">-</td>
+                    <td role="cell">-</td>
+                    <td role="cell">-</td>
+                </tr>
             </tbody>
             <!--
             <tfoot>
@@ -177,16 +181,120 @@ $urlcurrent = $urlseparate[3];
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
-
 //CHECKBOX
 //SELECCION / DESELECCIONA CHECKBOX
 function toggle(source) {
   checkboxes = document.getElementsByName('dinamico');
-
   for(var i=0, n=checkboxes.length;i<n;i++) {
     checkboxes[i].checked = source.checked;
   }
+}
+/* Elemento DIV que cambia su texto */
+var btnSCM = document.getElementById("btnSCM");
 
+/* Se agrega el evento al elemento */
+btnSCM.addEventListener("click", getcboxSCM);
+
+/* Función que se gatilla al hacer click en el elemento DIV */
+function getcboxSCM() {
+  var i = 0;
+  var checkActivos = [];
+  console.log('CONSULTA MASIVO');
+  $("input[type=checkbox]:checked").each(function(){ 
+  //console.log($(this).val());
+  checkActivos.push($(this).val());
+  
+  /*
+  $(this).closest('td').siblings().each(function(){
+
+    // obtenemos el texto del td 
+    console.log($(this).text());
+  });*/
+  });
+  //console.log(checkActivos);
+  preDataSCM(checkActivos);
+}
+function preDataSCM(date){
+  console.log(date);
+
+  date.forEach(miFuncion);
+ 
+function miFuncion(elemento, indice) {
+    console.log( "Indice: " + indice + " Valor: " + elemento );
+    bdato = elemento;
+    //DIVIDIMOS PARA BUSCAR EL DATO
+    var elementodivi = elemento.split('_');
+    console.log(typeof elementodivi);
+    console.log(elementodivi);
+    console.log(elementodivi[1]);
+    //CAPSULAMOS EL DATO A BUSCAR
+    elemabusc = elementodivi[1];
+    console.log(tableData);
+    //BUSCAMOS DATOS SELECCIONADOS  
+    var buscar = tableData.find(function(cnumero){ return cnumero.cnumero == elemabusc + '  ';});
+    if(buscar){
+      console.log(buscar);
+      var monto = buscar['nimporte']
+      var numero = buscar['cnumero'].trim();
+      var cserie = buscar['cserie'];
+      var validatorDoc = cserie.charAt(1);
+      var codcomp;
+      var numRuc = '20370715107';
+      //VALIDADOR TIPO DE DOCUMENTO
+      switch (validatorDoc) {
+        case 'F':
+          console.log('FACTURA');
+          codcomp = '01';
+          break;
+        case 'B':
+          console.log('BOLETA');
+          codcomp = '03';
+          break;
+        case 'C':
+          console.log('NOTA DE CREDITO');
+          codcomp = '07';
+          break;
+        case 'D':
+          console.log('NOTA DE DEBITO');
+          codcomp = '08';
+          break;
+        default:
+          console.log('Lo lamentamos, por el momento no disponemos de ' + validatorDoc + '.');
+      }
+      var fechaEmision = convertDateFormat(buscar['dfecemi']);
+      var queryformatSunat = {
+            "1" : {
+              "codComp" : codcomp,
+              "fechaEmision" : fechaEmision,
+              "monto" : monto,
+              "numRuc" : numRuc,
+              "numero" : numero,
+              "numeroSerie" : cserie,
+            },
+          };
+        console.log(queryformatSunat);
+        //SE ENVIA DATOS A LA FUNCION
+        makeRequests(queryformatSunat);
+    }
+    else
+    {
+      console.log('No se encontro');
+    }
+}
+function convertDateFormat(string) {
+        var info = string.split('-').reverse().join('/');
+        return info;
+   }
+  //var valorcnumero = valor.split(" ");
+  //console.log(valorcnumero[0]);
+
+  /*
+  ltableData = tableData.trim();
+  console.log(ltableData  );
+  */
+  
+
+  
 }
 //SELECT 
 //DETECAR CAMBIO SELECT
@@ -238,10 +346,12 @@ function toggle(source) {
       var sizeTableoption = sizeTable.options[sizeTable.selectedIndex];
       sizeTablevalue = sizeTableoption.value;
       console.log("Tamaño" + sizeTablevalue);
+      borrarTable()
       //GET DATA TABLE
       dtableDEmitidos(dateStart, dateEnd, sizeTablevalue);
     });
   });
+  //CONSULTA BASE DATOS DE LA EMPRESA
   const dtableDEmitidos = async (dateuno, datedos, size) => {
     console.log('Se hara consulta con este rango de fecha : ' + dateuno + 'Fecha Fin ' + datedos);
     const body = new FormData();
@@ -260,62 +370,123 @@ function toggle(source) {
     //rJParse = JSON.parse(data);
     tableData = data['result'];
     //console.log(tableData);
+    
     createTable(tableData);
     //$("#cArticle_idselectBrand").html(data).selectpicker('refresh');
     //$("#filcat").html(data).selectpicker('refresh');
   }
+  function borrarTable() {
+    let tableBody = document.getElementById('drcsunat');
+    
+    /*
+    let table = document.getElementById('table-Sunat');
+    table.removeChild(tableBody);
+    */
+    //document.getElementById('drcsuat').innerHTML = '';
+    tableBody.innerHTML = '';
+  }
   //GENERANDO CUERPO DE TABLA
   function createTable(tableData) {
     
-    //let tableBody = document.getElementById('drcsunat');
     let tableBody = document.getElementById('drcsunat');
-    var numruc = '20370715107';
+    //let table = document.getElementById('table-Sunat');
     var numruc = '20370715107';
     var tipCom = '01';
     var stateSunat = '-';
     var stateBD = '-';
     var consultSunat = 'Consultar 📝';
     var sendSunat = 'Enviar a Sunat 📨';
+    //BOTON ANIMADO
+    var txtPEstado = 'No consultado';
+    var txtSEstado = 'Consultando';
+    var txtTEstado = 'Activo';
     c = 0;
+    //i = 0;
     //tableBody.parentNode.removeChild(tableBody);
     console.log(tableData);
+    const tabBody = document.createElement('tbody');
+    tabBody.setAttribute("id", "drcsunat");
+    tabBody.setAttribute("role", 'rowgroup');
+    
     //tableBody.removeChild(primerParrafo);
     tableData.forEach(function(obj) {
+      i++;
       c++;
       //CREAMOS ETIQUETA
-      const cellCheck = document.createElement('td'); 
-      const ipt = document.createElement('input');  
-      const row = document.createElement('tr');      
+      const row = document.createElement('tr');
+      //const row = document.createElement('tr');
+      const cellCheck = document.createElement('td');
+      const ipt = document.createElement('input');
+      const info = document.createElement('span');
       const celld = document.createElement('td');
       const cellnumruc = document.createElement('td');
       const celldtipdoc = document.createElement('td');
       const celldastateSunat = document.createElement('td');
       const celldastateDb = document.createElement('td');
       const spanConsult = document.createElement('span');
+      //Boton animado
+      const aSConsult = document.createElement('a');
+      const sSCCAnimacion = document.createElement('span');
+      //
+      const sSCCPAnimacion = document.createElement('svg');
+      const sSCCPAElement = document.createElement('use');
+      const sSCCSAnimacion = document.createElement('svg');
+      const sSCCSAElement = document.createElement('use');
+      const sSCCTAnimacion = document.createElement('svg');
+      const sSCCTAElement = document.createElement('use');
+      //
+      const ulSCEstado = document.createElement('ul');
+      const ulSCPEstado = document.createElement('li');
+      const ulSCSEstado = document.createElement('li');
+      const ulSCTEstado = document.createElement('li');
+      //
       const spanBD = document.createElement('span');
       const spanSend = document.createElement('span');
       const celldacciones = document.createElement('td');
       const btnaconsult = document.createElement('a');
       const btnaSendSunat = document.createElement('a');
-
+      var i = c - 1;
+      console.log(i);
+      //var numero = dcsnat['data']['numero'].trim();
+      idSpanSestado = tableData[i]['cnumero'].trim();
+      console.log(tableData[i]);
       //AGREGAMOS TYPE O TIPO A ETIQUETA
       ipt.type = "checkbox";
       ipt.name = "dinamico";
       //c=c-1;
+      row.setAttribute("id", "row_" + idSpanSestado);
+      ipt.setAttribute("value", "state_" + idSpanSestado);
+      
+      spanConsult.setAttribute("id", "state_" + idSpanSestado);
       btnaconsult.setAttribute("data-json", c);
       btnaconsult.setAttribute("data-nComprobante", c);
       //AGREGAMOS CLASE A ETIQUETA
-      btnaconsult.className = "btn btn-warning btnConsul";
-      btnaSendSunat.className = "btn btn-warning";
-      spanConsult.className = "label label-table label-success";
-      spanBD.className = "btn btn-warning";
+      
+      btnaconsult.className = "btn btn-success btnConsul";
+      btnaSendSunat.className = "btn btn-success";
+      aSConsult.className = "activate";
+      spanConsult.className = "label label-table label-warning";
+      spanBD.className = "label label-table label-warning";
       //AGREGARMOS TEXTO O CONTENIDO A LA ETIQUETA
       celld.appendChild(document.createTextNode(c));
       cellnumruc.appendChild(document.createTextNode(numruc));
       celldtipdoc.appendChild(document.createTextNode(tipCom));
       spanConsult.appendChild(document.createTextNode(stateSunat));
-      spanBD.appendChild(document.createTextNode(stateBD));
+      // AGREGAMOS TEXTO
+      ulSCPEstado.appendChild(document.createTextNode(txtPEstado));
+      ulSCSEstado.appendChild(document.createTextNode(txtSEstado));
+      ulSCTEstado.appendChild(document.createTextNode(txtTEstado));
+      //
+      ulSCEstado.appendChild(ulSCPEstado);
+      ulSCEstado.appendChild(ulSCSEstado);
+      ulSCEstado.appendChild(ulSCTEstado);
+
+      aSConsult.appendChild(ulSCEstado);
+      aSConsult.appendChild(sSConsult);
+      //
       celldastateSunat.appendChild(spanConsult);
+      celldastateSunat.appendChild(aSConsult);
+      spanBD.appendChild(document.createTextNode(stateBD));
       celldastateDb.appendChild(spanBD);
       cellCheck.appendChild(ipt);
       btnaconsult.appendChild(document.createTextNode(consultSunat+c));
@@ -324,8 +495,8 @@ function toggle(source) {
       celldacciones.appendChild(btnaSendSunat);
     //CONSULTAR SUNAT INDIVIDUAL
     btnaconsult.addEventListener('click', obtenerValores);
-    
-    function obtenerValores(e) {
+      // CONSULTA INDIVIDUAL
+  function obtenerValores(e) {
         //OBTENEMOS VALOR DATA
         dataJson = btnaconsult.getAttribute('data-json');
         id = dataJson - 1; 
@@ -333,7 +504,8 @@ function toggle(source) {
         //console.log(tableData);
         console.log(tableData[id]);
         docConsultaIndividual = tableData[id];
-          cserie = docConsultaIndividual['cserie']
+        var numero = docConsultaIndividual['cnumero'].trim();
+        var cserie = docConsultaIndividual['cserie'];
           /*
           console.log(cserie);
           console.log(cserie.charAt(1));
@@ -363,7 +535,7 @@ function toggle(source) {
               console.log('Lo lamentamos, por el momento no disponemos de ' + validatorDoc + '.');
           }
           var fechaEmision = convertDateFormat(docConsultaIndividual['dfecemi']);
-          var numero = docConsultaIndividual['cnumero'].trim()
+          
           var queryformatSunat = {
             "1" : {
               "codComp" : codcomp,
@@ -374,10 +546,11 @@ function toggle(source) {
               "numeroSerie" : docConsultaIndividual['cserie'],
             },
           };
-          console.log(queryformatSunat);
+        //onsole.log(queryformatSunat);
+        //SE ENVIA DATOS A LA FUNCION
         makeRequests(queryformatSunat);
     }
-    //
+    //CONVIERTE EN FORMATO ADECUADO
     function convertDateFormat(string) {
         var info = string.split('-').reverse().join('/');
         return info;
@@ -388,14 +561,14 @@ function toggle(source) {
       row.appendChild(celld);
       row.appendChild(cellnumruc);
       row.appendChild(celldtipdoc);
-      console.log(obj);
+      //console.log(obj);
       Object.keys(obj).forEach(function(key) {
         var cell = document.createElement('td');
         //console.log(c);
         element = key, obj[key];
         elementdos = obj[key];
-        console.log(element);
-        console.log(elementdos);
+        //console.log(element);
+        //console.log(elementdos);
         if(element == 'benviado'){
           //console.log('si');
           //elementdos = '';
@@ -403,10 +576,10 @@ function toggle(source) {
           if(elementdos){
             spanSend.className = "label label-table label-success";
             elementdos = 'ENVIADO';
-            console.log('verdad');
+            //console.log('verdad');
           }else{
             spanSend.className = "label label-table label-danger";
-            console.log('falso');
+            //console.log('falso');
             elementdos = 'NO ENVIADO';
           }
           spanSend.appendChild(document.createTextNode(elementdos));
@@ -425,9 +598,13 @@ function toggle(source) {
       row.appendChild(celldastateSunat);
       row.appendChild(celldastateDb);
       row.appendChild(celldacciones);
+      //tabBody.appendChild(row);
       tableBody.appendChild(row);
     });
+    
+    //table.appendChild(tabBody);
   }
+
 
     //DOM ELEMENTS
     let btnConBDatos = document.getElementById('btnConBDatos');
@@ -512,19 +689,24 @@ function mostrarContenido(contenido) {
   //Si necesitas hacer algo con las respuestas del servidor
   //hacelas aqui.
   const handleReturnedData = (data) => {
+    //
     var drcsunat = document.getElementById('drcsunat');
     var tableSunat = document.getElementById('table-Sunat');
-
+    
     var ecsnat;
     var ctcsunat;
     var dcsnat = JSON.parse(data);
+    console.log(dcsnat);
     var codComp;
     var numeroSerie = dcsnat['data']['numeroSerie'];
-    var numero = dcsnat['data']['numero'];
+    var numero = dcsnat['data']['numero'].trim();
+    console.log(numero);
+    let textSpestadoSunat = document.getElementById('state_' + numero);
     var fechaEmision = dcsnat['data']['fechaEmision'];
     var monto = dcsnat['data']['monto'];
     var validatorDocnum = dcsnat['data']['codComp']
-    console.log(validatorDocnum);
+    /*console.log(validatorDocnum);
+    console.log('id celda');*/
     codComp = validatorDocnum;
     /*
     switch (validatorDocnum) {
@@ -546,17 +728,21 @@ function mostrarContenido(contenido) {
               break;
             default:
               console.log('Lo lamentamos, por el momento no disponemos de ' + validatorDoc + '.');
-      }*/
+      }
       console.log('se convertio');
-      console.log(codComp);
+      console.log(codComp);*/
       var estadoCp;
       if(dcsnat['data']['estadoCp'] == "1"){
         estadoCp = 'ACEPTADO';
         ctcsunat = 'class="table-success"';
+        textSpestadoSunat.innerHTML = estadoCp;
+        textSpestadoSunat.className += "label label-table label-success";
       }
       else{
         estadoCp = 'NO EXISTE';
         ctcsunat = 'class="table-danger"';
+        textSpestadoSunat.innerHTML = estadoCp;
+        textSpestadoSunat.className = "label label-table label-danger";
       }
       ecsnat = '<tr ' + ctcsunat + ' role="row">';
       ecsnat+='<th scope="row">1</th>';
@@ -583,8 +769,30 @@ function mostrarContenido(contenido) {
         }
         ecsnat+='<td role="cell">' + condDomiRuc +'</td>';
         ecsnat+='</tr>';
-        $("#drcsunat").append(ecsnat);
+        innerHTML += ecsnat; 
+        trSTFila.insertAdjacentElement('afterend', ecsnat);
+        $( ecsnat ).insertAfter( '#row_' + numero );
+        //var trSTFila = document.getElementById('row_' + numero);
+        //trSTFila.insertAdjacentElement('afterend',ecsnat);
+        //document.querySelector('#row_' + numero).parentElement.append(ecsnat);
+        //$("#drcsunat").append(ecsnat);
+        //document.querySelector('#row_' + numero).parent.append(ecsnat);
+        //$( '#row_' + numero ).append(ecsnat);
+        //drcsunat.appendChild(ecsnat);
+        /*
+        var i = document.createElement("tr");
+        insertAfter(trSTFila,i)
+        function insertAfter(trSTFila,i){ 
+          if(trSTFila.nextSibling){ 
+            trSTFila.parentNode.insertBefore(i,trSTFila.nextSibling); 
+          } else { 
+            trSTFila.parentNode.appendChild(i); 
+          }
+        }*/
         
+        //el.innerHTML = "test";
+        //var div = document.getElementById("foo");
+        //insertAfter(trSTFila, el);
         //console.log(dcsnat);
 
       };
@@ -603,11 +811,11 @@ function mostrarContenido(contenido) {
       function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
       };
+      //CONSULTA A SUNAT
       const makeRequests = async (requestSunat) => {
         beforeSending();
         let ccontador = 0;
         let climite = 5;
-        
         console.log(requestSunat);
         /*
         console.log(requestSunat['type']);
@@ -634,7 +842,7 @@ function mostrarContenido(contenido) {
             climite = (climite + 5);
             //console.log(climite);
             await sleep(2000);
-            //consola.log('llego a 5 consultas');
+            console.log('llego a 5 consultas');
           }
           //console.log(requestSunat);
           const body = new FormData();
@@ -650,6 +858,8 @@ function mostrarContenido(contenido) {
           body.append("data", JSON.stringify(data));
           const returned = await fetch("./../../controllers/controllerSunat.php", { method: "POST", body });
           const result = await returned.json();//await JSON.parse(returned);
+          console.log(typeof result);
+          console.log(result);
           handleReturnedData(result);
         }
         afterSending();
