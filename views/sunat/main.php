@@ -19,6 +19,8 @@ $urlcurrent = $urlseparate[3];
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!--
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">-->
     <!--Estilo Boton Animado [ REQUIRED ]-->
     <link href="./../../assets/css/btn-animado.css" rel="stylesheet">
     <!--Estilo Tabla [ REQUIRED ]-->
@@ -119,7 +121,7 @@ $urlcurrent = $urlseparate[3];
       <button type="button" id="btnSCM" class="btn btn-success">Consultar MASIVO SUNAT</button>
     </div>
     <div>
-      <button type="button" id="" class="btn btn-success">Registrar MASIVO BDATOS</button>
+      <button type="button" id="btnSRM" class="btn btn-success">Registrar MASIVO BDATOS</button>
     </div>
   </div>
 
@@ -176,11 +178,25 @@ $urlcurrent = $urlseparate[3];
             </tfoot>-->
         </table>
     </div>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="circle">
+        <circle cx="8" cy="8" r="7.5"></circle>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" id="arrow">
+        <path d="M2.7008908,5.37931459 L2.7008908,5.37931459 C2.9224607,5.60207651 3.2826628,5.60304283 3.50542472,5.38147293 C3.52232305,5.36466502 3.53814843,5.34681177 3.55280728,5.32801875 L5.34805194,3.02646954 L5.34805194,10.3480519 C5.34805194,10.7081129 5.63993903,11 6,11 L6,11 C6.36006097,11 6.65194806,10.7081129 6.65194806,10.3480519 L6.65194806,3.02646954 L8.44719272,5.32801875 C8.6404327,5.57575732 8.99791646,5.61993715 9.24565503,5.42669716 C9.26444805,5.41203831 9.28230129,5.39621293 9.2991092,5.37931459 L9.2991092,5.37931459 C9.55605877,5.12098268 9.57132199,4.70855346 9.33416991,4.43193577 L6.75918715,1.42843795 C6.39972025,1.00915046 5.76841509,0.960656296 5.34912761,1.32012319 C5.31030645,1.35340566 5.27409532,1.38961679 5.24081285,1.42843795 L2.66583009,4.43193577 C2.42867801,4.70855346 2.44394123,5.12098268 2.7008908,5.37931459 Z"></path>
+    </symbol>
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" id="check">
+            <path id="test" d="M4.76499011,6.7673683 L8.2641848,3.26100386 C8.61147835,2.91299871 9.15190114,2.91299871 9.49919469,3.26100386 C9.51164115,3.27347582 9.52370806,3.28637357 9.53537662,3.29967699 C9.83511755,3.64141434 9.81891834,4.17816549 9.49919469,4.49854425 L5.18121271,8.82537365 C4.94885368,9.05820878 4.58112654,9.05820878 4.34876751,8.82537365 L2.50080531,6.97362503 C2.48835885,6.96115307 2.47629194,6.94825532 2.46462338,6.93495189 C2.16488245,6.59321455 2.18108166,6.0564634 2.50080531,5.73608464 C2.84809886,5.3880795 3.38852165,5.3880795 3.7358152,5.73608464 L4.76499011,6.7673683 Z"></path>
+    </symbol>
+</svg>
     <!-- JQUERY -->
     <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="./../../assets/js/btn-animado.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
+
 //CHECKBOX
 //SELECCION / DESELECCIONA CHECKBOX
 function toggle(source) {
@@ -189,13 +205,19 @@ function toggle(source) {
     checkboxes[i].checked = source.checked;
   }
 }
-/* Elemento DIV que cambia su texto */
+/* Capturamos ID del Boton 'Consultar MASIVO SUNAT' */
 var btnSCM = document.getElementById("btnSCM");
 
 /* Se agrega el evento al elemento */
 btnSCM.addEventListener("click", getcboxSCM);
 
-/* Función que se gatilla al hacer click en el elemento DIV */
+/* Capturamos ID del Boton 'Registrar MASIVO SUNAT' */  
+var btnSCM = document.getElementById("btnSRM");
+
+/* Se agrega el evento al elemento */
+btnSRM.addEventListener("click", getcboxbtnSRM);
+
+/* Función que se gatilla al hacer click en el elemento BOTON */
 function getcboxSCM() {
   var i = 0;
   var checkActivos = [];
@@ -214,6 +236,38 @@ function getcboxSCM() {
   //console.log(checkActivos);
   preDataSCM(checkActivos);
 }
+
+/* Función que se gatilla al hacer click en el elemento BOTON */
+function getcboxbtnSRM() {
+  var i = 0;
+  var checkContador = [];
+  var checkATxt = []
+  console.log('REGISTRO MASIVO');
+  $("input[type=checkbox]:checked").each(function(){
+    checkContador.push($(this).val());
+    $(this).closest('td').siblings().each(function(){
+    // obtenemos el texto del td 
+    console.log($(this).text());
+    
+    checkATxt.push($(this).text());
+    });
+/*
+  console.log($(this).val());
+  checkActivos.push($(this).val());
+*/
+console.log(checkContador);
+
+  });
+  console.log(checkATxt);
+  checkContador.forEach(getTrId);
+  function getTrId(elemento, indice){
+    console.log( "Indice: " + indice + " Valor: " + elemento );
+    var elementodivi = elemento.split('_');
+    var idtr = elementodivi[1];
+    console.log($('#row_' + idtr).length);
+  }
+}
+
 function preDataSCM(date){
   console.log(date);
 
@@ -430,11 +484,14 @@ function convertDateFormat(string) {
       //
       const sSCCPAnimacion = document.createElement('svg');
       const sSCCPAElement = document.createElement('use');
+      sSCCPAnimacion.appendChild(sSCCPAElement);
       const sSCCSAnimacion = document.createElement('svg');
       const sSCCSAElement = document.createElement('use');
+      sSCCSAnimacion.appendChild(sSCCSAElement);
       const sSCCTAnimacion = document.createElement('svg');
       const sSCCTAElement = document.createElement('use');
-      //
+      sSCCTAnimacion.appendChild(sSCCTAElement);
+      
       const ulSCEstado = document.createElement('ul');
       const ulSCPEstado = document.createElement('li');
       const ulSCSEstado = document.createElement('li');
@@ -457,6 +514,10 @@ function convertDateFormat(string) {
       row.setAttribute("id", "row_" + idSpanSestado);
       ipt.setAttribute("value", "state_" + idSpanSestado);
       
+      sSCCPAElement.setAttribute("xlink:href", '#circle');
+      sSCCSAElement.setAttribute("xlink:href", '#arrow');
+      sSCCTAElement.setAttribute("xlink:href", '#check');
+
       spanConsult.setAttribute("id", "state_" + idSpanSestado);
       btnaconsult.setAttribute("data-json", c);
       btnaconsult.setAttribute("data-nComprobante", c);
@@ -480,10 +541,14 @@ function convertDateFormat(string) {
       ulSCEstado.appendChild(ulSCPEstado);
       ulSCEstado.appendChild(ulSCSEstado);
       ulSCEstado.appendChild(ulSCTEstado);
-
+      
+      sSCCAnimacion.appendChild(sSCCPAnimacion);
+      sSCCAnimacion.appendChild(sSCCSAnimacion);
+      sSCCAnimacion.appendChild(sSCCTAnimacion);
+      /*
+      aSConsult.appendChild(sSCCAnimacion);
       aSConsult.appendChild(ulSCEstado);
-      aSConsult.appendChild(sSConsult);
-      //
+      */
       celldastateSunat.appendChild(spanConsult);
       celldastateSunat.appendChild(aSConsult);
       spanBD.appendChild(document.createTextNode(stateBD));
@@ -495,6 +560,18 @@ function convertDateFormat(string) {
       celldacciones.appendChild(btnaSendSunat);
     //CONSULTAR SUNAT INDIVIDUAL
     btnaconsult.addEventListener('click', obtenerValores);
+    $('.activate').on('click touch', function(e) {
+    var self = $(this);
+    if(!self.hasClass('loading')) {
+        self.addClass('loading');
+        setTimeout(function() {
+            self.addClass('done');
+            setTimeout(function() {
+                self.removeClass('loading done');
+            }, 1600);
+        }, 3200);
+    }
+});
       // CONSULTA INDIVIDUAL
   function obtenerValores(e) {
         //OBTENEMOS VALOR DATA
@@ -769,8 +846,8 @@ function mostrarContenido(contenido) {
         }
         ecsnat+='<td role="cell">' + condDomiRuc +'</td>';
         ecsnat+='</tr>';
-        innerHTML += ecsnat; 
-        trSTFila.insertAdjacentElement('afterend', ecsnat);
+        //innerHTML += ecsnat; 
+        //trSTFila.insertAdjacentElement('afterend', ecsnat);
         $( ecsnat ).insertAfter( '#row_' + numero );
         //var trSTFila = document.getElementById('row_' + numero);
         //trSTFila.insertAdjacentElement('afterend',ecsnat);
