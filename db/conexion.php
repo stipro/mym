@@ -46,7 +46,7 @@ class Conexion
     {
         try
         {
-            $HOST   = '192.168.1.6';
+            $HOST   = '192.168.1.25';
             $DBNAME = 'distribuidora';
             $USER   = 'pgpromefardistribuidora';
             $PASS   = 'promefar2016';
