@@ -70,7 +70,6 @@ $urlcurrent = $urlseparate[3];
       </fieldset>
     </div>
   </div>
-</div>
   <h3>Contenido del archivo:</h3>
   <pre id="contenido-archivo"></pre>
 <?php
@@ -102,10 +101,10 @@ $urlcurrent = $urlseparate[3];
     }
     //var_dump($alsunat);
     $jelsunat = json_encode($alsunat);
-    ?>
-    <div class="csaSunat">
+?>
+  <div class="csaSunat">
 
-    </div>
+  </div>
     
   <div>
     <div>
@@ -124,33 +123,22 @@ $urlcurrent = $urlseparate[3];
       <button type="button" id="btnSRM" class="btn btn-success">Registrar MASIVO BDATOS</button>
     </div>
   </div>
-
-    <div class="table-responsive-md">
-        <table id="table-Sunat"class="table table-hover table table-bordered" role="table">
-            <caption>Consulta a Sunat</caption>
-            <thead class="thead-dark" role="rowgroup">
-              <tr role="row">
-                <th scope="col" role="columnheader"><div class="celltable"><input type="checkbox" onClick="toggle(this)"/></div></th>
-                <th scope="col">#</th>
-                <th scope="col" role="columnheader"><div class="celltable">RUC</div></th>
-                <th scope="col" role="columnheader"><div class="celltable">T. COMPROBANTE</div></th>
-                <th scope="col" role="columnheader"><div class="celltable">SERIE</div></th>
-                <th scope="col" role="columnheader"><div class="celltable">N° COMPROBANDO</div></th>
-                <th scope="col" role="columnheader"><div class="celltable">F. EMISION</div></th>
-                <th scope="col" role="columnheader"><div class="celltable">I. TOTAL</div></th>
-                <th scope="col" role="columnheader"><div class="celltable">E. ENVIO</div></th>
-                <th scope="col" role="columnheader"><div class="celltable">E. SUNAT</div></th>
-                <th scope="col" role="columnheader"><div class="celltable">E. REGISTRO</div></th>
-                <th scope="col" role="columnheader">ACCIONES</th>
-                    <!--
-                    <th scope="col" role="columnheader"><div class="celltable">Estado del comprobante a la fecha de la consulta</div></th>
-                    <th scope="col" role="columnheader"><div class="celltable">Estado del contribuyente a la fecha de emisión</div></th>
-                    <th scope="col" role="columnheader"><div class="celltable">Condición de domicilio a la fecha de emisión</div></th>
-                    -->
-              </tr>
-            </thead>
+  <div class="table-responsive-md">
+    <table id="table-Sunat" class="table table-hover table table-bordered" role="table">
+      <caption>Consulta a Sunat</caption>
+      <thead class="thead-dark" role="rowgroup"><tr id="theadSunat" role="row"><th scope="col" role="columnheader" data-title="selectcheck"><div class="celltable"><input type="checkbox" onClick="toggle(this)"/></div>
+      </th><th scope="col" data-title="#">#
+      </th><th scope="col" role="columnheader" data-title="RUC"><div class="celltable">RUC</div>
+          </th><th scope="col" role="columnheader" data-title="T_COMPROBANTE"><div class="celltable">T. COMPROBANTE</div>
+          </th><th scope="col" role="columnheader" data-title="SERIE"><div class="celltable">SERIE</div>
+          </th><th scope="col" role="columnheader" data-title="N_COMPROBANDO"><div class="celltable">N° COMPROBANDO</div>
+          </th><th scope="col" role="columnheader" data-title="F_EMISION"><div class="celltable">F. EMISION</div>
+          </th><th scope="col" role="columnheader" data-title="I_TOTAL"><div class="celltable">I. TOTAL</div>
+          </th><th scope="col" role="columnheader" data-title="E_ENVIO"><div class="celltable">E. ENVIO</div>
+          </th><th scope="col" role="columnheader" data-title="E_SUNAT"><div class="celltable">E. SUNAT</div>
+          </th><th scope="col" role="columnheader" data-title="E_REGISTRO"><div class="celltable">E. REGISTRO</div>
+          </th><th scope="col" role="columnheader" data-title="ACCIONES">ACCIONES</th></tr></thead>
             <tbody id="drcsunat" role="rowgroup">
-            
                 <tr role="row">
                     <th scope="row">-</th>
                     <td role="cell">-</td>
@@ -178,7 +166,23 @@ $urlcurrent = $urlseparate[3];
             </tfoot>-->
         </table>
     </div>
-    
+                        <!--
+                                          <th scope="col" role="columnheader" data-title="selectcheck"><div class="celltable"><input type="checkbox" onClick="toggle(this)"/></div></th>
+                <th scope="col" data-title="#">#</th>
+                <th scope="col" role="columnheader" data-title="RUC"><div class="celltable">RUC</div></th>
+                <th scope="col" role="columnheader" data-title="T_COMPROBANTE"><div class="celltable">T. COMPROBANTE</div></th>
+                <th scope="col" role="columnheader" data-title="SERIE"><div class="celltable">SERIE</div></th>
+                <th scope="col" role="columnheader" data-title="N_COMPROBANDO"><div class="celltable">N° COMPROBANDO</div></th>
+                <th scope="col" role="columnheader" data-title="F_EMISION"><div class="celltable">F. EMISION</div></th>
+                <th scope="col" role="columnheader" data-title="I_TOTAL"><div class="celltable">I. TOTAL</div></th>
+                <th scope="col" role="columnheader" data-title="E_ENVIO"><div class="celltable">E. ENVIO</div></th>
+                <th scope="col" role="columnheader" data-title="E_SUNAT"><div class="celltable">E. SUNAT</div></th>
+                <th scope="col" role="columnheader" data-title="E_REGISTRO"><div class="celltable">E. REGISTRO</div></th>
+                <th scope="col" role="columnheader" data-title="ACCIONES">ACCIONES</th>
+                    <th scope="col" role="columnheader"><div class="celltable">Estado del comprobante a la fecha de la consulta</div></th>
+                    <th scope="col" role="columnheader"><div class="celltable">Estado del contribuyente a la fecha de emisión</div></th>
+                    <th scope="col" role="columnheader"><div class="celltable">Condición de domicilio a la fecha de emisión</div></th>
+                    -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="circle">
         <circle cx="8" cy="8" r="7.5"></circle>
@@ -196,7 +200,6 @@ $urlcurrent = $urlseparate[3];
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
-
 //CHECKBOX
 //SELECCION / DESELECCIONA CHECKBOX
 function toggle(source) {
@@ -223,15 +226,13 @@ function getcboxSCM() {
   var checkActivos = [];
   console.log('CONSULTA MASIVO');
   $("input[type=checkbox]:checked").each(function(){ 
-  //console.log($(this).val());
-  checkActivos.push($(this).val());
-  
-  /*
-  $(this).closest('td').siblings().each(function(){
-
-    // obtenemos el texto del td 
-    console.log($(this).text());
-  });*/
+    //console.log($(this).val());
+    checkActivos.push($(this).val());
+    /*
+    $(this).closest('td').siblings().each(function(){
+      // obtenemos el texto del td 
+      console.log($(this).text());
+    });*/
   });
   //console.log(checkActivos);
   preDataSCM(checkActivos);
@@ -241,24 +242,106 @@ function getcboxSCM() {
 function getcboxbtnSRM() {
   var i = 0;
   var checkContador = [];
-  var checkATxt = []
+  var checkETxt = [];
+  var checkCTxt = [];
+  var checkSelect = [];
+  var rows = {};
   console.log('REGISTRO MASIVO');
+  $("input[type=checkbox]:checked").each(function(){ 
+    //console.log($(this).val());
+    checkSelect.push($(this).val());
+  });
+  console.log(checkSelect);
+  checkSelect.forEach( function(valor, indice, array) {
+    console.log("En el índice " + indice + " hay este valor: " + valor);
+    //separamos
+    var elementodivi = valor.split('_');
+    //escogemos el texto y limpiados de espacios
+    const objectarray = {};
+    var children = elementodivi[1].trim();
+    console.log(children);
+
+    thead = document.getElementById('theadSunat');
+    console.log(thead);
+    console.log('hijps de tabla cabezera:'+thead.children.length);
+    NodeList.prototype.forEach = Array.prototype.forEach
+    var childrenthead = thead.childNodes;
+    console.log(childrenthead);
+    childrenthead.forEach(function(itemhrow){
+      console.log('Cabezera');
+      console.log(itemhrow);
+      hijosw = itemhrow.getAttribute("data-title");
+      console.log(hijosw);
+    });
+
+    //father = document.getElementById(children).parentNode;
+    father = document.getElementById('row_' + children);
+    console.log(father);
+    console.log('La cantidad de hijos del nodo div es:'+father.childNodes.length);
+    NodeList.prototype.forEach = Array.prototype.forEach
+    var children = father.childNodes;
+    console.log(children);
+    children.forEach(function(itembrow){
+      console.log('item');
+      console.log(itembrow);
+      hijos = itembrow.getAttribute("data-txt");
+      console.log(hijos);
+    });
+    console.log(objectarray);
+    //var arrayfather = father.childNodes[1];
+    //console.log(arrayfather);
+    //hijos = arrayfather.getAttribute("id");
+    //console.log(hijos);
+    //grandfather = document.getElementById(arrayfather).parentNode;
+  });
+  var myRows = {};
+  var $headers = $("th");
+  var $rows = $("tbody tr").each(function(index) {
+    $cells = $(this).find("td");
+    myRows[index] = {};
+    $cells.each(function(cellIndex) {
+      //console.log($(this).html());
+      console.log($(this).attr("data-txt"));
+      //myRows[index][$($headers[cellIndex]).html()] = $(this).html();
+      myRows[index][$($headers[cellIndex]).attr("data-title")] = $(this).attr("data-txt");
+    });    
+  });
+  var myObj = {};
+  myObj.myrows = myRows;
+  console.log(myObj);
+  console.log(JSON.stringify(myObj));
+  /*
+  var datefront = new Date();
+  var getdate = datefront.getFullYear() + '-' + datefront.getMonth() + '-' + datefront.getDate() + ' ' + datefront.getHours() + ':' + datefront.getMinutes() + ':' + datefront.getSeconds()
+  console.log(getdate);
   $("input[type=checkbox]:checked").each(function(){
     checkContador.push($(this).val());
-    $(this).closest('td').siblings().each(function(){
-    // obtenemos el texto del td 
-    console.log($(this).text());
     
-    checkATxt.push($(this).text());
+    
+    $(this).closest('td').siblings().each(function(){
+      console.log('TAMAÑO DE ELEMENTO');
+      console.log($(this));
+      elementotxt = $(this).text();
+      i++;
+      console.log(elementotxt.trim())
+      // obtenemos el texto del td
+      //for (var i = 0; i < 9; i++) {
+      //n += i;
+      //mifuncion(n);}
+      //checkETxt.push(elementotxt.trim());
+    
     });
-/*
-  console.log($(this).val());
-  checkActivos.push($(this).val());
-*/
-console.log(checkContador);
+    checkCTxt.push(checkETxt);
+    
+      //console.log($(this).val());
+      //checkActivos.push($(this).val());
+    
+    console.log('contenedor');
+    console.log(checkCTxt);
+    
 
   });
-  console.log(checkATxt);
+  console.log(checkETxt);
   checkContador.forEach(getTrId);
   function getTrId(elemento, indice){
     console.log( "Indice: " + indice + " Valor: " + elemento );
@@ -266,6 +349,7 @@ console.log(checkContador);
     var idtr = elementodivi[1];
     console.log($('#row_' + idtr).length);
   }
+  */
 }
 
 function preDataSCM(date){
@@ -362,6 +446,7 @@ function convertDateFormat(string) {
     dtableDEmitidos(dateStart, dateEnd, sizeTablevalue)
   });
   // TABLA
+  /*
   $(function() {
     var pressed = false;
     var start = undefined;
@@ -388,6 +473,7 @@ function convertDateFormat(string) {
         }
     });
 });
+*/
 // FECHA
   $(function() {
     $('input[name="daterange"]').daterangepicker({
@@ -416,9 +502,11 @@ function convertDateFormat(string) {
       "size" : size,
     };
     body.append("data", JSON.stringify(data));  
-    const returnSunat = await fetch("./../../controllers/controllerSunat.php", { method: "POST", body});
-    const resultSunat = await returnSunat.json(); //await JSON.parse(returned);
-    handleReturnedDocEmiSunat(resultSunat);
+    const responsemaindatabase = await fetch("./../../controllers/controllerSunat.php", { method: "POST", body});
+    const responsemaindatabaseobject = await responsemaindatabase.json(); //await JSON.parse(returned);
+    console.log('se limpiara')
+    console.log(typeof responsemaindatabaseobject);
+    handleReturnedDocEmiSunat(responsemaindatabaseobject);
   };
   const handleReturnedDocEmiSunat = (data) => {
     //rJParse = JSON.parse(data);
@@ -530,9 +618,13 @@ function convertDateFormat(string) {
       spanBD.className = "label label-table label-warning";
       //AGREGARMOS TEXTO O CONTENIDO A LA ETIQUETA
       celld.appendChild(document.createTextNode(c));
+      celld.setAttribute("data-txt", c);
       cellnumruc.appendChild(document.createTextNode(numruc));
+      cellnumruc.setAttribute("data-txt", numruc);
       celldtipdoc.appendChild(document.createTextNode(tipCom));
+      celldtipdoc.setAttribute("data-txt", tipCom);
       spanConsult.appendChild(document.createTextNode(stateSunat));
+      
       // AGREGAMOS TEXTO
       ulSCPEstado.appendChild(document.createTextNode(txtPEstado));
       ulSCSEstado.appendChild(document.createTextNode(txtSEstado));
@@ -550,10 +642,13 @@ function convertDateFormat(string) {
       aSConsult.appendChild(ulSCEstado);
       */
       celldastateSunat.appendChild(spanConsult);
+      celldastateSunat.setAttribute("data-txt", stateSunat);
       celldastateSunat.appendChild(aSConsult);
       spanBD.appendChild(document.createTextNode(stateBD));
       celldastateDb.appendChild(spanBD);
+      celldastateDb.setAttribute("data-txt", stateBD);
       cellCheck.appendChild(ipt);
+      cellCheck.setAttribute("data-txt", '0');
       btnaconsult.appendChild(document.createTextNode(consultSunat+c));
       btnaSendSunat.appendChild(document.createTextNode(sendSunat));
       celldacciones.appendChild(btnaconsult);
@@ -644,6 +739,7 @@ function convertDateFormat(string) {
         //console.log(c);
         element = key, obj[key];
         elementdos = obj[key];
+        
         //console.log(element);
         //console.log(elementdos);
         if(element == 'benviado'){
@@ -661,11 +757,14 @@ function convertDateFormat(string) {
           }
           spanSend.appendChild(document.createTextNode(elementdos));
           cell.appendChild(spanSend);
+          cell.setAttribute("data-txt", elementdos);
           row.appendChild(cell);
         }
         else{
           //console.log('no');
           cell.appendChild(document.createTextNode(elementdos));
+          elementlim = elementdos.trim();
+          cell.setAttribute("data-txt", elementlim);
           //celld.appendChild(cell);
           row.appendChild(cell);
           //console.log(key, obj[key]);
