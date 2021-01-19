@@ -14,7 +14,6 @@ $urlcurrent = $urlseparate[3];
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--Estilo Tabla [ REQUIRED ]
     <link href="./../../assets/css/table.css" rel="stylesheet">-->
-
     <!-- Fecha -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <!-- Bootstrap CSS -->
@@ -23,6 +22,8 @@ $urlcurrent = $urlseparate[3];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">-->
     <!--Estilo Boton Animado [ REQUIRED ]-->
     <link href="./../../assets/css/btn-animado.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <!--Estilo Tabla [ REQUIRED ]-->
     <link href="./../../assets/css/base.css" rel="stylesheet">
     <!-- Titulo de la pagina / pestaña -->
@@ -43,6 +44,15 @@ $urlcurrent = $urlseparate[3];
             <label for="exampleInputEmail1">Elegir Fecha</label>
             <input type="text" name="daterange" value="12/01/2020 - 12/12/2020" />
             <small id="emailHelp" class="form-text text-muted">Puedes seleccionar un dia o un rango de dias</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Unidad</label>
+            <select class="selectpicker show-tick">
+              <option>Mustard</option>
+              <option>Ketchup</option>
+              <option>Relish</option>
+            </select>
+            <small id="" class="form-text text-muted">Puedes seleccionar un dia o un rango de dias</small>
           </div>
           <button type="button" id="btnConBDatos" class="btn btn-success">Consultar</button>
         </form>
@@ -139,6 +149,30 @@ $urlcurrent = $urlseparate[3];
           </th><th scope="col" role="columnheader" data-title="E_REGISTRO"><div class="celltable">E. REGISTRO</div>
           </th><th scope="col" role="columnheader" data-title="ACCIONES">ACCIONES</th></tr></thead>
             <tbody id="drcsunat" role="rowgroup">
+                  <tr role="row">
+                      <th scope="row">-</th>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                  </tr>
+                  <tr role="row">
+                      <th scope="row">-</th>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                      <td role="cell">-</td>
+                  </tr>
                 <tr role="row">
                     <th scope="row">-</th>
                     <td role="cell">-</td>
@@ -199,6 +233,7 @@ $urlcurrent = $urlseparate[3];
     <script src="./../../assets/js/btn-animado.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 <script>
 //CHECKBOX
 //SELECCION / DESELECCIONA CHECKBOX
@@ -215,7 +250,7 @@ var btnSCM = document.getElementById("btnSCM");
 btnSCM.addEventListener("click", getcboxSCM);
 
 /* Capturamos ID del Boton 'Registrar MASIVO SUNAT' */  
-var btnSCM = document.getElementById("btnSRM");
+var btnSRM = document.getElementById("btnSRM");
 
 /* Se agrega el evento al elemento */
 btnSRM.addEventListener("click", getcboxbtnSRM);
@@ -226,7 +261,6 @@ function getcboxSCM() {
   var checkActivos = [];
   console.log('CONSULTA MASIVO');
   $("input[type=checkbox]:checked").each(function(){ 
-    //console.log($(this).val());
     checkActivos.push($(this).val());
     /*
     $(this).closest('td').siblings().each(function(){
@@ -234,10 +268,92 @@ function getcboxSCM() {
       console.log($(this).text());
     });*/
   });
-  //console.log(checkActivos);
+  console.log(checkActivos);
   preDataSCM(checkActivos);
 }
-
+function preDataSCM(date){
+  date.forEach(miFuncion);
+function miFuncion(elemento, indice) {
+  console.log("En el índice " + indice + " hay este valor: " + elemento);
+  if(elemento == 'on'){
+    console.log('es on');
+  }
+  else{
+    var fdocESunat = document.getElementById(elemento).innerHTML;
+    console.log(fdocESunat);
+    if(fdocESunat == 'ACEPTADO'){
+      console.log('Ya esta aceptado');
+    }
+    else{
+      console.log('No Esta consultado');
+      bdato = elemento;
+      //DIVIDIMOS PARA BUSCAR EL DATO
+      var elementodivi = elemento.split('_');
+      //console.log(typeof elementodivi);
+      //console.log(elementodivi);
+      //console.log(elementodivi[1]);
+      //CAPSULAMOS EL DATO A BUSCAR
+      elemabusc = elementodivi[1];
+      //console.log(tableData);
+      //BUSCAMOS DATOS SELECCIONADOS  
+      var buscar = tableData.find(function(cnumero){ return cnumero.cnumero == elemabusc + '  ';});
+      if(buscar){
+        //console.log(buscar);
+        var monto = buscar['nimporte']
+        var numero = buscar['cnumero'].trim();
+        var cserie = buscar['cserie'];
+        var validatorDoc = cserie.charAt(1);
+        var codcomp;
+        var numRuc = '20370715107';
+        //VALIDADOR TIPO DE DOCUMENTO
+        switch (validatorDoc) {
+          case 'F':
+            //console.log('FACTURA');
+            codcomp = '01';
+            break;
+          case 'B':
+            //console.log( "Indice: " + indice + " Valor: " + elemento );
+            //console.log('BOLETA');
+            codcomp = '03';
+            break;
+          case 'C':
+            //console.log('NOTA DE CREDITO');
+            codcomp = '07';
+            break;
+          case 'D':
+            //console.log('NOTA DE DEBITO');
+            codcomp = '08';
+            break;
+          default:
+            //console.log('Lo lamentamos, por el momento no disponemos de ' + validatorDoc + '.');
+        }
+        var fechaEmision = convertDateFormat(buscar['dfecemi']);
+        var queryformatSunat = {
+          "1" : {
+              "codComp" : codcomp,
+              "fechaEmision" : fechaEmision,
+              "monto" : monto,
+              "numRuc" : numRuc,
+              "numero" : numero,
+              "numeroSerie" : cserie,
+          },
+        };
+        //console.log(queryformatSunat);
+        //SE ENVIA DATOS A LA FUNCION
+        makeRequests(queryformatSunat);
+      }
+      else
+      {
+        console.log('No se encontro');
+      }
+    }    
+  }
+}
+function convertDateFormat(string) {
+        var info = string.split('-').reverse().join('/');
+        return info;
+   }
+}
 /* Función que se gatilla al hacer click en el elemento BOTON */
 function getcboxbtnSRM() {
   var i = 0;
@@ -248,192 +364,77 @@ function getcboxbtnSRM() {
   var rows = {};
   console.log('REGISTRO MASIVO');
   $("input[type=checkbox]:checked").each(function(){ 
-    //console.log($(this).val());
     checkSelect.push($(this).val());
   });
   console.log(checkSelect);
+  //Recorremos todos los checkbox seleccionados
+  
   checkSelect.forEach( function(valor, indice, array) {
     console.log("En el índice " + indice + " hay este valor: " + valor);
     //separamos
-    var elementodivi = valor.split('_');
-    //escogemos el texto y limpiados de espacios
-    const objectarray = {};
-    var children = elementodivi[1].trim();
-    console.log(children);
-
-    thead = document.getElementById('theadSunat');
-    console.log(thead);
-    console.log('hijps de tabla cabezera:'+thead.children.length);
-    NodeList.prototype.forEach = Array.prototype.forEach
-    var childrenthead = thead.childNodes;
-    console.log(childrenthead);
-    childrenthead.forEach(function(itemhrow){
-      console.log('Cabezera');
-      console.log(itemhrow);
-      hijosw = itemhrow.getAttribute("data-title");
-      console.log(hijosw);
-    });
-
-    //father = document.getElementById(children).parentNode;
-    father = document.getElementById('row_' + children);
-    console.log(father);
-    console.log('La cantidad de hijos del nodo div es:'+father.childNodes.length);
-    NodeList.prototype.forEach = Array.prototype.forEach
-    var children = father.childNodes;
-    console.log(children);
-    children.forEach(function(itembrow){
-      console.log('item');
-      console.log(itembrow);
-      hijos = itembrow.getAttribute("data-txt");
-      console.log(hijos);
-    });
-    console.log(objectarray);
-    //var arrayfather = father.childNodes[1];
-    //console.log(arrayfather);
-    //hijos = arrayfather.getAttribute("id");
-    //console.log(hijos);
-    //grandfather = document.getElementById(arrayfather).parentNode;
-  });
-  var myRows = {};
-  var $headers = $("th");
-  var $rows = $("tbody tr").each(function(index) {
-    $cells = $(this).find("td");
-    myRows[index] = {};
-    $cells.each(function(cellIndex) {
-      //console.log($(this).html());
-      console.log($(this).attr("data-txt"));
-      //myRows[index][$($headers[cellIndex]).html()] = $(this).html();
-      myRows[index][$($headers[cellIndex]).attr("data-title")] = $(this).attr("data-txt");
-    });    
-  });
-  var myObj = {};
-  myObj.myrows = myRows;
-  console.log(myObj);
-  console.log(JSON.stringify(myObj));
-  /*
-  var datefront = new Date();
-  var getdate = datefront.getFullYear() + '-' + datefront.getMonth() + '-' + datefront.getDate() + ' ' + datefront.getHours() + ':' + datefront.getMinutes() + ':' + datefront.getSeconds()
-  console.log(getdate);
-  $("input[type=checkbox]:checked").each(function(){
-    checkContador.push($(this).val());
-    
-    
-    $(this).closest('td').siblings().each(function(){
-      console.log('TAMAÑO DE ELEMENTO');
-      console.log($(this));
-      elementotxt = $(this).text();
-      i++;
-      console.log(elementotxt.trim())
-      // obtenemos el texto del td
-      //for (var i = 0; i < 9; i++) {
-      //n += i;
-      //mifuncion(n);}
-      //checkETxt.push(elementotxt.trim());
-    
-    });
-    checkCTxt.push(checkETxt);
-    
-      //console.log($(this).val());
-      //checkActivos.push($(this).val());
-    
-    console.log('contenedor');
-    console.log(checkCTxt);
-    
-
-  });
-  console.log(checkETxt);
-  checkContador.forEach(getTrId);
-  function getTrId(elemento, indice){
-    console.log( "Indice: " + indice + " Valor: " + elemento );
-    var elementodivi = elemento.split('_');
-    var idtr = elementodivi[1];
-    console.log($('#row_' + idtr).length);
-  }
-  */
-}
-
-function preDataSCM(date){
-  console.log(date);
-
-  date.forEach(miFuncion);
- 
-function miFuncion(elemento, indice) {
-    console.log( "Indice: " + indice + " Valor: " + elemento );
-    bdato = elemento;
-    //DIVIDIMOS PARA BUSCAR EL DATO
-    var elementodivi = elemento.split('_');
-    console.log(typeof elementodivi);
-    console.log(elementodivi);
-    console.log(elementodivi[1]);
-    //CAPSULAMOS EL DATO A BUSCAR
-    elemabusc = elementodivi[1];
-    console.log(tableData);
-    //BUSCAMOS DATOS SELECCIONADOS  
-    var buscar = tableData.find(function(cnumero){ return cnumero.cnumero == elemabusc + '  ';});
-    if(buscar){
-      console.log(buscar);
-      var monto = buscar['nimporte']
-      var numero = buscar['cnumero'].trim();
-      var cserie = buscar['cserie'];
-      var validatorDoc = cserie.charAt(1);
-      var codcomp;
-      var numRuc = '20370715107';
-      //VALIDADOR TIPO DE DOCUMENTO
-      switch (validatorDoc) {
-        case 'F':
-          console.log('FACTURA');
-          codcomp = '01';
-          break;
-        case 'B':
-          console.log('BOLETA');
-          codcomp = '03';
-          break;
-        case 'C':
-          console.log('NOTA DE CREDITO');
-          codcomp = '07';
-          break;
-        case 'D':
-          console.log('NOTA DE DEBITO');
-          codcomp = '08';
-          break;
-        default:
-          console.log('Lo lamentamos, por el momento no disponemos de ' + validatorDoc + '.');
+    if(valor == 'on'){
+      console.log('Es on');
+    }else{
+      var elementodivi = valor.split('_');
+      //escogemos el texto y limpiados de espacios
+      const objectarray = {};
+      var children = elementodivi[1].trim();
+      thead = document.getElementById('theadSunat');
+      NodeList.prototype.forEach = Array.prototype.forEach
+      //Guardamos el NodeList en una variable
+      var childrenthead = thead.childNodes;
+      childrenthead.forEach(function(itemhrow){
+        hijosw = itemhrow.getAttribute("data-title");
+      });
+      //father = document.getElementById(children).parentNode;
+      father = document.getElementById('row_' + children);
+      NodeList.prototype.forEach = Array.prototype.forEach
+      //Guardamos el NodeList en una variable
+      var childrentbody = father.childNodes;
+      childrentbody.forEach(function(itembrow){
+        hijos = itembrow.getAttribute("data-txt");
+      });
+    //Guardamos el tamaño de la array
+      size = thead.childNodes.length;
+      for(var r = 0; r < size; r++){
+        objectarray[childrenthead[r].getAttribute("data-title")] = childrentbody[r].getAttribute("data-txt");
       }
-      var fechaEmision = convertDateFormat(buscar['dfecemi']);
-      var queryformatSunat = {
-            "1" : {
-              "codComp" : codcomp,
-              "fechaEmision" : fechaEmision,
-              "monto" : monto,
-              "numRuc" : numRuc,
-              "numero" : numero,
-              "numeroSerie" : cserie,
-            },
-          };
-        console.log(queryformatSunat);
-        //SE ENVIA DATOS A LA FUNCION
-        makeRequests(queryformatSunat);
-    }
-    else
-    {
-      console.log('No se encontro');
-    }
-}
-function convertDateFormat(string) {
-        var info = string.split('-').reverse().join('/');
-        return info;
-   }
-  //var valorcnumero = valor.split(" ");
-  //console.log(valorcnumero[0]);
+      var datefront = new Date();
+      var mes = datefront.getMonth() + 1  ;
+      var getdate = datefront.getFullYear() + '-0' + mes + '-' + datefront.getDate() + ' ' + datefront.getHours() + ':' + datefront.getMinutes() + ':' + datefront.getSeconds()
+        if(objectarray['E_SUNAT'] != 'FALSE'){
+          console.log('Si tiene respuesta de Sunat, se procederá a Registrar');
+          console.log(getdate);
+          objectarray['F_REGISTRO'] = getdate;
+          console.log(objectarray);
+          insertStatesSunat(objectarray);
+        }else{
+          console.log('Debe tener respuesta de Sunat');
+        }
+      }
+    });
+  }
 
-  /*
-  ltableData = tableData.trim();
-  console.log(ltableData  );
-  */
-  
+//CONSULTA A SUNAT
+const insertStatesSunat = async (objectarray) => {
+  console.log(objectarray);
+  beforeSending();
+  const body = new FormData();
+  var data = {
+    "accion" : '2',
+    "doc" : objectarray
+  };
+  console.log(data);
+  body.append("data", JSON.stringify(data));
+  //body.append("data", JSON.stringify(data[prop]));
+  const returned = await fetch("./../../controllers/controllerSunat.php", { method: "POST", body });
+  const result = await returned.json();//await JSON.parse(returned);
+  console.log(typeof result);
+  console.log(result);
+  //handleReturnedData(result);
+  afterSending();
+}; 
 
-  
-}
 //SELECT 
 //DETECAR CAMBIO SELECT
   var selectTable = document.getElementById('sizeTable');
@@ -446,7 +447,7 @@ function convertDateFormat(string) {
     dtableDEmitidos(dateStart, dateEnd, sizeTablevalue)
   });
   // TABLA
-  /*
+  
   $(function() {
     var pressed = false;
     var start = undefined;
@@ -473,8 +474,8 @@ function convertDateFormat(string) {
         }
     });
 });
-*/
-// FECHA
+
+// INPUT FECHA PARA CONSULTAR BASE DATOS
   $(function() {
     $('input[name="daterange"]').daterangepicker({
       opens: 'left'
@@ -534,8 +535,8 @@ function convertDateFormat(string) {
     //let table = document.getElementById('table-Sunat');
     var numruc = '20370715107';
     var tipCom = '01';
-    var stateSunat = '-';
-    var stateBD = '-';
+    var stateSunat = 'NO CONSULTADO';
+    var stateBD = 'FALSE';
     var consultSunat = 'Consultar 📝';
     var sendSunat = 'Enviar a Sunat 📨';
     //BOTON ANIMADO
@@ -643,6 +644,7 @@ function convertDateFormat(string) {
       */
       celldastateSunat.appendChild(spanConsult);
       celldastateSunat.setAttribute("data-txt", stateSunat);
+      celldastateSunat.setAttribute("id", 'cellCont' + idSpanSestado);
       celldastateSunat.appendChild(aSConsult);
       spanBD.appendChild(document.createTextNode(stateBD));
       celldastateDb.appendChild(spanBD);
@@ -656,17 +658,17 @@ function convertDateFormat(string) {
     //CONSULTAR SUNAT INDIVIDUAL
     btnaconsult.addEventListener('click', obtenerValores);
     $('.activate').on('click touch', function(e) {
-    var self = $(this);
-    if(!self.hasClass('loading')) {
+      var self = $(this);
+      if(!self.hasClass('loading')) {
         self.addClass('loading');
         setTimeout(function() {
-            self.addClass('done');
-            setTimeout(function() {
-                self.removeClass('loading done');
-            }, 1600);
+          self.addClass('done');
+          setTimeout(function() {
+            self.removeClass('loading done');
+          }, 1600);
         }, 3200);
-    }
-});
+      }
+    });
       // CONSULTA INDIVIDUAL
   function obtenerValores(e) {
         //OBTENEMOS VALOR DATA
@@ -868,15 +870,24 @@ function mostrarContenido(contenido) {
     //
     var drcsunat = document.getElementById('drcsunat');
     var tableSunat = document.getElementById('table-Sunat');
-    
+
     var ecsnat;
     var ctcsunat;
     var dcsnat = JSON.parse(data);
-    console.log(dcsnat);
+
+    //console.info(dcsnat.includes('observaciones'));
+    console.log('Recibido')
+    console.log(dcsnat['data']);
+    const aobjtrptsunat = dcsnat['data'];
+
     var codComp;
     var numeroSerie = dcsnat['data']['numeroSerie'];
     var numero = dcsnat['data']['numero'].trim();
+    console.log('idcon'+ numero);
+
     console.log(numero);
+    console.log('cellCont'+ numero);
+    var cellContEstSunat = document.getElementById('cellCont'+ numero);
     let textSpestadoSunat = document.getElementById('state_' + numero);
     var fechaEmision = dcsnat['data']['fechaEmision'];
     var monto = dcsnat['data']['monto'];
@@ -908,19 +919,22 @@ function mostrarContenido(contenido) {
       console.log('se convertio');
       console.log(codComp);*/
       var estadoCp;
+      var idConComprobante = 'id = idcon'+numero;
       if(dcsnat['data']['estadoCp'] == "1"){
         estadoCp = 'ACEPTADO';
         ctcsunat = 'class="table-success"';
         textSpestadoSunat.innerHTML = estadoCp;
         textSpestadoSunat.className += "label label-table label-success";
+        cellContEstSunat.setAttribute("data-txt", "estadoCp:1|estadoRuc");
       }
       else{
         estadoCp = 'NO EXISTE';
         ctcsunat = 'class="table-danger"';
         textSpestadoSunat.innerHTML = estadoCp;
         textSpestadoSunat.className = "label label-table label-danger";
+        
       }
-      ecsnat = '<tr ' + ctcsunat + ' role="row">';
+      ecsnat = '<tr ' + idConComprobante + ' '+ ctcsunat + ' role="row">';
       ecsnat+='<th scope="row">1</th>';
       ecsnat+='<td role="cell">' + codComp + '</td>';
       ecsnat+='<td role="cell">' + numeroSerie + '</td>';
@@ -944,10 +958,27 @@ function mostrarContenido(contenido) {
           condDomiRuc = '-';
         }
         ecsnat+='<td role="cell">' + condDomiRuc +'</td>';
+        if (aobjtrptsunat['observaciones']){
+            console.log('existe');
+            observacionSunat = aobjtrptsunat['observaciones'][0];
+            console.log(observacionSunat);
+        }
+        else{
+          console.log('no existe');
+          observacionSunat = '-';
+        }
+        ecsnat+='<td role="cell">' + observacionSunat +'</td>';
         ecsnat+='</tr>';
+        cellContEstSunat.setAttribute("data-txt", estadoCp + '|' + estadoRuc + '|' + condDomiRuc + '|' + observacionSunat);
         //innerHTML += ecsnat; 
         //trSTFila.insertAdjacentElement('afterend', ecsnat);
-        $( ecsnat ).insertAfter( '#row_' + numero );
+        if ( document.getElementById('idcon'+ numero)) {
+          console.log('Si existe');
+        }
+        else{
+          console.log('No existe');
+          $( ecsnat ).insertAfter( '#row_' + numero );
+        }        
         //var trSTFila = document.getElementById('row_' + numero);
         //trSTFila.insertAdjacentElement('afterend',ecsnat);
         //document.querySelector('#row_' + numero).parentElement.append(ecsnat);

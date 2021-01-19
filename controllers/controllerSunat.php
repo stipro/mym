@@ -8,13 +8,16 @@ if($_POST){
         $dataSunat = json_decode($object,true);
         //var_dump($dataSunat);
         $accion = $dataSunat['accion'];
+        //0 = CONSULTAR RANGO FECHA BD PRINCIPAL
+        //1 = CONSULTAR SUNAT
+        //2 = INSERTAR DB
         if($accion == '0')
         {
+            require_once ('./../models/sunat.php');
+            $sunat = new Sunat();
             //echo 'es 0';
             //REQUERIMOS ARCHIVO
-            require_once ('./../models/sunat.php');
             //Se instacia la clase
-            $sunat = new Sunat();
             $dataSunatDoc = $dataSunat['doc'];
             //var_dump($dataSunatDoc);
             $jedcsunat = json_encode($dataSunatDoc);
@@ -26,33 +29,36 @@ if($_POST){
             //var_dump($rptApiSunat);
             if($rptApiSunat)
             {
-                    $jdrptSunat = json_decode($rptApiSunat);
-                    //var_dump($jdrptSunat);
-                    $porciones = explode('"', $jdrptSunat);
-                    //var_dump($porciones);
-                    //Preparacion Datos
-                    $numRuc = $porciones[21];
-                    $codComp = $porciones[13];
-                    $numSerie = $porciones[9];
-                    $numero = intval($porciones[5]);
-                    //CAMBIAMOS FORMATO DE FECHA
-                    $datepart = explode('/', $porciones[17]);
-                    $fechaEmision = $datepart[2].'/'.$datepart[1].'/'.$datepart[0];
-                    //DECLAAMOS FLOAT MONTO
-                    $monto = floatval($porciones[33]);
-                    $estadoCp = $porciones[37];
-                    $estadoRuc = $porciones[41];
-                    $condDomiRuc = $porciones[45];
-                    //CONVERT STRING TO ARRAY
-                $arptSunat = array("numRuc"=>$numRuc, "codComp"=>$codComp, "numeroSerie"=>$numSerie, "numero"=>$numero, "fechaEmision"=>$fechaEmision,"monto"=>$monto,"estadoCp"=>$estadoCp, "estadoRuc"=>$estadoRuc, "condDomiRuc"=>$condDomiRuc);
+                echo $rptApiSunat;
+                $jdrptSunat = json_decode($rptApiSunat);
+                //var_dump($jdrptSunat);
+                $porciones = explode('"', $jdrptSunat);
+                //var_dump($porciones);
+                //Preparacion Datos
+                $numRuc = $porciones[21];
+                $codComp = $porciones[13];
+                $numSerie = $porciones[9];
+                $numero = intval($porciones[5]);
+                //CAMBIAMOS FORMATO DE FECHA
+                $datepart = explode('/', $porciones[17]);
+                $fechaEmision = $datepart[2].'/'.$datepart[1].'/'.$datepart[0];
+                //DECLAAMOS FLOAT MONTO
+                $monto = floatval($porciones[33]);
+                $estadoCp = $porciones[37];
+                $estadoRuc = $porciones[41];
+                $condDomiRuc = $porciones[45];
+                //CONVERT STRING TO ARRAY
+                //$arptSunat = array("numRuc"=>$numRuc, "codComp"=>$codComp, "numeroSerie"=>$numSerie, "numero"=>$numero, "fechaEmision"=>$fechaEmision,"monto"=>$monto,"estadoCp"=>$estadoCp, "estadoRuc"=>$estadoRuc, "condDomiRuc"=>$condDomiRuc);
                 //$jsonlol = json_decode($rptApiSunat);
                 //SEND PARAMETERS
+                /*
                 $rptInsert = $sunat->insert($numRuc, $codComp, $numSerie, $numero, $fechaEmision, $monto, $estadoCp, $estadoRuc, $condDomiRuc);
                     //echo $rptInsert;
                 if($rptInsert){
                     echo $rptApiSunat;
                     //echo $jdrptSunat;
                 }
+                */
                 //$strnombre = $jedcsunat['nombre'];
             }
             else{
@@ -63,6 +69,34 @@ if($_POST){
                 
                 echo json_encode($rptServidor);
             }
+        }
+        elseif($accion == '2'){
+            require_once ('./../models/sunat.php');
+            $sunat = new Sunat();
+            $dataSunatDoc = $dataSunat['doc'];
+            //ARRAY DEL DATO RECIBIDO
+            //var_dump($dataSunatDoc);
+            //PREPARANDO
+            //PASO DESGLOSAR LOS DATOS EN CADA SU VARIABLE
+
+            $numRuc = (int)$dataSunatDoc['RUC'];
+            $codComp = (int)$dataSunatDoc['T_COMPROBANTE'];
+            $numSerie = $dataSunatDoc['SERIE'];
+            $numero = (int)$dataSunatDoc['N_COMPROBANDO'];
+            $fechaEmision = $dataSunatDoc['F_EMISION'];
+            $monto = (float)$dataSunatDoc['I_TOTAL'];
+            $estados = explode('|', $dataSunatDoc['E_SUNAT']);  
+            $estadoCp = $estados[0];
+            $estadoRuc = $estados[1];
+            $condDomiRuc = $estados[2];
+            $obseDoc = $estados[3];
+            $estadoEnvio = $dataSunatDoc['E_ENVIO'];
+            $fechaRegistro = $dataSunatDoc['F_REGISTRO'];
+            //echo json_encode($dataSunatDoc);
+            //echo 'saldras del controller para entrar al modelo';
+            //Se pasara los datos a registrar
+            //PASO LAS VARIBLES AL INSERT
+            echo $sunat->insert($numRuc, $codComp, $numSerie, $numero, $fechaEmision, $monto, $estadoCp, $estadoRuc, $condDomiRuc, $obseDoc, $estadoEnvio, $fechaRegistro);
         }
         else{
             //REQUERIMOS ARCHIVO

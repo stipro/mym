@@ -1,5 +1,5 @@
 <?php
-declare (strict_types = 1);
+//declare (strict_types = 1);
 class Conexion
 {
     protected $db;
@@ -8,9 +8,10 @@ class Conexion
     {
         //Conexion MySql
         $this->db = $this->conectar();
-        //Conexion Postgrest        
+        //Conexion PgSql
         $this->dbsql = $this->conectarPgsql();
     }
+    //MI PRIMERA CONEXION
     private function conectar()
     {
         try
@@ -19,15 +20,23 @@ class Conexion
             $DBNAME = 'corpmym';
             $USER   = 'root';
             $PASS   = '';
-            $con    = new PDO("mysql:host={$HOST}; dbname={$DBNAME}", $USER, $PASS);
+            $con    = new PDO("mysql:host=$HOST;dbname=$DBNAME",$USER,$PASS);
             $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $con->exec('SET CHARACTER SET UTF8');
+            //$con->exec('SET CHARACTER SET UTF8');
+            //return $con;
         }
         catch (PDOException $e)
         {
-            echo "No se pudo conectar a la BD: " . $e->getMessage();
+            echo "No se pudo conectar a la BD (Mysql): " . $e->getMessage();
         }
         return $con;
+    }
+    public function getDb() {
+        return $this->db;
+    }
+  
+    public function setDb($db) {
+          $this->db=$db;
     }
     protected function ConsultaSimple(string $query): array
     {
@@ -41,23 +50,24 @@ class Conexion
         $result->execute($array);
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
+    //SEUNDA CONEXION
     //POSTGREST
     private function conectarPgsql()
     {
         try
         {
-            $HOST   = '192.168.1.6';
-            $DBNAME = 'distribuidora';
-            $USER   = 'pgpromefardistribuidora';
-            $PASS   = 'promefar2016';
-            $PORT   = '5432';
-            $conpgsql    = new PDO("pgsql:host=$HOST; port=$PORT; dbname=$DBNAME", $USER, $PASS);
+            $HOSTPGSQL   = '192.168.1.6';
+            $DBNAMEPGSQL = 'distribuidora';
+            $USERPGSQL   = 'pgpromefardistribuidora';
+            $PASSPGSQL   = 'promefar2016';
+            $PORTPGSQL   = '5432';
+            $conpgsql    = new PDO("pgsql:host=$HOSTPGSQL; port=$PORTPGSQL; dbname=$DBNAMEPGSQL", $USERPGSQL, $PASSPGSQL);
             $conpgsql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             //$conpgsql->exec('SET CHARACTER SET UTF8');
         }
         catch (PDOException $e)
         {
-            echo "No se pudo conectar a la BD: " . $e->getMessage();
+            echo "No se pudo conectar a la BD (POSTGRESSQL): " . $e->getMessage();
         }
         return $conpgsql;
     }
