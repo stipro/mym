@@ -25,6 +25,12 @@ tbody{
 .btn{
   font-size: 0.75rem;
 }
+.icdateconsult{
+  text-align: center;
+}
+.pagina-inac{
+  color: #007bff !important;
+}
 /* 320px Celular VGA*/
 @media screen and (max-width: 20rem)
 {

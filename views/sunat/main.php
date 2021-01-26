@@ -11,19 +11,20 @@ $urlcurrent = $urlseparate[3];
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--Estilo Tabla [ REQUIRED ]
     <link href="./../../assets/css/table.css" rel="stylesheet">-->
     <!-- Fecha -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
     <!--
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">-->
     <!--Estilo Boton Animado [ REQUIRED ]-->
     <link href="./../../assets/css/btn-animado.css" rel="stylesheet">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!--Estilo Tabla [ REQUIRED ]-->
     <link href="./../../assets/css/base.css" rel="stylesheet">
     <!-- Titulo de la pagina / pestaña -->
@@ -42,42 +43,76 @@ $urlcurrent = $urlseparate[3];
         <form>
           <div class="form-group">
             <label for="exampleInputEmail1">Elegir Fecha</label>
-            <input type="text" name="daterange" value="12/01/2020 - 12/12/2020" />
+            <input id="date_range" class="form-control icdateconsult" type="text" name="daterange" value="02/01/2021 - 12/01/2021" />
             <small id="emailHelp" class="form-text text-muted">Puedes seleccionar un dia o un rango de dias</small>
           </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Unidad</label>
-            <select class="selectpicker show-tick">
-              <option>Mustard</option>
-              <option>Ketchup</option>
-              <option>Relish</option>
+          <label for="start">Start date:</label>
+          <input class="form-control icdateconsult" type="date" id="start" name="trip-start"
+                value="2020-12-21">
+          <!-- UNIDAD -->
+          <div class="form-group">                                        
+            <label for="sUnidad"><strong>Unidad</strong></label>
+            <select id="sUnidad" class="selectpicker form-control" data-live-search="true">
+              <option data-tokens="">Selecciona un Almacen</option>
+              <option data-tokens="AQP" selected>AREQUIPA</option>
+              <option data-tokens="LIMA">LIMA</option>
+              <option data-tokens="*">TODOS</option>
+              <option data-tokens="TRANSPORTE">TRANSPORTE</option>
             </select>
-            <small id="" class="form-text text-muted">Puedes seleccionar un dia o un rango de dias</small>
+            <small id="" class="form-text text-muted">Puede seleccionar sola una opción</small>
+          </div>
+          <!-- Almacen -->
+          <div class="form-group">                                        
+            <label for="sCanal"><strong>Canal</strong></label>
+            <select id="sCanal" class="selectpicker form-control" data-live-search="true">
+              <option data-tokens="">Selecciona un canal</option>
+              <option data-tokens="04">FARMA</option>
+              <option data-tokens="01">CONSUMO</option>
+              <option data-tokens="06">INSTITUCIONES</option>
+              <option data-tokens="TODOS">TODOS</option>
+              <option data-tokens="02">TRANSPORTE</option>
+              <option data-tokens="07">LICITACION</option>
+            </select>
+            <small id="" class="form-text text-muted">Puede seleccionar sola una opción</small>
+          </div>
+          <!-- Almacen -->
+          <div class="form-group">                                        
+            <label for="sTipDoc"><strong>Tip. Doc</strong></label>
+            <select id="sTipDoc" class="selectpicker form-control" data-live-search="true">
+              <option data-tokens="">Selecciona el tipo de Doc.</option>
+              <option data-tokens="FF">FACTURA</option>
+              <option data-tokens="BB">BOLETA</option>
+              <option data-tokens="C">N. CREDITO</option>
+              <option data-tokens="D">N. DEBITO</option>
+            </select>
+            <small id="" class="form-text text-muted">Puede seleccionar sola una opción</small>
           </div>
           <button type="button" id="btnConBDatos" class="btn btn-success">Consultar</button>
         </form>
       </fieldset>      
     </div>
     <div class="col-sm">
-      <fieldset>
-        <legend>Consulta por Archivo de carpeta en el Servidor</legend>
-        <form>
-          <button type="button" id="btnConSunat" class="btn btn-success">Consultar</button>
-        </form>
-      </fieldset>      
-    </div>
-    <div class="col-sm">
-      <fieldset>
-        <legend>Consulta por selección de Archivo</legend>
-        <form>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Seleccione Archivo</label>
-            <input class="btn btn-success" value="ES" type="file" id="file-input" style=" width: 132px; overflow:hidden;"/>
-            <small id="emailHelp" class="form-text text-muted">Solo con archivos TXT</small>
-          </div>
-          <button type="button" id="btnConSunatCli" class="btn btn-success">Consultar</button>
-        </form>
-      </fieldset>
+      <div class="d-flex flex-column bd-highlight mb-3">
+        <fieldset>
+          <legend>Consulta por Archivo de carpeta en el Servidor</legend>
+          <form>
+            <button type="button" id="btnConSunat" class="btn btn-success">Consultar</button>
+          </form>
+        </fieldset>
+      </div>
+      <div class="d-flex flex-column-reverse bd-highlight">
+        <fieldset>
+          <legend>Consulta por selección de Archivo</legend>
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Seleccione Archivo</label>
+              <input class="btn btn-success" value="ES" type="file" id="file-input" style=" width: 132px; overflow:hidden;"/>
+              <small id="emailHelp" class="form-text text-muted">Solo con archivos TXT</small>
+            </div>
+            <button type="button" id="btnConSunatCli" class="btn btn-success">Consultar</button>
+          </form>
+        </fieldset>
+      </div>
     </div>
   </div>
   <h3>Contenido del archivo:</h3>
@@ -133,6 +168,10 @@ $urlcurrent = $urlseparate[3];
       <button type="button" id="btnSRM" class="btn btn-success">Registrar MASIVO BDATOS</button>
     </div>
   </div>
+  <nav aria-label="Page navigation example">
+    <ul id="tablepag" class="pagination justify-content-end">
+    </ul>
+  </nav>
   <div class="table-responsive-md">
     <table id="table-Sunat" class="table table-hover table table-bordered" role="table">
       <caption>Consulta a Sunat</caption>
@@ -186,7 +225,6 @@ $urlcurrent = $urlseparate[3];
                     <td role="cell">-</td>
                 </tr>
             </tbody>
-            <!--
             <tfoot>
                 <tr>
                     <th scope="row">4</th>
@@ -197,8 +235,23 @@ $urlcurrent = $urlseparate[3];
                     <th class="pie-elem">1 h 24 min</th>
                     <th class="pie-elem">1 h 22 min</th>
                 </tr>
-            </tfoot>-->
+            </tfoot>
         </table>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-end">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+            </li>
+            <li class="page-item active" aria-current="page">
+              <span class="page-link disabled">1</span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Siguiente</a>
+            </li>
+          </ul>
+        </nav>
     </div>
                         <!--
                                           <th scope="col" role="columnheader" data-title="selectcheck"><div class="celltable"><input type="checkbox" onClick="toggle(this)"/></div></th>
@@ -228,8 +281,12 @@ $urlcurrent = $urlseparate[3];
             <path id="test" d="M4.76499011,6.7673683 L8.2641848,3.26100386 C8.61147835,2.91299871 9.15190114,2.91299871 9.49919469,3.26100386 C9.51164115,3.27347582 9.52370806,3.28637357 9.53537662,3.29967699 C9.83511755,3.64141434 9.81891834,4.17816549 9.49919469,4.49854425 L5.18121271,8.82537365 C4.94885368,9.05820878 4.58112654,9.05820878 4.34876751,8.82537365 L2.50080531,6.97362503 C2.48835885,6.96115307 2.47629194,6.94825532 2.46462338,6.93495189 C2.16488245,6.59321455 2.18108166,6.0564634 2.50080531,5.73608464 C2.84809886,5.3880795 3.38852165,5.3880795 3.7358152,5.73608464 L4.76499011,6.7673683 Z"></path>
     </symbol>
 </svg>
-    <!-- JQUERY -->
-    <script src="./../../assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script src="./../../assets/js/btn-animado.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -269,6 +326,8 @@ function getcboxSCM() {
     });*/
   });
   console.log(checkActivos);
+  validacionConsulta = checkActivos.length == 0  ? 'No hay datos, no se procede a consultar' : 'Si hay datos, se procede a consultar';
+  console.log(validacionConsulta);
   preDataSCM(checkActivos);
 }
 function preDataSCM(date){
@@ -478,26 +537,62 @@ const insertStatesSunat = async (objectarray) => {
 // INPUT FECHA PARA CONSULTAR BASE DATOS
   $(function() {
     $('input[name="daterange"]').daterangepicker({
-      opens: 'left'
+      "locale": {
+            "format": "YYYY/MM/DD",
+            "separator": " - ",
+            "applyLabel": "Guardar",
+            "cancelLabel": "Cancelar",
+            "fromLabel": "Desde",
+            "toLabel": "Hasta",
+            "customRangeLabel": "Personalizar",
+            "daysOfWeek": [
+                "Do",
+                "Lu",
+                "Ma",
+                "Mi",
+                "Ju",
+                "Vi",
+                "Sa"
+            ],
+            "monthNames": [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Setiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre"
+            ],
+            "firstDay": 1
+        },
+        "startDate": "2021-01-01",
+        "endDate": "2021-01-03",
+        "opens": "center",
+      "opens" : 'left'
     }, function(start, end, label) {
       dateStart = start.format('YYYY-MM-DD');
       dateEnd = end.format('YYYY-MM-DD');
-      console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
       var sizeTable = document.getElementById('sizeTable');
       var sizeTableoption = sizeTable.options[sizeTable.selectedIndex];
       sizeTablevalue = sizeTableoption.value;
       console.log("Tamaño" + sizeTablevalue);
-      borrarTable()
       //GET DATA TABLE
-      dtableDEmitidos(dateStart, dateEnd, sizeTablevalue);
+      //dtableDEmitidos(dateStart, dateEnd, sizeTablevalue);
     });
   });
+//
   //CONSULTA BASE DATOS DE LA EMPRESA
   const dtableDEmitidos = async (dateuno, datedos, size) => {
     console.log('Se hara consulta con este rango de fecha : ' + dateuno + 'Fecha Fin ' + datedos);
     const body = new FormData();
     var data = {
-      "accion" : '1',
+      "accion" : '0',
       "dateuno" : dateuno,
       "datedos" : datedos,
       "size" : size,
@@ -511,28 +606,37 @@ const insertStatesSunat = async (objectarray) => {
   };
   const handleReturnedDocEmiSunat = (data) => {
     //rJParse = JSON.parse(data);
-    tableData = data['result'];
     //console.log(tableData);
     
-    createTable(tableData);
+    createTable(data);
     //$("#cArticle_idselectBrand").html(data).selectpicker('refresh');
     //$("#filcat").html(data).selectpicker('refresh');
   }
   function borrarTable() {
     let tableBody = document.getElementById('drcsunat');
-    
+    let tablepag = document.getElementById('tablepag');
     /*
     let table = document.getElementById('table-Sunat');
     table.removeChild(tableBody);
     */
     //document.getElementById('drcsuat').innerHTML = '';
     tableBody.innerHTML = '';
+    tablepag.innerHTML = '';
   }
   //GENERANDO CUERPO DE TABLA
-  function createTable(tableData) {
-    
+  function createTable(data) {
+    console.log(data);
+    //OBTENIEDO DATOS DE TABLA
+    tableData = data['consulta']['result'];
+    //OBTENIEDO DATOS DE TABLA
+    paginas = data['paginacion']['filasPagina'];
+    //OBTENIEDO N° PAGINA
+    npagina = data['npagina'];
+
+    //INDICAMOS ETIQUETA A IMPRIMIR
     let tableBody = document.getElementById('drcsunat');
-    //let table = document.getElementById('table-Sunat');
+    let tablepag = document.getElementById('tablepag');
+    //TABLA
     var numruc = '20370715107';
     var tipCom = '01';
     var stateSunat = 'NO CONSULTADO';
@@ -544,6 +648,107 @@ const insertStatesSunat = async (objectarray) => {
     var txtSEstado = 'Consultando';
     var txtTEstado = 'Activo';
     c = 0;
+    //PAGINACION
+    var eliPrevious = document.createElement('li');
+    var eliNext = document.createElement('li');
+    var eaPrevious = document.createElement('a');
+    var eaNext = document.createElement('a');
+    var espan = document.createElement('span');
+    
+    //AGREGANDO CLASE
+    //eliPrevious.className = "page-item";
+    eliNext.className     = "page-item";
+    eaPrevious.className  = "page-link";
+    eaNext.className      = "page-link";
+    espan.className       = "page-link";
+    //AGREGANDO TEXTO
+    eaPrevious.appendChild(document.createTextNode('Anterior'));
+    eaNext.appendChild(document.createTextNode('Siguiente'));
+    //AGRUPANDO
+    eliPrevious.appendChild(eaPrevious);
+    eliNext.appendChild(eaNext);
+    //CREANDO
+    console.log('la cantidad de paginas son :' + paginas);
+    //tablepag.appendChild(eliPrevious);
+    //CREANDO LAS PAGINAS
+    console.log('esta en la pagina :' + npagina);
+    for (var pi = 1; pi <= paginas; pi++) {
+
+      const eli = document.createElement('li');
+      const ea = document.createElement('a');
+      console.log('estas en el numero :' + pi);
+      var cPrevious = npagina == '1' ? 'page-item disabled' : 'page-item';
+      pi == '1' ? eliPrevious.className = cPrevious : 'page-item';
+      pi == '1' ? tablepag.appendChild(eliPrevious) : 'page-item';
+      var cNext = npagina == paginas ? 'page-item disabled' : 'page-item';
+      pi == paginas ? eliNext.className = cNext : 'page-item';
+      pi == paginas ? tablepag.appendChild(eliNext) : 'page-item';  
+      console.log(cNext);
+      //AGREGANDO CLASE
+      if(npagina == pi){
+        console.log('Es igual');
+        eli.className = "page-item active";
+        ea.className = "page-link";
+      }else{
+        console.log('No es igual');
+        eli.className = "page-item";
+        ea.className = "page-link pagina-inac";
+      }
+      //AGREGANDO ID
+      eli.setAttribute("id", "pag_" + pi);
+      //EJECUTO CONSULTA PAGINA
+      eli.addEventListener('click', consultpag);
+      //FUNCION CONSULTAR PAGINA
+      function consultpag(e) {
+        //OBTENGO EL ID
+        id = eli.getAttribute('id');
+        var sid = id.split('_');
+        var pagina = sid['1'];
+        var calpagina = pagina - 1;
+        console.log('Paginacion : ' + id);
+        //OBTENIENDO DATOS
+        //OBTENEMOS LA FECHA
+        console.log('Hola Fecha seleccionado es : ' + dateStart + ' hasta' +  dateEnd);
+        //OBTENEMOS UNIDAD
+        var idsUnidad = document.getElementById('sUnidad');
+        var dtUnidad = idsUnidad.options[idsUnidad.selectedIndex].getAttribute('data-tokens');
+        console.log(dtUnidad);
+        //OBTENEMOS CANAL
+        var idsCanal = document.getElementById('sCanal');
+        var dtCanal = idsCanal.options[idsCanal.selectedIndex].getAttribute('data-tokens');
+        console.log(dtCanal);
+        //OBTENEMOS tipo documentos
+        var idsTipDoc = document.getElementById('sTipDoc');
+        var dtTipDoc = idsTipDoc.options[idsTipDoc.selectedIndex].getAttribute('data-tokens');
+        console.log(dtTipDoc);
+        //OBTENEMOS EL TAMAÑO DE CONSULTA
+        var idsSizeTable = document.getElementById('sizeTable');
+        var dtSizeTable = idsSizeTable.options[idsSizeTable.selectedIndex].getAttribute('value');
+        console.log(dtSizeTable);
+        console.log(calpagina);
+        console.log(dtSizeTable);
+        console.log('Se multiplicara');
+        var offset = dtSizeTable * calpagina;
+        console.log('Total : ' + offset);
+        console.log(queryformatDoc);
+        var queryformatDoc = {
+            "fechainicio" : dateStart,
+            "fechafin" : dateEnd,
+            "unidad" : dtUnidad,
+            "canal"  : dtCanal,
+            "tipdoc" : dtTipDoc,
+            "tamano" : dtSizeTable,
+            "pagina" : pagina,
+            "offset" : offset,
+        };
+        makeRequestsdocEmi(queryformatDoc);
+      }
+      console.log(pi);
+      ea.appendChild(document.createTextNode(pi));
+      eli.appendChild(ea);
+      tablepag.appendChild(eli);
+    }
+    tablepag.appendChild(eliNext);
     //i = 0;
     //tableBody.parentNode.removeChild(tableBody);
     console.log(tableData);
@@ -552,7 +757,7 @@ const insertStatesSunat = async (objectarray) => {
     tabBody.setAttribute("role", 'rowgroup');
     
     //tableBody.removeChild(primerParrafo);
-    tableData.forEach(function(obj) {
+    tableData.forEach(function(obj){
       i++;
       c++;
       //CREAMOS ETIQUETA
@@ -592,10 +797,10 @@ const insertStatesSunat = async (objectarray) => {
       const btnaconsult = document.createElement('a');
       const btnaSendSunat = document.createElement('a');
       var i = c - 1;
-      console.log(i);
+      //console.log(i);
       //var numero = dcsnat['data']['numero'].trim();
       idSpanSestado = tableData[i]['cnumero'].trim();
-      console.log(tableData[i]);
+      //console.log(tableData[i]);
       //AGREGAMOS TYPE O TIPO A ETIQUETA
       ipt.type = "checkbox";
       ipt.name = "dinamico";
@@ -784,13 +989,54 @@ const insertStatesSunat = async (objectarray) => {
   }
 
 
-    //DOM ELEMENTS
-    let btnConBDatos = document.getElementById('btnConBDatos');
+  //DOM ELEMENTS
+  let btnConBDatos = document.getElementById('btnConBDatos');
   //
   btnConBDatos.addEventListener('click', function(){
-    
+    //OBTENEMOS LA FECHA
     console.log('Hola Fecha seleccionado es : ' + dateStart + ' hasta' +  dateEnd);
+    //OBTENEMOS UNIDAD
+    var idsUnidad = document.getElementById('sUnidad');
+    var dtUnidad = idsUnidad.options[idsUnidad.selectedIndex].getAttribute('data-tokens');
+    console.log(dtUnidad);
+    //OBTENEMOS CANAL
+    var idsCanal = document.getElementById('sCanal');
+    var dtCanal = idsCanal.options[idsCanal.selectedIndex].getAttribute('data-tokens');
+    console.log(dtCanal);
+    //OBTENEMOS tipo documentos
+    var idsTipDoc = document.getElementById('sTipDoc');
+    var dtTipDoc = idsTipDoc.options[idsTipDoc.selectedIndex].getAttribute('data-tokens');
+    console.log(dtTipDoc);
+    var idsSizeTable = document.getElementById('sizeTable');
+    var dtSizeTable = idsSizeTable.options[idsSizeTable.selectedIndex].getAttribute('value');
+    console.log(dtSizeTable);
+    var queryformatDoc = {
+        "fechainicio" : dateStart,
+        "fechafin" : dateEnd,
+        "unidad" : dtUnidad,
+        "canal"  : dtCanal,
+        "tipdoc" : dtTipDoc,
+        "tamano" : dtSizeTable,
+        "pagina" : '1',
+        "offset" : '0',
+    };
+    console.log(queryformatDoc);
+    makeRequestsdocEmi(queryformatDoc);
   });
+  const makeRequestsdocEmi = async (queryformatDoc) => {
+    const body = new FormData();
+    var data = {
+      "accion" : '0',
+      "doc" : queryformatDoc
+    };
+    body.append("data", JSON.stringify(data));  
+    const responsemaindatabase = await fetch("./../../controllers/controllerSunat.php", { method: "POST", body});
+    const responsemaindatabaseobject = await responsemaindatabase.json(); //await JSON.parse(returned);
+    console.log('se limpiara')
+    borrarTable()
+    console.log(typeof responsemaindatabaseobject);
+    handleReturnedDocEmiSunat(responsemaindatabaseobject);
+  };
   let prueba = <?php echo $jelsunat ?>;
   //console.log(prueba);
   var contenido;
@@ -1055,7 +1301,7 @@ function mostrarContenido(contenido) {
           const body = new FormData();
           
           var data = {
-            "accion" : '0',
+            "accion" : '1',
             "doc" : requestSunat[prop]
           };
 

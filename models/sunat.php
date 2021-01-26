@@ -91,7 +91,45 @@ class Sunat extends Conexion
         return $this->ConsultaSimple($query);
     }
     //GET NAME AWAREHOUSE
-    
+    public function getdocDB($fechainicio, $fechafin, $unidad, $canalSQL, $TipDocSQL, $tamano, $offset): array
+    {
+        //"select * FROM public.comprobante_emitido where dfecemi between '2020-10-11' and '2020-10-20' order by dfecemi desc limit 20"
+        $columns = "cserie, cnumero, dfecemi, nimporte, benviado";
+        //$where = "WHERE dfecemi >= :fechainicio AND dfecemi <= :fechafin ORDER BY dfecemi DESC LIMIT :tamano";
+        //$canalSQL = $canalSQL ? 'VACIO' : $canal;
+        //$array = array(':fechainicio' => $fechainicio, ':fechafin' => $fechafin, ':tamano' => $tamano);
+        if($canalSQL && $TipDocSQL){
+            $uctDoc = "AND comprobante_emitido.cserie = '" . $TipDocSQL . "" . $canalSQL . "'";
+        }else{
+            $uctDoc = "";
+        }
+        $where = "WHERE dfecemi >= :fechainicio AND dfecemi <= :fechafin ".$uctDoc." ORDER BY idcomprobante ASC LIMIT :tamano OFFSET :offset ";
+        $array = array(':fechainicio' => $fechainicio, ':fechafin' => $fechafin, ':tamano' => $tamano, ':offset' => $offset);
+        return $this->ConsultaComplejaPgsql($columns, $where, $array);
+    }
+
+    public function getPagination($fechainicio, $fechafin, $canalSQL, $TipDocSQL, $tamano): array
+    {
+        if($canalSQL && $TipDocSQL){
+            $uctDoc = "AND comprobante_emitido.cserie = '" . $TipDocSQL . "" . $canalSQL . "'";
+        }else{
+            $uctDoc = "";
+        }
+        $where = "WHERE comprobante_emitido.dfecemi >= :fechainicio AND comprobante_emitido.dfecemi <= :fechafin ".$uctDoc;
+        $array = array(':fechainicio' => $fechainicio, ':fechafin' => $fechafin);
+        //return $this->dbsql->query($query)->fetch(PDO::FETCH_BOTH)[0];
+        $query  = "SELECT COUNT(*) FROM public.comprobante_emitido {$where}";
+        $result = $this->dbsql->prepare($query);
+        $result->execute($array);
+        $sizetotal = intval($result->fetch(PDO::FETCH_BOTH)[0]);
+        //$sizetotal = intval($this->dbsql->prepare($query)->fetch(PDO::FETCH_BOTH)[0]);
+        $paginas = $sizetotal / $tamano;
+        return [
+            'filasTotal'  => $sizetotal,
+            'filasPagina' => ceil($paginas),
+        ];
+    }
+    //GET NAME AWAREHOUSE    
     public function getdateSunat($dateone, $datetwo, $sizeTable): array
     {   /*
         echo ' PRIMER FECHA '.$dateone;
@@ -147,14 +185,7 @@ class Sunat extends Conexion
         return $this->ConsultaCompleja($where, $array);
     }
 
-    public function getPagination(): array
-    {
-        $query = "SELECT COUNT(*) FROM almacenes;";
-        return array(
-            'filasTotal'  => intval($this->db->query($query)->fetch(PDO::FETCH_BOTH)[0]),
-            'filasPagina' => 5,
-        );
-    }
+
 
     public function showTable(array $query): string
     {

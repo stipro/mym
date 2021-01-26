@@ -6,12 +6,11 @@ if($_POST){
     try{
         $object = $_POST['data'];
         $dataSunat = json_decode($object,true);
-        //var_dump($dataSunat);
         $accion = $dataSunat['accion'];
         //0 = CONSULTAR RANGO FECHA BD PRINCIPAL
         //1 = CONSULTAR SUNAT
         //2 = INSERTAR DB
-        if($accion == '0')
+        if($accion == '1')
         {
             require_once ('./../models/sunat.php');
             $sunat = new Sunat();
@@ -103,18 +102,39 @@ if($_POST){
             require_once ('./../models/sunat.php');
             //Se instacia la clase
             $sunat = new Sunat();
-            //echo $variable ? "soy un true" : "ups! soy false";
-            if($dataSunat['dateuno'] == $dataSunat['datedos']){
-                $dateone = $dataSunat['dateuno'];
-                $sunat->getdateSunat($dateone);
+            $dataSunatDoc = $dataSunat['doc'];
+            $fechainicio = $dataSunatDoc['fechainicio'];
+            $fechafin    = $dataSunatDoc['fechafin'];
+            //$fechainicio = date('Y-m-d', strtotime($dataSunat['fechainicio']));
+            //$fechafin = date('Y-m-d', strtotime($dataSunat['fechafin']));
+            $unidad      = $dataSunatDoc['unidad'];
+            //$unidadSQL = $unidad == "LIMA" ? '003' : 'falso';
+            $canal       = $dataSunatDoc['canal'];
+            $canalSQL = $canal == "" ? FALSE : $canal;
+            $TipDoc    = $dataSunatDoc['tipdoc'];
+            $TipDocSQL = $TipDoc == "" ? FALSE : $TipDoc;
+            $tamano    = $dataSunatDoc['tamano'];
+            $offset    = $dataSunatDoc['offset'];
+            $pagina = $dataSunatDoc['pagina'];
+            //echo $fechainicio == $fechafin ? "soy un true" : "ups! soy false";
+            if($fechainicio == $fechafin){
+                $sunat->getdateSunat($fechainicio);
             }
             else{
-                $dateone = date('Y-m-d', strtotime($dataSunat['dateuno']));
-                $datetwo = date('Y-m-d', strtotime($dataSunat['datedos']));
-                $sizeTable = $dataSunat['size'];
-                $rptConsulta = $sunat->getdateSunat($dateone, $datetwo, $sizeTable);
+                //$dateone = date('Y-m-d', strtotime($dataSunat['dateuno']));
+                //$datetwo = date('Y-m-d', strtotime($dataSunat['datedos']));
+                //$sizeTable = $dataSunat['size'];
+                $rptConsulta = $sunat->getdocDB($fechainicio, $fechafin, $unidad, $canalSQL, $TipDocSQL, $tamano, $offset);
+                $cantconsult = $sunat->getPagination($fechainicio, $fechafin, $canalSQL, $TipDocSQL, $tamano);
+                //$rptConsulta = $sunat->getdateSunat($fechainicio, $fechafin);
                 if($rptConsulta){
-                    echo json_encode($rptConsulta);
+                    //echo json_encode($cantconsult);
+                    $array = [
+                        "consulta" => $rptConsulta,
+                        "paginacion" => $cantconsult,
+                        "npagina" => $pagina,
+                    ];
+                    echo json_encode($array);
                 }
                 else{
                     echo json_encode('No hay datos');

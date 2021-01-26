@@ -71,6 +71,10 @@ class Conexion
         }
         return $conpgsql;
     }
+    protected function ConsultaSimplePgsql(string $query): array
+    {
+        return $this->dbsql->query($query)->fetchAll(PDO::FETCH_ASSOC);
+    }
     protected function ConsultaComplejaPgsql(string $columns, string $where, array $array):array
     {
         $query  = "SELECT {$columns} FROM public.comprobante_emitido {$where}";
