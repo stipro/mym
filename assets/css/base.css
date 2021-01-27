@@ -31,18 +31,19 @@ tbody{
 .pagina-inac{
   color: #007bff !important;
 }
+
 /* 320px Celular VGA*/
 @media screen and (max-width: 20rem)
 {
   body{
-    background: blueviolet;
+    background: #f8f9fa;
   }
 }
 /* 321px y 640px CELULARES HD*/
 @media only screen and (min-width: 20.0625rem) and (max-width: 40rem)
 {
   body{
-    background: yellow;
+    background: #f8f9fa;
   }
   .respuesta_servi{
     position: fixed;
@@ -57,7 +58,7 @@ tbody{
 @media only screen and (min-width: 40.0625rem) and (max-width: 64rem)
 {
   body{
-    background: green;
+    background: #f8f9fa;
   }
   .celltable{
     /*width: 8rem;*/

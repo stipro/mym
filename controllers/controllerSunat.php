@@ -62,7 +62,7 @@ if($_POST){
             }
             else{
                 $rptServidor = array(
-                    "rpta" => "0",
+                    "rpta" => "1",
                     "text" => "No responde servidor correctamente",
                 );
                 
@@ -84,18 +84,27 @@ if($_POST){
             $numero = (int)$dataSunatDoc['N_COMPROBANDO'];
             $fechaEmision = $dataSunatDoc['F_EMISION'];
             $monto = (float)$dataSunatDoc['I_TOTAL'];
-            $estados = explode('|', $dataSunatDoc['E_SUNAT']);  
-            $estadoCp = $estados[0];
-            $estadoRuc = $estados[1];
-            $condDomiRuc = $estados[2];
-            $obseDoc = $estados[3];
+            if($dataSunatDoc['E_SUNAT'] == 'NO CONSULTADO'){
+                $dataSunatDoc['E_SUNAT'];
+                $estadoCp = '-';
+                $estadoRuc = '-';
+                $condDomiRuc = '-';
+                $obseDoc = '-';
+            }else{
+                $estados = explode('|', $dataSunatDoc['E_SUNAT']);  
+                $estadoCp = $estados[0];
+                $estadoRuc = $estados[1];
+                $condDomiRuc = $estados[2];
+                $obseDoc = $estados[3];
+            }
             $estadoEnvio = $dataSunatDoc['E_ENVIO'];
             $fechaRegistro = $dataSunatDoc['F_REGISTRO'];
             //echo json_encode($dataSunatDoc);
             //echo 'saldras del controller para entrar al modelo';
             //Se pasara los datos a registrar
             //PASO LAS VARIBLES AL INSERT
-            echo $sunat->insert($numRuc, $codComp, $numSerie, $numero, $fechaEmision, $monto, $estadoCp, $estadoRuc, $condDomiRuc, $obseDoc, $estadoEnvio, $fechaRegistro);
+            $rptServidor = $sunat->insert($numRuc, $codComp, $numSerie, $numero, $fechaEmision, $monto, $estadoCp, $estadoRuc, $condDomiRuc, $obseDoc, $estadoEnvio, $fechaRegistro);
+            echo json_encode($rptServidor);
         }
         else{
             //REQUERIMOS ARCHIVO
@@ -110,9 +119,9 @@ if($_POST){
             $unidad      = $dataSunatDoc['unidad'];
             //$unidadSQL = $unidad == "LIMA" ? '003' : 'falso';
             $canal       = $dataSunatDoc['canal'];
-            $canalSQL = $canal == "" ? FALSE : $canal;
+            $canalSQL = $canal == "" ? 'FALSE1' : $canal;
             $TipDoc    = $dataSunatDoc['tipdoc'];
-            $TipDocSQL = $TipDoc == "" ? FALSE : $TipDoc;
+            $TipDocSQL = $TipDoc == "" ? 'FALSE2' : $TipDoc;
             $tamano    = $dataSunatDoc['tamano'];
             $offset    = $dataSunatDoc['offset'];
             $pagina = $dataSunatDoc['pagina'];
@@ -127,6 +136,8 @@ if($_POST){
                 $rptConsulta = $sunat->getdocDB($fechainicio, $fechafin, $unidad, $canalSQL, $TipDocSQL, $tamano, $offset);
                 $cantconsult = $sunat->getPagination($fechainicio, $fechafin, $canalSQL, $TipDocSQL, $tamano);
                 //$rptConsulta = $sunat->getdateSunat($fechainicio, $fechafin);
+                $serieSQL = $TipDocSQL . $canalSQL;
+                //var_dump($serieSQL);
                 if($rptConsulta){
                     //echo json_encode($cantconsult);
                     $array = [

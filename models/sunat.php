@@ -1,7 +1,12 @@
 <?php
 declare (strict_types = 1);
 require_once('./../db/conexion.php');
-
+//ESTADO
+// 0 = EXITO;
+// 1 = ERROR;
+//TIPO
+// 1 = Mensaje;
+//
 class Sunat extends Conexion
 {
     public function __construct()
@@ -12,7 +17,7 @@ class Sunat extends Conexion
     public function insert(int $numRuc, int $codComp, string $numSerie, int $numero, $fechaEmision, float $monto, string $estadoCp, string $estadoRuc, string $condDomiRuc, string $obseDoc, string $estadoEnvio, string $fechaRegistro)
     {
         try
-        {
+        {   
             //echo "Estas en el model function insertar";
             //var_dump($db);
             $queryDocVali  = "INSERT INTO validacion_documentos(ruc_documento, tipo_documento, serie_documento, numero_documento, fecemi_documento, nimporte_documento, estcom_documento, estcon_documento, condom_documento, obs_documento, estenvio_documento, fecreg_documento) VALUES (:numRuc, :codComp, :numSerie, :numero, :fechaEmision, :monto, :estadoCp, :estadoRuc, :condDomiRuc, :obseDoc, :estadoEnvio, :fechaRegistro)";
@@ -31,23 +36,31 @@ class Sunat extends Conexion
             $insertDocVali->bindParam(':estadoEnvio', $estadoEnvio, PDO::PARAM_STR);
             $insertDocVali->bindParam(':fechaRegistro', $fechaRegistro, PDO::PARAM_STR);
             $sqlsuccess = $insertDocVali->execute();
-            //echo "Se espera respuesta";
             if($sqlsuccess) // MENSAJE DE EXITO
             {
-                //echo 'Se realizo correctamente el registro.';
-                return 'Se realizo correctamente el registro.';
-                //echo $replys;
+                $rptaSQL = [
+                    "estadorpt" => "0",
+                    "text" => 'Se realizo correctamente el registro del Doc :'.$numero,
+                ];
+                return $rptaSQL;
             }
         }
         catch (PDOException $e) {
             if($e->getCode() == '23000')
             {
-                return 'Ya se inserto el documento: '.$numero.', '.$e->getMessage();
+                $rptaSQL = [
+                    "estadorpt" => "1",
+                    "text" => 'Ya se inserto el documento: '.$numero.', '.$e->getMessage(),
+                ];
+                
             }
             else{
-                return 'Ocurrio un problema, llamar a sistemas '.$e->getMessage();
-            }       
-            
+                $rptaSQL = [
+                    "estadorpt" => "1",
+                    "text" => 'Ocurrio un problema, llamar a sistemas '.$e->getMessage(),
+                ];
+            }
+            return $rptaSQL;
             //echo 'ocurrio problema';
         }
         return parent::getDb()->lastInsertId();
@@ -93,12 +106,13 @@ class Sunat extends Conexion
     //GET NAME AWAREHOUSE
     public function getdocDB($fechainicio, $fechafin, $unidad, $canalSQL, $TipDocSQL, $tamano, $offset): array
     {
+        $serieSQL;
         //"select * FROM public.comprobante_emitido where dfecemi between '2020-10-11' and '2020-10-20' order by dfecemi desc limit 20"
         $columns = "cserie, cnumero, dfecemi, nimporte, benviado";
         //$where = "WHERE dfecemi >= :fechainicio AND dfecemi <= :fechafin ORDER BY dfecemi DESC LIMIT :tamano";
         //$canalSQL = $canalSQL ? 'VACIO' : $canal;
         //$array = array(':fechainicio' => $fechainicio, ':fechafin' => $fechafin, ':tamano' => $tamano);
-        if($canalSQL && $TipDocSQL){
+        if($canalSQL or $TipDocSQL){
             $uctDoc = "AND comprobante_emitido.cserie = '" . $TipDocSQL . "" . $canalSQL . "'";
         }else{
             $uctDoc = "";
@@ -110,7 +124,7 @@ class Sunat extends Conexion
 
     public function getPagination($fechainicio, $fechafin, $canalSQL, $TipDocSQL, $tamano): array
     {
-        if($canalSQL && $TipDocSQL){
+        if($canalSQL or $TipDocSQL){
             $uctDoc = "AND comprobante_emitido.cserie = '" . $TipDocSQL . "" . $canalSQL . "'";
         }else{
             $uctDoc = "";

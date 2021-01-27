@@ -11,286 +11,240 @@ $urlcurrent = $urlseparate[3];
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+        <!-- Fecha -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--Estilo Tabla [ REQUIRED ]
     <link href="./../../assets/css/table.css" rel="stylesheet">-->
-    <!-- Fecha -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
-    
-    <!--
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <!-- Reset
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">-->
     <!--Estilo Boton Animado [ REQUIRED ]-->
     <link href="./../../assets/css/btn-animado.css" rel="stylesheet">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!--Estilo Tabla [ REQUIRED ]-->
     <link href="./../../assets/css/base.css" rel="stylesheet">
     <!-- Titulo de la pagina / pestaña -->
     <title>Hello, <?php echo $urlcurrent?>!</title>
   </head>
 <body>
+<div class="root">
 <?php
   //Llamo Nav
   include ('../nav.php');
 ?>
-  <h1>Hello, <?php echo $urlcurrent?>!</h1><div class="container-fluid">
-  <div class="row justify-content-md-center ">
-    <div class="col-sm ">      
-      <fieldset>
-        <legend>Consulta Directo Base Datos</legend>
-        <form>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Elegir Fecha</label>
-            <input id="date_range" class="form-control icdateconsult" type="text" name="daterange" value="02/01/2021 - 12/01/2021" />
-            <small id="emailHelp" class="form-text text-muted">Puedes seleccionar un dia o un rango de dias</small>
+<section class="contenedor mx-2">
+    <div class="row">
+      <div class="col-md-12">
+          <h2>Modulo, <?php echo $urlcurrent?>!</h2> 
+          <nav class="d-flex justify-content-end">
+          <div class="nav nav-tabs" id="nav-tab" role="group">
+              <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Consulta DB Principal</a>
+              <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Consulta Archivo Servidor</a>
+              <a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Consulta Seleccion de Archivo</a>
           </div>
-          <label for="start">Start date:</label>
-          <input class="form-control icdateconsult" type="date" id="start" name="trip-start"
-                value="2020-12-21">
-          <!-- UNIDAD -->
-          <div class="form-group">                                        
-            <label for="sUnidad"><strong>Unidad</strong></label>
-            <select id="sUnidad" class="selectpicker form-control" data-live-search="true">
-              <option data-tokens="">Selecciona un Almacen</option>
-              <option data-tokens="AQP" selected>AREQUIPA</option>
-              <option data-tokens="LIMA">LIMA</option>
-              <option data-tokens="*">TODOS</option>
-              <option data-tokens="TRANSPORTE">TRANSPORTE</option>
-            </select>
-            <small id="" class="form-text text-muted">Puede seleccionar sola una opción</small>
-          </div>
-          <!-- Almacen -->
-          <div class="form-group">                                        
-            <label for="sCanal"><strong>Canal</strong></label>
-            <select id="sCanal" class="selectpicker form-control" data-live-search="true">
-              <option data-tokens="">Selecciona un canal</option>
-              <option data-tokens="04">FARMA</option>
-              <option data-tokens="01">CONSUMO</option>
-              <option data-tokens="06">INSTITUCIONES</option>
-              <option data-tokens="TODOS">TODOS</option>
-              <option data-tokens="02">TRANSPORTE</option>
-              <option data-tokens="07">LICITACION</option>
-            </select>
-            <small id="" class="form-text text-muted">Puede seleccionar sola una opción</small>
-          </div>
-          <!-- Almacen -->
-          <div class="form-group">                                        
-            <label for="sTipDoc"><strong>Tip. Doc</strong></label>
-            <select id="sTipDoc" class="selectpicker form-control" data-live-search="true">
-              <option data-tokens="">Selecciona el tipo de Doc.</option>
-              <option data-tokens="FF">FACTURA</option>
-              <option data-tokens="BB">BOLETA</option>
-              <option data-tokens="C">N. CREDITO</option>
-              <option data-tokens="D">N. DEBITO</option>
-            </select>
-            <small id="" class="form-text text-muted">Puede seleccionar sola una opción</small>
-          </div>
-          <button type="button" id="btnConBDatos" class="btn btn-success">Consultar</button>
-        </form>
-      </fieldset>      
-    </div>
-    <div class="col-sm">
-      <div class="d-flex flex-column bd-highlight mb-3">
-        <fieldset>
-          <legend>Consulta por Archivo de carpeta en el Servidor</legend>
-          <form>
-            <button type="button" id="btnConSunat" class="btn btn-success">Consultar</button>
-          </form>
-        </fieldset>
-      </div>
-      <div class="d-flex flex-column-reverse bd-highlight">
-        <fieldset>
-          <legend>Consulta por selección de Archivo</legend>
-          <form>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Seleccione Archivo</label>
-              <input class="btn btn-success" value="ES" type="file" id="file-input" style=" width: 132px; overflow:hidden;"/>
-              <small id="emailHelp" class="form-text text-muted">Solo con archivos TXT</small>
+          </nav>
+        <br>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="row container d-flex justify-content-center">
+            <div id="rpts-sunat">
             </div>
-            <button type="button" id="btnConSunatCli" class="btn btn-success">Consultar</button>
-          </form>
-        </fieldset>
+              <div class="col-md-12">
+                  <div class="col-sm"> 
+                      <fieldset>
+                          <legend>Consulta Directo Base Datos</legend>
+                          <form>
+                          <div class="form-group">
+                              <label for="exampleInputEmail1">Elegir Fecha</label>
+                              <input id="date_range" class="form-control icdateconsult" type="text" name="daterange" value="02/01/2021 - 12/01/2021" />
+                              <small id="emailHelp" class="form-text text-muted">Puedes seleccionar un dia o un rango de dias</small>
+                          </div>
+                          UNIDAD 
+                          <div class="row">
+                              <div class="form-group col-sm">                                        
+                                  <label for="sUnidad"><strong>Unidad</strong></label>
+                                  <select id="sUnidad" class="selectpicker form-control" data-live-search="true">
+                                  <option data-tokens="">Selecciona un Almacen</option>
+                                  <option data-tokens="AQP" selected>AREQUIPA</option>
+                                  <option data-tokens="LIMA">LIMA</option>
+                                  <option data-tokens="*">TODOS</option>
+                                  <option data-tokens="TRANSPORTE">TRANSPORTE</option>
+                                  </select>
+                                  <small id="" class="form-text text-muted">Puede seleccionar sola una opción</small>
+                              </div>
+                              <!-- TIPO DOCUMENTO -->
+                              <div class="form-group col-sm">                                        
+                                <label for="sTipDoc"><strong>Tip. Doc</strong></label>
+                                <select id="sTipDoc" class="selectpicker form-control" data-live-search="true">
+                                <option data-tokens="">Selecciona el tipo de Doc.</option>
+                                <option data-tokens="FF">FACTURA</option>
+                                <option data-tokens="BB">BOLETA</option>
+                                <option data-tokens="C">N. CREDITO</option>
+                                <option data-tokens="D">N. DEBITO</option>
+                                </select>
+                                <small id="" class="form-text text-muted">Puede seleccionar sola una opción</small>
+                              </div>
+                              <!-- CANAL -->
+                              <div class="form-group col-sm">                                        
+                                  <label for="sCanal"><strong>Canal</strong></label>
+                                  <select id="sCanal" class="selectpicker form-control" data-live-search="true">
+                                  <option data-tokens="">Selecciona un canal</option>
+                                  <option data-tokens="04">FARMA</option>
+                                  <option data-tokens="01">CONSUMO</option>
+                                  <option data-tokens="06">INSTITUCIONES</option>
+                                  <option data-tokens="TODOS">TODOS</option>
+                                  <option data-tokens="02">TRANSPORTE</option>
+                                  <option data-tokens="07">LICITACION</option>
+                                  </select>
+                                  <small id="" class="form-text text-muted">Puede seleccionar sola una opción</small>
+                              </div>
+
+                          </div>
+                          <!--<button type="button" id="btnConBDatos" class="btn btn-success">Consultar</button>-->
+                          </form>
+                      </fieldset>      
+                  </div>
+                  <div>
+                      <div class="">
+                          <div class="">
+                              <div class="d-inline-flex p-2 bd-highlight">
+                              Mostrar
+                              </div>
+                              <div class="d-inline-flex p-2 bd-highlight">
+                              <select class="selectpicker form-control" name="sizeTable" id="sizeTable">
+                                  <option value="10" selected>10</option> 
+                                  <option value="25">25</option>
+                                  <option value="50">50</option>
+                              </select>
+                              </div>
+                              <div class="d-inline-flex p-2 bd-highlight">
+                              Entradas
+                              </div>
+                          </div>
+                      </div>
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                      <button type="button" id="btnConBDatos" class="btn btn-success">Consultar</button>
+                      <button type="button" id="btnSCM" class="btn btn-success">Consultar MASIVO SUNAT</button>
+                      <button type="button" id="btnSRM" class="btn btn-success">Registrar MASIVO BDATOS </button>
+                      </div>    
+                  </div>
+                  <nav aria-label="Page navigation example">
+                      <ul id="tablepag" class="pagination justify-content-end">
+                      </ul>
+                  </nav>
+                  <div class="table-responsive-md">
+                      <table id="table-Sunat" class="table table-hover table table-bordered" role="table">
+                          <caption>Consulta a Sunat</caption>
+                          <thead class="thead-dark" role="rowgroup"><tr id="theadSunat" role="row"><th scope="col" role="columnheader" data-title="selectcheck">
+                          <div class="celltable"><input type="checkbox" onClick="toggle(this)"/></div>
+                          </th><th scope="col" data-title="#">#
+                          </th><th scope="col" role="columnheader" data-title="RUC"><div class="celltable">RUC</div>
+                          </th><th scope="col" role="columnheader" data-title="T_COMPROBANTE"><div class="celltable">T. COMPROBANTE</div>
+                          </th><th scope="col" role="columnheader" data-title="SERIE"><div class="celltable">SERIE</div>
+                          </th><th scope="col" role="columnheader" data-title="N_COMPROBANDO"><div class="celltable">N° COMPROBANDO</div>
+                          </th><th scope="col" role="columnheader" data-title="F_EMISION"><div class="celltable">F. EMISION</div>
+                          </th><th scope="col" role="columnheader" data-title="I_TOTAL"><div class="celltable">I. TOTAL</div>
+                          </th><th scope="col" role="columnheader" data-title="E_ENVIO"><div class="celltable">E. ENVIO</div>
+                          </th><th scope="col" role="columnheader" data-title="E_SUNAT"><div class="celltable">E. SUNAT</div>
+                          </th><th scope="col" role="columnheader" data-title="E_REGISTRO"><div class="celltable">E. REGISTRO</div>
+                          </th><th scope="col" role="columnheader" data-title="ACCIONES">ACCIONES</th></tr></thead>
+                              <tbody id="drcsunat" role="rowgroup">
+                              </tbody>
+                              <tfoot>
+                                  <tr>
+                                      <th scope="row">-</th>
+                                      <th scope="row">-</th>
+                                      <th scope="row">-</th>
+                                      <th scope="row">-</th>
+                                      <th scope="row">-</th>
+                                      <th scope="row">-</th>
+                                      <th scope="row">-</th>
+                                      <th scope="row">-</th>
+                                      <th class="pie-elem">-</th>
+                                      <th class="pie-elem">-</th>
+                                      <th class="pie-elem">-</th>
+                                      <th class="pie-elem">-</th>
+                                  </tr>
+                              </tfoot>
+                      </table>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <div class="row container d-flex justify-content-center">
+                  <fieldset>
+                      <legend>Consulta por Archivo de carpeta en el Servidor</legend>
+                      <form>                        
+                          <div class="form-group">
+                          <button type="button" id="btnConSunat" class="btn btn-success">Consultar</button>
+                          <small id="" class="form-text text-muted">Seleccionara el archivo</small>
+                          </div>
+                      </form>
+                  </fieldset>
+                  <div>
+                      <h3>Contenido del archivo:</h3>
+                      <pre id="contenido-archivo"></pre>
+                  </div>
+                  <?php
+                      $alsunat = array();
+                      $adsunar = array();
+                      $c = 0;
+                      //URL DEL ARCHIVO
+                      $ArchivoLeer = "./../../data/05102020.txt";
+                      if(touch($ArchivoLeer)){
+                          $archivoID = fopen($ArchivoLeer, "r");   
+                          while( !feof($archivoID)){
+                              //SUMA EL CONTADOR
+                              $c++;
+                              //DATO
+                              $linea = fgets($archivoID, 1024);
+                              //SEPARAMOS POR EL SIGNO |
+                              $porciones = explode("|", $linea);
+                              //QUITAMOS EL SIGNO \n, \r
+                              $pmonto = explode("\n", $porciones[5]);
+                              $psmonto = explode("\r", $pmonto[0]);
+                              $plmonto = $psmonto[0];
+                              //$alsunat[$c]['monto'] = (float) $alsunat[$c]['monto'];
+                              $alsunat[$c] = array("numRuc"=>$porciones[0], "codComp"=>$porciones[1],"numeroSerie"=>$porciones[2], "numero"=>$porciones[3], "fechaEmision"=>$porciones[4],"monto"=>$plmonto);
+                          }
+                      //CERRAMOS
+                      fclose($archivoID);
+                      }
+                      //var_dump($alsunat);
+                      $jelsunat = json_encode($alsunat);
+                  ?>
+              </div>
+          </div>
+          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+              <div class="row container d-flex justify-content-center">
+                  <fieldset>
+                      <legend>Consulta por Archivo de carpeta en el Servidor</legend>
+                      <form>
+                          <div class="form-group">
+                              <label for="exampleInputEmail1">Seleccione Archivo</label>
+                              <input class="btn btn-success" value="ES" type="file" id="file-input" style=" width: 132px; overflow:hidden;"/>
+                          </div>
+                          <button type="button" id="btnConSunatCli" class="btn btn-success">Consultar</button>
+                          <small id="emailHelp" class="form-text text-muted">Solo con archivos TXT</small>
+                      </form>
+                  </fieldset>
+              </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <h3>Contenido del archivo:</h3>
-  <pre id="contenido-archivo"></pre>
-<?php
-  $alsunat = array();
-  $adsunar = array();
-  $c = 0;
-    //URL DEL ARCHIVO
-    $ArchivoLeer = "./../../data/05102020.txt";
-    if(touch($ArchivoLeer)){
-      //
-      $archivoID = fopen($ArchivoLeer, "r");
-      //      
-      while( !feof($archivoID)){
-        //SUMA EL CONTADOR
-        $c++;
-        //DATO
-        $linea = fgets($archivoID, 1024);
-        //SEPARAMOS POR EL SIGNO |
-        $porciones = explode("|", $linea);
-        //QUITAMOS EL SIGNO \n, \r
-        $pmonto = explode("\n", $porciones[5]);
-        $psmonto = explode("\r", $pmonto[0]);
-        $plmonto = $psmonto[0];
-        //$alsunat[$c]['monto'] = (float) $alsunat[$c]['monto'];
-        $alsunat[$c] = array("numRuc"=>$porciones[0], "codComp"=>$porciones[1],"numeroSerie"=>$porciones[2], "numero"=>$porciones[3], "fechaEmision"=>$porciones[4],"monto"=>$plmonto);
-      }
-      //CERRAMOS
-      fclose($archivoID);
-    }
-    //var_dump($alsunat);
-    $jelsunat = json_encode($alsunat);
-?>
-  <div class="csaSunat">
+  </section>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 
-  </div>
-    
-  <div>
-    <div>
-      Mostrar
-      <select name="sizeTable" id="sizeTable">
-        <option value="10" selected>10</option> 
-        <option value="25">25</option>
-        <option value="50">50</option>
-      </select>
-      Entradas
-    </div>
-    <div>
-      <button type="button" id="btnSCM" class="btn btn-success">Consultar MASIVO SUNAT</button>
-    </div>
-    <div>
-      <button type="button" id="btnSRM" class="btn btn-success">Registrar MASIVO BDATOS</button>
-    </div>
-  </div>
-  <nav aria-label="Page navigation example">
-    <ul id="tablepag" class="pagination justify-content-end">
-    </ul>
-  </nav>
-  <div class="table-responsive-md">
-    <table id="table-Sunat" class="table table-hover table table-bordered" role="table">
-      <caption>Consulta a Sunat</caption>
-      <thead class="thead-dark" role="rowgroup"><tr id="theadSunat" role="row"><th scope="col" role="columnheader" data-title="selectcheck"><div class="celltable"><input type="checkbox" onClick="toggle(this)"/></div>
-      </th><th scope="col" data-title="#">#
-      </th><th scope="col" role="columnheader" data-title="RUC"><div class="celltable">RUC</div>
-          </th><th scope="col" role="columnheader" data-title="T_COMPROBANTE"><div class="celltable">T. COMPROBANTE</div>
-          </th><th scope="col" role="columnheader" data-title="SERIE"><div class="celltable">SERIE</div>
-          </th><th scope="col" role="columnheader" data-title="N_COMPROBANDO"><div class="celltable">N° COMPROBANDO</div>
-          </th><th scope="col" role="columnheader" data-title="F_EMISION"><div class="celltable">F. EMISION</div>
-          </th><th scope="col" role="columnheader" data-title="I_TOTAL"><div class="celltable">I. TOTAL</div>
-          </th><th scope="col" role="columnheader" data-title="E_ENVIO"><div class="celltable">E. ENVIO</div>
-          </th><th scope="col" role="columnheader" data-title="E_SUNAT"><div class="celltable">E. SUNAT</div>
-          </th><th scope="col" role="columnheader" data-title="E_REGISTRO"><div class="celltable">E. REGISTRO</div>
-          </th><th scope="col" role="columnheader" data-title="ACCIONES">ACCIONES</th></tr></thead>
-            <tbody id="drcsunat" role="rowgroup">
-                  <tr role="row">
-                      <th scope="row">-</th>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                  </tr>
-                  <tr role="row">
-                      <th scope="row">-</th>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                      <td role="cell">-</td>
-                  </tr>
-                <tr role="row">
-                    <th scope="row">-</th>
-                    <td role="cell">-</td>
-                    <td role="cell">-</td>
-                    <td role="cell">-</td>
-                    <td role="cell">-</td>
-                    <td role="cell">-</td>
-                    <td role="cell">-</td>
-                    <td role="cell">-</td>
-                    <td role="cell">-</td>
-                    <td role="cell">-</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th scope="row">4</th>
-                    <th scope="row">Promedio</th>
-                    <th scope="row">Promedio</th>
-                    <th class="pie-elem">1 h 24 min</th>
-                    <th class="pie-elem">1 h 22 min</th>
-                    <th class="pie-elem">1 h 24 min</th>
-                    <th class="pie-elem">1 h 22 min</th>
-                </tr>
-            </tfoot>
-        </table>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-end">
-            <li class="page-item disabled">
-              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-            </li>
-            <li class="page-item active" aria-current="page">
-              <span class="page-link disabled">1</span>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">Siguiente</a>
-            </li>
-          </ul>
-        </nav>
-    </div>
-                        <!--
-                                          <th scope="col" role="columnheader" data-title="selectcheck"><div class="celltable"><input type="checkbox" onClick="toggle(this)"/></div></th>
-                <th scope="col" data-title="#">#</th>
-                <th scope="col" role="columnheader" data-title="RUC"><div class="celltable">RUC</div></th>
-                <th scope="col" role="columnheader" data-title="T_COMPROBANTE"><div class="celltable">T. COMPROBANTE</div></th>
-                <th scope="col" role="columnheader" data-title="SERIE"><div class="celltable">SERIE</div></th>
-                <th scope="col" role="columnheader" data-title="N_COMPROBANDO"><div class="celltable">N° COMPROBANDO</div></th>
-                <th scope="col" role="columnheader" data-title="F_EMISION"><div class="celltable">F. EMISION</div></th>
-                <th scope="col" role="columnheader" data-title="I_TOTAL"><div class="celltable">I. TOTAL</div></th>
-                <th scope="col" role="columnheader" data-title="E_ENVIO"><div class="celltable">E. ENVIO</div></th>
-                <th scope="col" role="columnheader" data-title="E_SUNAT"><div class="celltable">E. SUNAT</div></th>
-                <th scope="col" role="columnheader" data-title="E_REGISTRO"><div class="celltable">E. REGISTRO</div></th>
-                <th scope="col" role="columnheader" data-title="ACCIONES">ACCIONES</th>
-                    <th scope="col" role="columnheader"><div class="celltable">Estado del comprobante a la fecha de la consulta</div></th>
-                    <th scope="col" role="columnheader"><div class="celltable">Estado del contribuyente a la fecha de emisión</div></th>
-                    <th scope="col" role="columnheader"><div class="celltable">Condición de domicilio a la fecha de emisión</div></th>
-                    -->
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="circle">
-        <circle cx="8" cy="8" r="7.5"></circle>
-    </symbol>
-    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" id="arrow">
-        <path d="M2.7008908,5.37931459 L2.7008908,5.37931459 C2.9224607,5.60207651 3.2826628,5.60304283 3.50542472,5.38147293 C3.52232305,5.36466502 3.53814843,5.34681177 3.55280728,5.32801875 L5.34805194,3.02646954 L5.34805194,10.3480519 C5.34805194,10.7081129 5.63993903,11 6,11 L6,11 C6.36006097,11 6.65194806,10.7081129 6.65194806,10.3480519 L6.65194806,3.02646954 L8.44719272,5.32801875 C8.6404327,5.57575732 8.99791646,5.61993715 9.24565503,5.42669716 C9.26444805,5.41203831 9.28230129,5.39621293 9.2991092,5.37931459 L9.2991092,5.37931459 C9.55605877,5.12098268 9.57132199,4.70855346 9.33416991,4.43193577 L6.75918715,1.42843795 C6.39972025,1.00915046 5.76841509,0.960656296 5.34912761,1.32012319 C5.31030645,1.35340566 5.27409532,1.38961679 5.24081285,1.42843795 L2.66583009,4.43193577 C2.42867801,4.70855346 2.44394123,5.12098268 2.7008908,5.37931459 Z"></path>
-    </symbol>
-    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" id="check">
-            <path id="test" d="M4.76499011,6.7673683 L8.2641848,3.26100386 C8.61147835,2.91299871 9.15190114,2.91299871 9.49919469,3.26100386 C9.51164115,3.27347582 9.52370806,3.28637357 9.53537662,3.29967699 C9.83511755,3.64141434 9.81891834,4.17816549 9.49919469,4.49854425 L5.18121271,8.82537365 C4.94885368,9.05820878 4.58112654,9.05820878 4.34876751,8.82537365 L2.50080531,6.97362503 C2.48835885,6.96115307 2.47629194,6.94825532 2.46462338,6.93495189 C2.16488245,6.59321455 2.18108166,6.0564634 2.50080531,5.73608464 C2.84809886,5.3880795 3.38852165,5.3880795 3.7358152,5.73608464 L4.76499011,6.7673683 Z"></path>
-    </symbol>
-</svg>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-    <script src="./../../assets/js/btn-animado.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
+<script src="./../../assets/js/btn-animado.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
 //CHECKBOX
 //SELECCION / DESELECCIONA CHECKBOX
@@ -413,6 +367,22 @@ function convertDateFormat(string) {
         return info;
    }
 }
+const handlereturnedFins = (data) => {
+  contadorFins = contadorFins++;
+  console.log(contadorFins);
+  //ESTADO
+  // 0 = EXITO;
+  // 1 = ERROR;
+  //TIPO
+  console.log(typeof data);
+  console.log(data);
+  text = data['text']
+  if(data['estadorpt'] == '0'){
+    document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-success" role="alert">' + text + '</div>';
+  }else{
+    document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-danger" role="alert">' + text + '</div>';
+  }
+};
 /* Función que se gatilla al hacer click en el elemento BOTON */
 function getcboxbtnSRM() {
   var i = 0;
@@ -425,14 +395,14 @@ function getcboxbtnSRM() {
   $("input[type=checkbox]:checked").each(function(){ 
     checkSelect.push($(this).val());
   });
-  console.log(checkSelect);
+  //console.log(checkSelect);
   //Recorremos todos los checkbox seleccionados
   
   checkSelect.forEach( function(valor, indice, array) {
-    console.log("En el índice " + indice + " hay este valor: " + valor);
+    //console.log("En el índice " + indice + " hay este valor: " + valor);
     //separamos
     if(valor == 'on'){
-      console.log('Es on');
+      //console.log('Es on');
     }else{
       var elementodivi = valor.split('_');
       //escogemos el texto y limpiados de espacios
@@ -462,13 +432,13 @@ function getcboxbtnSRM() {
       var mes = datefront.getMonth() + 1  ;
       var getdate = datefront.getFullYear() + '-0' + mes + '-' + datefront.getDate() + ' ' + datefront.getHours() + ':' + datefront.getMinutes() + ':' + datefront.getSeconds()
         if(objectarray['E_SUNAT'] != 'FALSE'){
-          console.log('Si tiene respuesta de Sunat, se procederá a Registrar');
-          console.log(getdate);
+          //console.log('Si tiene respuesta de Sunat, se procederá a Registrar');
+          //console.log(getdate);
           objectarray['F_REGISTRO'] = getdate;
           console.log(objectarray);
           insertStatesSunat(objectarray);
         }else{
-          console.log('Debe tener respuesta de Sunat');
+          //console.log('Debe tener respuesta de Sunat');
         }
       }
     });
@@ -488,9 +458,7 @@ const insertStatesSunat = async (objectarray) => {
   //body.append("data", JSON.stringify(data[prop]));
   const returned = await fetch("./../../controllers/controllerSunat.php", { method: "POST", body });
   const result = await returned.json();//await JSON.parse(returned);
-  console.log(typeof result);
-  console.log(result);
-  //handleReturnedData(result);
+  handlereturnedFins(result);
   afterSending();
 }; 
 
@@ -993,35 +961,38 @@ const insertStatesSunat = async (objectarray) => {
   let btnConBDatos = document.getElementById('btnConBDatos');
   //
   btnConBDatos.addEventListener('click', function(){
-    //OBTENEMOS LA FECHA
-    console.log('Hola Fecha seleccionado es : ' + dateStart + ' hasta' +  dateEnd);
-    //OBTENEMOS UNIDAD
-    var idsUnidad = document.getElementById('sUnidad');
-    var dtUnidad = idsUnidad.options[idsUnidad.selectedIndex].getAttribute('data-tokens');
-    console.log(dtUnidad);
-    //OBTENEMOS CANAL
-    var idsCanal = document.getElementById('sCanal');
-    var dtCanal = idsCanal.options[idsCanal.selectedIndex].getAttribute('data-tokens');
-    console.log(dtCanal);
-    //OBTENEMOS tipo documentos
-    var idsTipDoc = document.getElementById('sTipDoc');
-    var dtTipDoc = idsTipDoc.options[idsTipDoc.selectedIndex].getAttribute('data-tokens');
-    console.log(dtTipDoc);
-    var idsSizeTable = document.getElementById('sizeTable');
-    var dtSizeTable = idsSizeTable.options[idsSizeTable.selectedIndex].getAttribute('value');
-    console.log(dtSizeTable);
-    var queryformatDoc = {
-        "fechainicio" : dateStart,
-        "fechafin" : dateEnd,
-        "unidad" : dtUnidad,
-        "canal"  : dtCanal,
-        "tipdoc" : dtTipDoc,
-        "tamano" : dtSizeTable,
-        "pagina" : '1',
-        "offset" : '0',
-    };
-    console.log(queryformatDoc);
-    makeRequestsdocEmi(queryformatDoc);
+    if(typeof dateStart === 'undefined'){
+      document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-warning" role="alert">No selecciono una fecha</div>';
+    } else {
+      document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-success" role="alert">La consulta es: '+dateStart+' a '+dateEnd+'</div>';
+      //OBTENEMOS UNIDAD
+      var idsUnidad = document.getElementById('sUnidad');
+      var dtUnidad = idsUnidad.options[idsUnidad.selectedIndex].getAttribute('data-tokens');
+      console.log(dtUnidad);
+      //OBTENEMOS CANAL
+      var idsCanal = document.getElementById('sCanal');
+      var dtCanal = idsCanal.options[idsCanal.selectedIndex].getAttribute('data-tokens');
+      console.log(dtCanal);
+      //OBTENEMOS tipo documentos
+      var idsTipDoc = document.getElementById('sTipDoc');
+      var dtTipDoc = idsTipDoc.options[idsTipDoc.selectedIndex].getAttribute('data-tokens');
+      console.log(dtTipDoc);
+      var idsSizeTable = document.getElementById('sizeTable');
+      var dtSizeTable = idsSizeTable.options[idsSizeTable.selectedIndex].getAttribute('value');
+      console.log(dtSizeTable);
+      var queryformatDoc = {
+          "fechainicio" : dateStart,
+          "fechafin" : dateEnd,
+          "unidad" : dtUnidad,
+          "canal"  : dtCanal,
+          "tipdoc" : dtTipDoc,
+          "tamano" : dtSizeTable,
+          "pagina" : '1',
+          "offset" : '0',
+      };
+      console.log(queryformatDoc);
+      makeRequestsdocEmi(queryformatDoc);
+    }
   });
   const makeRequestsdocEmi = async (queryformatDoc) => {
     const body = new FormData();
@@ -1319,5 +1290,9 @@ function mostrarContenido(contenido) {
       };   
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>
 </html>
