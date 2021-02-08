@@ -20,7 +20,7 @@ if($_POST){
             $dataSunatDoc = $dataSunat['doc'];
             //var_dump($dataSunatDoc);
             $jedcsunat = json_encode($dataSunatDoc);
-            //var_dump($jedcsunat);
+            //var_dump($dataSunatDoc);
             //$rptApiSunat = $sunat->getApiSunat($jedcsunat);
             $rptApiSunat = $sunat->getApiSunat($dataSunatDoc);
             //$jdrptSunat = json_decode($rptApiSunat);
@@ -64,6 +64,8 @@ if($_POST){
                 $rptServidor = array(
                     "rpta" => "1",
                     "text" => "No responde servidor correctamente",
+                    "serie" => $dataSunatDoc['numeroSerie'],
+                    "numero" => $dataSunatDoc['numero'],
                 );
                 
                 echo json_encode($rptServidor);
@@ -119,24 +121,28 @@ if($_POST){
             $unidad      = $dataSunatDoc['unidad'];
             //$unidadSQL = $unidad == "LIMA" ? '003' : 'falso';
             $canal       = $dataSunatDoc['canal'];
-            $canalSQL = $canal == "" ? 'FALSE1' : $canal;
+            //$canalSQL = $canal == "" ? FALSE : $canal;
             $TipDoc    = $dataSunatDoc['tipdoc'];
-            $TipDocSQL = $TipDoc == "" ? 'FALSE2' : $TipDoc;
+            //$TipDocSQL = $TipDoc == "" ? 'true2' : $TipDoc;
+            //$TipDocSQL = $TipDoc == "" ? '' : ($TipDoc == "D" ? $TipDoc : ($TipDoc == "C" ? $TipDoc : 'Tipo de Doc. No existe'));
+            //$resultado = $condicion ? 'verdadero' : ($condicion2 ? 'verdadero2' : 'falso'); 
             $tamano    = $dataSunatDoc['tamano'];
             $offset    = $dataSunatDoc['offset'];
             $pagina = $dataSunatDoc['pagina'];
             //echo $fechainicio == $fechafin ? "soy un true" : "ups! soy false";
-            if($fechainicio == $fechafin){
-                $sunat->getdateSunat($fechainicio);
-            }
-            else{
-                //$dateone = date('Y-m-d', strtotime($dataSunat['dateuno']));
-                //$datetwo = date('Y-m-d', strtotime($dataSunat['datedos']));
-                //$sizeTable = $dataSunat['size'];
-                $rptConsulta = $sunat->getdocDB($fechainicio, $fechafin, $unidad, $canalSQL, $TipDocSQL, $tamano, $offset);
-                $cantconsult = $sunat->getPagination($fechainicio, $fechafin, $canalSQL, $TipDocSQL, $tamano);
-                //$rptConsulta = $sunat->getdateSunat($fechainicio, $fechafin);
-                $serieSQL = $TipDocSQL . $canalSQL;
+            //$dateone = date('Y-m-d', strtotime($dataSunat['dateuno']));
+            //$datetwo = date('Y-m-d', strtotime($dataSunat['datedos']));
+            //$sizeTable = $dataSunat['size'];
+            $rptConsulta = $sunat->getdocDB($fechainicio, $fechafin, $unidad, $canal, $TipDoc, $tamano, $offset);
+            $cantconsult = $sunat->getPagination($fechainicio, $fechafin, $canal, $TipDoc, $tamano);
+            /*
+                echo 'La TABLA es : ';
+                var_dump($tableSQL);
+                echo 'La serie es : ';
+                var_dump($serieSQL);
+                echo 'SQL es : ';
+                var_dump($uctDoc);
+                */
                 //var_dump($serieSQL);
                 if($rptConsulta){
                     //echo json_encode($cantconsult);
@@ -150,7 +156,7 @@ if($_POST){
                 else{
                     echo json_encode('No hay datos');
                 }   
-            }
+            
         }
     }
     catch (Exception $e) {

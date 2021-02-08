@@ -75,9 +75,9 @@ class Conexion
     {
         return $this->dbsql->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
-    protected function ConsultaComplejaPgsql(string $columns, string $where, array $array):array
+    protected function ConsultaComplejaPgsql(string $columns, string $where, array $array, string $tableSQL):array
     {
-        $query  = "SELECT {$columns} FROM public.comprobante_emitido {$where}";
+        $query  = "SELECT {$columns} FROM public.{$tableSQL} {$where}";
         $result = $this->dbsql->prepare($query);
         $result->execute($array);
         $resultConsult = $result->fetchAll(PDO::FETCH_ASSOC);

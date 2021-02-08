@@ -84,6 +84,11 @@ $urlcurrent = $urlseparate[3];
                                 <option data-tokens="BB">BOLETA</option>
                                 <option data-tokens="C">N. CREDITO</option>
                                 <option data-tokens="D">N. DEBITO</option>
+                                <!--
+                                <option data-tokens="FC">N. CREDITO FACTURA</option>
+                                <option data-tokens="BC">N. CREDITO BOLETA</option>
+                                <option data-tokens="FD">N. DEBITO FACTURA</option>
+                                <option data-tokens="BD">N. DEBITO BOLETA</option>-->
                                 </select>
                                 <small id="" class="form-text text-muted">Puede seleccionar sola una opción</small>
                               </div>
@@ -246,6 +251,9 @@ $urlcurrent = $urlseparate[3];
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
+var conconfailed = 0;
+var contadorFins = 0;
+var arrayinsert = [];
 //CHECKBOX
 //SELECCION / DESELECCIONA CHECKBOX
 function toggle(source) {
@@ -268,6 +276,7 @@ btnSRM.addEventListener("click", getcboxbtnSRM);
 
 /* Función que se gatilla al hacer click en el elemento BOTON */
 function getcboxSCM() {
+  conconfailed = 0;
   var i = 0;
   var checkActivos = [];
   console.log('CONSULTA MASIVO');
@@ -368,7 +377,7 @@ function convertDateFormat(string) {
    }
 }
 const handlereturnedFins = (data) => {
-  contadorFins = contadorFins++;
+  contadorFins++;
   console.log(contadorFins);
   //ESTADO
   // 0 = EXITO;
@@ -376,11 +385,20 @@ const handlereturnedFins = (data) => {
   //TIPO
   console.log(typeof data);
   console.log(data);
-  text = data['text']
+  text = data['text'];
+  serie = data['numSerie'];
+  numero = data['numero'];
   if(data['estadorpt'] == '0'){
-    document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-success" role="alert">' + text + '</div>';
+    if(contadorFins == "1"){
+      console.log('es igual a 1');
+      document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-success" role="alert"> <h3>Documentos Registrados</h3> <ol><li class="rptinsertdoc">' + serie + '-'+numero + ' contador 1 : ' + contadorFins + ' </li></ol> ' + text + '</div>';
+    }else{
+      console.log('no es igual a 1');
+      $(".rptinsertdoc").append('<li class="rptinsertdoc">' + serie + '-' + numero+' contador 2 : ' + contadorFins + '</li>');
+    }
   }else{
-    document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-danger" role="alert">' + text + '</div>';
+    console.log('Datos no registrado');
+    //document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-danger" role="alert"> <h3>Documentos no consultados</h3> <ol><li class="docfail">'+serie+'-'+numero+'</li></ol> ' + text + '</div>';
   }
 };
 /* Función que se gatilla al hacer click en el elemento BOTON */
@@ -392,6 +410,7 @@ function getcboxbtnSRM() {
   var checkSelect = [];
   var rows = {};
   console.log('REGISTRO MASIVO');
+  contadorFins = 0;
   $("input[type=checkbox]:checked").each(function(){ 
     checkSelect.push($(this).val());
   });
@@ -1085,17 +1104,23 @@ function mostrarContenido(contenido) {
   //hacelas aqui.
   const handleReturnedData = (data) => {
     //
+
     var drcsunat = document.getElementById('drcsunat');
     var tableSunat = document.getElementById('table-Sunat');
 
     var ecsnat;
     var ctcsunat;
-    var dcsnat = JSON.parse(data);
+    
+    //OBJECT ERROR
+    if(typeof data == 'string'){
+      console.log('Es un string');
+      var dcsnat = JSON.parse(data);
+          
 
-    //console.info(dcsnat.includes('observaciones'));
-    console.log('Recibido')
-    console.log(dcsnat['data']);
-    const aobjtrptsunat = dcsnat['data'];
+      //console.info(dcsnat.includes('observaciones'));
+      console.log('Recibido')
+      console.log(dcsnat['data']);
+      const aobjtrptsunat = dcsnat['data'];
 
     var codComp;
     var numeroSerie = dcsnat['data']['numeroSerie'];
@@ -1218,8 +1243,26 @@ function mostrarContenido(contenido) {
         //var div = document.getElementById("foo");
         //insertAfter(trSTFila, el);
         //console.log(dcsnat);
-
-      };
+    }else{
+      conconfailed++;
+      console.log('Contador es : ' + conconfailed);
+      console.log('No es un string');
+      var dcsnat = data;
+      console.log('Recibido')
+      console.log(dcsnat);
+      text = data['text'];
+      serie = data['serie'];
+      numero = data['numero'];
+      if(conconfailed == '1'){
+        console.log();
+        arrayinsert.push(numero);
+        estatusarray = arrayinsert.includes(numero);
+        document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-danger" role="alert"> <h3>Documentos no consultados</h3> <ol><li class="docfail">' + serie + '-' + numero + ' contador es : ' + conconfailed + '</li></ol> ' + text + '</div>';
+      }else{
+        $(".docfail").append('<li class="docfail">' + serie + '-' + numero + ' contador es : ' + conconfailed + '</li>');
+      }
+    }
+  };
       //Si necesitas hacer algo antes de enviar las
       //consultas, hacelo aqui.
       const beforeSending = () => {
@@ -1282,8 +1325,11 @@ function mostrarContenido(contenido) {
           body.append("data", JSON.stringify(data));
           const returned = await fetch("./../../controllers/controllerSunat.php", { method: "POST", body });
           const result = await returned.json();//await JSON.parse(returned);
-          console.log(typeof result);
-          console.log(result);
+          /*if(typeof result == 'string'){
+            result = result;
+          }else{
+            result
+          }*/
           handleReturnedData(result);
         }
         afterSending();

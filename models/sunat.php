@@ -41,6 +41,8 @@ class Sunat extends Conexion
                 $rptaSQL = [
                     "estadorpt" => "0",
                     "text" => 'Se realizo correctamente el registro del Doc :'.$numero,
+                    "numSerie" => $numSerie,
+                    "numero" => $numero,
                 ];
                 return $rptaSQL;
             }
@@ -104,35 +106,97 @@ class Sunat extends Conexion
         return $this->ConsultaSimple($query);
     }
     //GET NAME AWAREHOUSE
-    public function getdocDB($fechainicio, $fechafin, $unidad, $canalSQL, $TipDocSQL, $tamano, $offset): array
+    public function getdocDB($fechainicio, $fechafin, $unidad, $canal, $TipDoc, $tamano, $offset): array
     {
-        $serieSQL;
-        //"select * FROM public.comprobante_emitido where dfecemi between '2020-10-11' and '2020-10-20' order by dfecemi desc limit 20"
         $columns = "cserie, cnumero, dfecemi, nimporte, benviado";
-        //$where = "WHERE dfecemi >= :fechainicio AND dfecemi <= :fechafin ORDER BY dfecemi DESC LIMIT :tamano";
-        //$canalSQL = $canalSQL ? 'VACIO' : $canal;
-        //$array = array(':fechainicio' => $fechainicio, ':fechafin' => $fechafin, ':tamano' => $tamano);
-        if($canalSQL or $TipDocSQL){
-            $uctDoc = "AND comprobante_emitido.cserie = '" . $TipDocSQL . "" . $canalSQL . "'";
+        $tableSQL = 'comprobante_emitido';
+        $uctDoc = "AND comprobante_emitido.cserie "; 
+        if($fechainicio == $fechafin){
+            //echo 'Fecha igual';
+            $where = "WHERE dfecemi = :fechainicio ORDER BY cnumero ASC LIMIT :tamano OFFSET :offset ";
+            $array = array(':fechainicio' => $fechainicio, ':tamano' => $tamano, ':offset' => $offset);
         }else{
-            $uctDoc = "";
+            if($TipDoc == "" && $canal == ""){
+                $serieSQL = $TipDoc.$canal;
+                $uctDoc = "";
+            }elseif($TipDoc == 'FF' && $canal == ""){
+                $serieSQL = '%'.$TipDoc.'%';
+                $uctDoc.= "LIKE '".$serieSQL."'";
+            }elseif($TipDoc == 'FF' && $canal != ""){
+                $serieSQL = $TipDoc.$canal;
+                $uctDoc.= "= '".$serieSQL."'";
+            }elseif($TipDoc == 'BB' && $canal == ""){
+                $serieSQL = '%'.$TipDoc.'%';
+                $uctDoc.= "LIKE '".$serieSQL."'";
+            }elseif($TipDoc == 'BB' && $canal != ""){
+                $serieSQL = $TipDoc;
+                $uctDoc.= "= '".$serieSQ."'";
+            }elseif($TipDoc == 'D' && $canal != ""){
+                $serieSQL = 'Error no seleccione CANAL';
+            }elseif($TipDoc == 'C' && $canal != ""){
+                $serieSQL = 'Error no seleccione CANAL';
+            }elseif($TipDoc == 'D' && $canal == ""){
+                $serieSQL = '%'.$TipDoc.'%';
+                $tableSQL = 'notcar_cliente';
+                $uctDoc = "AND ".$tableSQL.".cserie LIKE ";
+                $uctDoc.= "'".$serieSQL."'";
+            }elseif($TipDoc == 'C' && $canal == ""){
+                $serieSQL = '%'.$TipDoc.'%';
+                $tableSQL = 'notabo_cliente';
+                $uctDoc = "AND ".$tableSQL.".cserie LIKE ";
+                $uctDoc.= "'".$serieSQL."'";
+            }
+            $where = "WHERE dfecemi >= :fechainicio AND dfecemi <= :fechafin ".$uctDoc." ORDER BY cnumero ASC LIMIT :tamano OFFSET :offset ";
+            $array = array(':fechainicio' => $fechainicio, ':fechafin' => $fechafin, ':tamano' => $tamano, ':offset' => $offset);
         }
-        $where = "WHERE dfecemi >= :fechainicio AND dfecemi <= :fechafin ".$uctDoc." ORDER BY idcomprobante ASC LIMIT :tamano OFFSET :offset ";
-        $array = array(':fechainicio' => $fechainicio, ':fechafin' => $fechafin, ':tamano' => $tamano, ':offset' => $offset);
-        return $this->ConsultaComplejaPgsql($columns, $where, $array);
+        //$where = "WHERE dfecemi >= :fechainicio AND dfecemi <= :fechafin ".$uctDoc." ORDER BY cnumero ASC LIMIT :tamano OFFSET :offset ";
+        //$array = array(':fechainicio' => $fechainicio, ':fechafin' => $fechafin, ':tamano' => $tamano, ':offset' => $offset);
+        return $this->ConsultaComplejaPgsql($columns, $where, $array, $tableSQL);
     }
 
-    public function getPagination($fechainicio, $fechafin, $canalSQL, $TipDocSQL, $tamano): array
+    public function getPagination($fechainicio, $fechafin, $canal, $TipDoc, $tamano): array
     {
-        if($canalSQL or $TipDocSQL){
-            $uctDoc = "AND comprobante_emitido.cserie = '" . $TipDocSQL . "" . $canalSQL . "'";
+        $tableSQL = 'comprobante_emitido';
+        $uctDoc = "AND comprobante_emitido.cserie ";
+        if($fechainicio == $fechafin){
+            $where = "WHERE dfecemi = :fechainicio";
+            $array = array(':fechainicio' => $fechainicio);
         }else{
-            $uctDoc = "";
+            if($TipDoc == "" && $canal == ""){
+                $serieSQL = $TipDoc.$canal;
+                $uctDoc = "";
+            }elseif($TipDoc == 'FF' && $canal == ""){
+                $serieSQL = '%'.$TipDoc.'%';
+                $uctDoc.= "LIKE '".$serieSQL."'";
+            }elseif($TipDoc == 'FF' && $canal != ""){
+                $serieSQL = $TipDoc.$canal;
+                $uctDoc.= "= '".$serieSQL."'";
+            }elseif($TipDoc == 'BB' && $canal == ""){
+                $serieSQL = '%'.$TipDoc.'%';
+                $uctDoc.= "LIKE '".$serieSQL."'";
+            }elseif($TipDoc == 'BB' && $canal != ""){
+                $serieSQL = $TipDoc;
+                $uctDoc.= "= '".$serieSQ."'";
+            }elseif($TipDoc == 'D' && $canal != ""){
+                $serieSQL = 'Error no seleccione CANAL';
+            }elseif($TipDoc == 'C' && $canal != ""){
+                $serieSQL = 'Error no seleccione CANAL';
+            }elseif($TipDoc == 'D' && $canal == ""){
+                $serieSQL = '%'.$TipDoc.'%';
+                $tableSQL = 'notcar_cliente';
+                $uctDoc = "AND ".$tableSQL.".cserie LIKE ";
+                $uctDoc.= "'".$serieSQL."'";
+            }elseif($TipDoc == 'C' && $canal == ""){
+                $serieSQL = '%'.$TipDoc.'%';
+                $tableSQL = 'notabo_cliente';
+                $uctDoc = "AND ".$tableSQL.".cserie LIKE ";
+                $uctDoc.= "'".$serieSQL."'";
+            }
+            $where = "WHERE dfecemi >= :fechainicio AND dfecemi <= :fechafin ".$uctDoc;
+            $array = array(':fechainicio' => $fechainicio, ':fechafin' => $fechafin);
         }
-        $where = "WHERE comprobante_emitido.dfecemi >= :fechainicio AND comprobante_emitido.dfecemi <= :fechafin ".$uctDoc;
-        $array = array(':fechainicio' => $fechainicio, ':fechafin' => $fechafin);
         //return $this->dbsql->query($query)->fetch(PDO::FETCH_BOTH)[0];
-        $query  = "SELECT COUNT(*) FROM public.comprobante_emitido {$where}";
+        $query  = "SELECT COUNT(*) FROM public.{$tableSQL} {$where}";
         $result = $this->dbsql->prepare($query);
         $result->execute($array);
         $sizetotal = intval($result->fetch(PDO::FETCH_BOTH)[0]);
@@ -159,6 +223,8 @@ class Sunat extends Conexion
     {
         //PREPARAMOS PARAMETROS
         //var_dump($jedcsunat);
+        $cookie = 'f5avraaaaaaaaaaaaaaaa_session_=FIAAFADFJMCIJOEBIGMOEBAMDAJIFDAENDJNBOPLMOPLBOEEHLAHLAEEFLJIBAHCPAMDBEPKBPGFEOPCLCLAMKIPIHAFBAMIJFKKDJFAIFLJDPAJDFFOGKDMGNEHOLPC; ITCONSULTAUNIFICADALIBRESESSION=ZtodmPHbGdHXRSvxiNSwGWPEoo9yOKIrS_coiC5DMzcqhpbqWYT5aXkn4WyozUgtuvZmWCiBNN6SRqhG2LF3IbTOD0sSBZwL-fOPnWaNZY8Q4ShDBV_poHeqnk8iPfZh560JEsOkH7KKc5_BY-mTUxFxWMbI-yd_wg-wlyJWG9JiMtL_WWxwJzg2cEqy7vsKG4jF4o29LaxX9tGMXtHrHZzM8ExW_h5WtRiysgctcYy672tHO6-xcsQYOgznkAid!1771393487!878333934; TS0103674e=019edc9eb86cb7d03b8fee4275b26a1789d5eb3fed45bd783fae70587450ce3fc65e0ca2be331a4a7e3c0eeeebc4d3da148ea735f43dadd84fbf83d0daeac5435dfb622334a8fa104c7655b8de4a26a39121258808';
+        $cookied = 'f5avraaaaaaaaaaaaaaaa_session_=HPGHCDLKEALDGOIKNMIDJEMGKDGAPPDALMALBNBEFIDMAJMABMDDJFPNNHKHKJILANIDIHGMPHMNJHLMGMHAMMCGLAHIBLOMEIHFGIJLAMHBFDGNHCOAINNFFHNPBGJE; _ga=GA1.3.651044179.1605104373; dtCookie=v_4_srv_2_sn_ED1A31195DC8EDB3FEA640A868A7C1EC_perc_73457_ol_1; ITCONSULTAUNIFICADALIBRESESSION=6GRKXSH4YmHrkxJ1lPW2Yab65TlBdBwf8ZLDmBqqvrYCsRLCYAwQ7fbX7_vUzVDcakMZg9O04wGXQvrqLiQJgNw2xeceTi3lG32KBmSowARvi-9WvvmoGuzc2jxu-xLS-KjjukO7HZQy9OTxSDOdxSaX4jba40xUBriPkarUaJKKvxZlF9DDgf84QHbhAKiPaviNRrcDuNI-tCdpH7ARgLwQDKy-g36wwYka-BWxGLpTOL9ufZw3oRU4dWsysdYB!1507844040!-1122540974; TS0103674e=019edc9eb8f42e6f737262c8392bd623589cb4752b9b8d4db21b209596afdefba6134db42644590007552ab86d190d56427ccfe7efb4f8dd6254a90218b2b65d94d179f990d653da3b68052c9869d85d138c2829ef; TS0143f8a5=019edc9eb89f3122f41d4da628bb3dd26f98a23c4d9b8d4db21b209596afdefba6134db426c679c6b17f77beb7806ed6cb3a2da1d2cfa8664e8e455064d890a43355839c4f; TS8effaff5027=08d0cd49b8ab200080e4156e779728114be270bd3ed29c1e1e24a506223f5629fe7072f31678fab9088d967c5e11300050cbfbc5ac1d9fc154ac5d66b0b4acaf25b06dbff934457d50cf1606d5d820edb0919ab54059d409ff4c5fbc436ffd62';
         $codigo = 'FVIH';
         $numRuc = $jedcsunat['numRuc'];
         $codComp = $jedcsunat['codComp'];
@@ -168,7 +234,6 @@ class Sunat extends Conexion
         $numDocRecep = '';
         $fechaEmision = $jedcsunat['fechaEmision'];
         $monto = $jedcsunat['monto'];
-        
         $curl = curl_init();
         curl_setopt_array($curl, array(
           CURLOPT_URL => "https://www.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consultaIndividual?numRuc=$numRuc&codComp=$codComp&numeroSerie=$numeroSerie&numero=$numero&codDocRecep&numDocRecep&fechaEmision=$fechaEmision&monto=$monto",//&codigo=$codigo
@@ -182,7 +247,7 @@ class Sunat extends Conexion
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",
           CURLOPT_HTTPHEADER => array(
-            "Cookie: f5avraaaaaaaaaaaaaaaa_session_=FIAAFADFJMCIJOEBIGMOEBAMDAJIFDAENDJNBOPLMOPLBOEEHLAHLAEEFLJIBAHCPAMDBEPKBPGFEOPCLCLAMKIPIHAFBAMIJFKKDJFAIFLJDPAJDFFOGKDMGNEHOLPC; ITCONSULTAUNIFICADALIBRESESSION=ZtodmPHbGdHXRSvxiNSwGWPEoo9yOKIrS_coiC5DMzcqhpbqWYT5aXkn4WyozUgtuvZmWCiBNN6SRqhG2LF3IbTOD0sSBZwL-fOPnWaNZY8Q4ShDBV_poHeqnk8iPfZh560JEsOkH7KKc5_BY-mTUxFxWMbI-yd_wg-wlyJWG9JiMtL_WWxwJzg2cEqy7vsKG4jF4o29LaxX9tGMXtHrHZzM8ExW_h5WtRiysgctcYy672tHO6-xcsQYOgznkAid!1771393487!878333934; TS0103674e=019edc9eb86cb7d03b8fee4275b26a1789d5eb3fed45bd783fae70587450ce3fc65e0ca2be331a4a7e3c0eeeebc4d3da148ea735f43dadd84fbf83d0daeac5435dfb622334a8fa104c7655b8de4a26a39121258808"
+            "Cookie: ".$cookied.""
           ),
         ));
         //EJECUTAMOS CONEXION
