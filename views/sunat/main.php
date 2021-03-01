@@ -656,6 +656,9 @@ const insertStatesSunat = async (objectarray) => {
     //tablepag.appendChild(eliPrevious);
     //CREANDO LAS PAGINAS
     console.log('esta en la pagina :' + npagina);
+    if(){
+      
+    }
     for (var pi = 1; pi <= paginas; pi++) {
 
       const eli = document.createElement('li');
