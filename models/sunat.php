@@ -40,7 +40,7 @@ class Sunat extends Conexion
             {
                 $rptaSQL = [
                     "estadorpt" => "0",
-                    "text" => 'Se realizo correctamente el registro del Doc :'.$numero,
+                    "text" => 'Se registro correctamente el documento :',
                     "numSerie" => $numSerie,
                     "numero" => $numero,
                 ];
@@ -153,7 +153,10 @@ class Sunat extends Conexion
         //$array = array(':fechainicio' => $fechainicio, ':fechafin' => $fechafin, ':tamano' => $tamano, ':offset' => $offset);
         return $this->ConsultaComplejaPgsql($columns, $where, $array, $tableSQL);
     }
+    //OBTENEMOS DATOS LOCAL
+    public function getdocLocal(){
 
+    }
     public function getPagination($fechainicio, $fechafin, $canal, $TipDoc, $tamano): array
     {
         $tableSQL = 'comprobante_emitido';

@@ -51,6 +51,7 @@ $urlcurrent = $urlseparate[3];
           <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             <div class="row container d-flex justify-content-center">
             <div id="rpts-sunat">
+              <div></div>
             </div>
               <div class="col-md-12">
                   <div class="col-sm"> 
@@ -388,17 +389,13 @@ const handlereturnedFins = (data) => {
   text = data['text'];
   serie = data['numSerie'];
   numero = data['numero'];
-  if(data['estadorpt'] == '0'){
-    if(contadorFins == "1"){
-      console.log('es igual a 1');
-      document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-success" role="alert"> <h3>Documentos Registrados</h3> <ol><li class="rptinsertdoc">' + serie + '-'+numero + ' contador 1 : ' + contadorFins + ' </li></ol> ' + text + '</div>';
-    }else{
-      console.log('no es igual a 1');
-      $(".rptinsertdoc").append('<li class="rptinsertdoc">' + serie + '-' + numero+' contador 2 : ' + contadorFins + '</li>');
-    }
+  if(contadorFins == "1"){
+    console.log('xD X ... ' + contadorFins);
+    document.getElementById("rpts-sunat").innerHTML = '<div id="alert-insert" class="alert alert-success" role="alert"><h4>Se registro correctamente los siguientes Documentos: </h4><ol id="alert-container"><li class="rptinsertdoc">' + serie + '-'+numero + '</li></ol> </div>';
+    contadorFins++;
   }else{
-    console.log('Datos no registrado');
-    //document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-danger" role="alert"> <h3>Documentos no consultados</h3> <ol><li class="docfail">'+serie+'-'+numero+'</li></ol> ' + text + '</div>';
+    console.log('no es igual a 1');
+      $("#alert-container").append('<li class="rptinsertdoc">' + serie + '-' + numero + '</li>');
   }
 };
 /* Función que se gatilla al hacer click en el elemento BOTON */
@@ -1103,8 +1100,7 @@ function mostrarContenido(contenido) {
   //Si necesitas hacer algo con las respuestas del servidor
   //hacelas aqui.
   const handleReturnedData = (data) => {
-    //
-
+    //ENCAPSULO VARIABLES
     var drcsunat = document.getElementById('drcsunat');
     var tableSunat = document.getElementById('table-Sunat');
 
@@ -1257,9 +1253,10 @@ function mostrarContenido(contenido) {
         console.log();
         arrayinsert.push(numero);
         estatusarray = arrayinsert.includes(numero);
-        document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-danger" role="alert"> <h3>Documentos no consultados</h3> <ol><li class="docfail">' + serie + '-' + numero + ' contador es : ' + conconfailed + '</li></ol> ' + text + '</div>';
+        document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-danger" role="alert"> <h3>Documentos no consultados</h3> <ol id="alert-container"><li class="docfail">' + serie + '-' + numero + ' contador es : ' + conconfailed + '</li></ol> ' + text + '</div>';
+        conconfailed++;
       }else{
-        $(".docfail").append('<li class="docfail">' + serie + '-' + numero + ' contador es : ' + conconfailed + '</li>');
+        $("#alert-container").append('<li class="docfail">' + serie + '-' + numero + ' contador es : ' + conconfailed + '</li>');
       }
     }
   };
