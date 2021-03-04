@@ -118,6 +118,23 @@ $urlcurrent = $urlseparate[3];
                           <div class="">
                               <div class="d-inline-flex p-2 bd-highlight">
                               Mostrar
+                              <a class="page-link pagina-inac">3
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-left" viewBox="0 0 16 16">
+                                  <path fill-rule="evenodd" d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223z"/>
+                                </svg>
+                              </a>
+                              <a class="page-link pagina-inac">
+                                <img src="./../../assets/icons/icons-1.0.0-alpha5/chevron-double-left.svg" alt="" width="16" height="16" title="Guardar">
+                              </a>
+                              <a class="page-link pagina-inac">
+                                <img src="./../../assets/icons/icons-1.0.0-alpha5/chevron-compact-left.svg" alt="" width="16" height="16" title="Guardar">
+                              </a>
+                              <a class="page-link pagina-inac">
+                                <img src="./../../assets/icons/icons-1.0.0-alpha5/chevron-compact-right.svg" alt="" width="16" height="16" title="Guardar">
+                              </a>
+                              <a class="page-link pagina-inac">
+                                <img src="./../../assets/icons/icons-1.0.0-alpha5/chevron-double-right.svg" alt="" width="16" height="16" title="Guardar">
+                              </a>
                               </div>
                               <div class="d-inline-flex p-2 bd-highlight">
                               <select class="selectpicker form-control" name="sizeTable" id="sizeTable">
@@ -656,8 +673,21 @@ const insertStatesSunat = async (objectarray) => {
     //tablepag.appendChild(eliPrevious);
     //CREANDO LAS PAGINAS
     console.log('esta en la pagina :' + npagina);
-    if(){
-      
+    
+    if(paginas > 5){
+      console.log('es mayor a 5 ');
+
+    }
+    else{
+      console.log('es menor igual o menos a 5 ');
+      const previousLi = document.createElement('li');
+      const previousImg = document.createElement('img');
+      urlBase = './../../assets/icons/icons-1.0.0-alpha5/';
+      previousImg.setAttribute("id", urlBase + "chevron-compact-left.svg");
+      const nextLi = document.createElement('li');
+      const previousa = document.createElement('a');
+      previousLi.appendChild(previousImg);
+      tablepag.appendChild(previousLi);
     }
     for (var pi = 1; pi <= paginas; pi++) {
 
