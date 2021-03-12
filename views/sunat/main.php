@@ -11,9 +11,10 @@ $urlcurrent = $urlseparate[3];
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-        <!-- Fecha -->
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <!-- Fecha -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -250,6 +251,26 @@ $urlcurrent = $urlseparate[3];
                               </tfoot>
                       </table>
                   </div>
+                  <div>
+                    <table id="table_id" class="display">
+                      <thead>
+                        <tr>
+                          <th>Column 1</th>
+                          <th>Column 2</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                            <td>Row 1 Data 1</td>
+                            <td>Row 1 Data 2</td>
+                          </tr>
+                          <tr>
+                            <td>Row 2 Data 1</td>
+                            <td>Row 2 Data 2</td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
               </div>
             </div>
           </div>
@@ -324,7 +345,11 @@ $urlcurrent = $urlseparate[3];
 <script src="./../../assets/js/btn-animado.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script>
+$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
 var conconfailed = 0;
 var contadorFins = 0;
 var arrayinsert = [];
@@ -803,7 +828,7 @@ const insertStatesSunat = async (objectarray) => {
         else{
           console.log('No llega al limite');
         }
-        var cNext = npagina == plimit ? 'page-item' : 'page-item';
+        var cNext = npagina == plimit ? 'page-item active' : 'page-item';
         pi == plimit ? eliNext.className = cNext : 'page-item';
         pi == plimit ? LastLi.className = cNext : 'page-item';
         pi == plimit ? NextLi.className = cNext : 'page-item';
@@ -940,6 +965,7 @@ const insertStatesSunat = async (objectarray) => {
       //AGREGAMOS EL PRIMERO Y ANTERIOR
       tablepag.appendChild(FirstLi);
       tablepag.appendChild(previousLi);
+      //RECORREMOS EL TAMAÑO DE PAGINACION
       for(var pi = 1; pi <= plimit; pi++){
         //CONSTRUIMOS BASE PARA NUMEROS DE PAGINACION
         const pnumli = document.createElement('li');
@@ -949,10 +975,15 @@ const insertStatesSunat = async (objectarray) => {
         pnuma.className = "page-link";
         //AGREGANDO CLASE
         console.log('la pagina es: ' + npagina + ' Pagina indicador: ' + pi);
+        //COMPROBAMOS SI ESTAMOS EN PRIMER
+        var cPrevious = npagina == '1' ? 'page-item disabled' : 'page-item';
+        pi == '1' ? FirstLi.className = cPrevious : 'page-item';
+        pi == '1' ? previousLi.className = cPrevious : 'page-item';
+
         if(npagina == pi){
           console.log('es igual');
-          FirstLi.classList.add('disabled');
-          previousLi.classList.add('disabled');
+          //FirstLi.classList.add('disabled');
+          //previousLi.classList.add('disabled');
           pnumli.className = "page-item active";
           pnuma.className = "page-link";
         }else{
@@ -960,18 +991,20 @@ const insertStatesSunat = async (objectarray) => {
           pnumli.className = "page-item";
           pnuma.className = "page-link pagina-inac";
         }
+        //npagina == plimit ? (NextLi.classList.add('disabled');LastLi.classList.add('disabled'););
+        /*
         if(npagina == plimit){
           NextLi.classList.add('disabled');
           LastLi.classList.add('disabled');
         }else{
 
-        }
+        }*/
         //AGREGANDO ID
         pnumli.setAttribute("id", "pag_" + pi);
         //EJECUTO CONSULTA PAGINA
-        pnumli.addEventListener('click', consultpag);
+        pnumli.addEventListener('click', consultpagdos);
         //FUNCION CONSULTAR PAGINA
-        function consultpag(e) {
+        function consultpagdos(e) {
           //Obtenemos el id
           id = pnumli.getAttribute('id');
           //Separamos
@@ -979,37 +1012,38 @@ const insertStatesSunat = async (objectarray) => {
           //Obtenemos el numero
           var pagina = sid['1'];
           //Restamos
-          var npactual = pagina;
+          //var npactual = pagina - 1;
+          npagselec = pagina - 1;
           console.log('Paginacion : ' + id);
-          sendconsultaPaginacion(npactual);
+          sendconsultaPaginacion(npagselec);
         }
         function sendconsultaPaginacion(n){
-          const npactual = n;
-          console.log('Se recibio el numero ' + npactual);
+          const npagselec = n;
+          pagina = npagselec + 1;
+          console.log('Se recibio el numero ' + npagselec);
           //OBTENIENDO DATOS
           //OBTENEMOS UNIDAD
           var idsUnidad = document.getElementById('sUnidad');
           var dtUnidad = idsUnidad.options[idsUnidad.selectedIndex].getAttribute('data-tokens');
-          console.log(dtUnidad);
+          //console.log(dtUnidad);
           //OBTENEMOS CANAL
           var idsCanal = document.getElementById('sCanal');
           var dtCanal = idsCanal.options[idsCanal.selectedIndex].getAttribute('data-tokens');
-          console.log(dtCanal);
+          //console.log(dtCanal);
           //OBTENEMOS tipo documentos
           var idsTipDoc = document.getElementById('sTipDoc');
           var dtTipDoc = idsTipDoc.options[idsTipDoc.selectedIndex].getAttribute('data-tokens');
-          console.log(dtTipDoc);
+          //console.log(dtTipDoc);
           //OBTENEMOS EL TAMAÑO DE CONSULTA
           var idsSizeTable = document.getElementById('sizeTable');
           var dtSizeTable = idsSizeTable.options[idsSizeTable.selectedIndex].getAttribute('value');
-          console.log(dtSizeTable);
-          console.log(npactual);
+          //console.log(dtSizeTable);
+          console.log(npagselec);
           console.log(dtSizeTable);
           //Se MUltiplicara
-          console.log('Size : ' + dtSizeTable + 'pagina actual : ' + npactual);
-          var offset = dtSizeTable * npactual;
+          console.log('Size : ' + dtSizeTable + 'pagina actual : ' + npagselec);
+          var offset = dtSizeTable * npagselec;
           console.log('Total : ' + offset);
-          console.log(queryformatDoc);
           var queryformatDoc = {
               "fechainicio" : dateStart,
               "fechafin" : dateEnd,
@@ -1017,7 +1051,7 @@ const insertStatesSunat = async (objectarray) => {
               "canal"  : dtCanal,
               "tipdoc" : dtTipDoc,
               "tamano" : dtSizeTable,
-              "pagina" : npactual,
+              "pagina" : pagina,
               "offset" : offset,
           };
           makeRequestsdocEmi(queryformatDoc);
