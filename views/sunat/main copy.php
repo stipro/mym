@@ -646,7 +646,7 @@ const insertStatesSunat = async (objectarray) => {
 //
   //CONSULTA BASE DATOS DE LA EMPRESA
   const dtableDEmitidos = async (dateuno, datedos, size) => {
-    //console.log('Se hara consulta con este rango de fecha : ' + dateuno + 'Fecha Fin ' + datedos);
+    console.log('Se hara consulta con este rango de fecha : ' + dateuno + 'Fecha Fin ' + datedos);
     const body = new FormData();
     var data = {
       "accion" : '0',
@@ -688,7 +688,7 @@ const insertStatesSunat = async (objectarray) => {
     //OBTENIEDO DATOS DE TABLA
     paginas = data['paginacion']['filasPagina'];
     //OBTENIEDO N° PAGINA
-    var npagina = data['npagina'];
+    npagina = data['npagina'];
 
     //INDICAMOS ETIQUETA A IMPRIMIR
     let tableBody = document.getElementById('drcsunat');
@@ -726,177 +726,118 @@ const insertStatesSunat = async (objectarray) => {
     eliNext.appendChild(eaNext);
     //CREANDO
     console.log('la cantidad de paginas son :' + paginas);
+    //tablepag.appendChild(eliPrevious);
     //CREANDO LAS PAGINAS
     console.log('esta en la pagina :' + npagina);
-    //CONSTRUIMOS BOTONES PAGINACION
-    //CONSTRUIMOS BOTON PRIMERO
-    const FirstLi = document.createElement('li');
-    const Firsta = document.createElement('button');
-    const FirstI = document.createElement('i');
-    Firsta.appendChild(FirstI);
-    FirstLi.appendChild(Firsta);
-    FirstI.className = "bi bi-chevron-double-left icon-pagi";
-    Firsta.className = "page-link";
-    FirstLi.className = "page-item";
-    FirstLi.setAttribute("id", "First");
-    //CONSTRUIMOS BOTON ANTERIOR
-    const previousLi = document.createElement('li');
-    const previousbtn = document.createElement('button');
-    const previousI = document.createElement('i');
-    previousbtn.appendChild(previousI);
-    previousLi.appendChild(previousbtn);
-    previousI.className = "bi bi-chevron-compact-left icon-pagi";
-    previousbtn.className = "page-link";
-    previousbtn.setAttribute("disabled", "disabled");
-    previousbtn.setAttribute("id", "previousBtn");
-    previousLi.className = "page-item";
-    previousLi.setAttribute("id", "previous");
-    //CONTRUIMOS ICON SUSPENSIVOS
-    const ellipsisLi = document.createElement('li');
-    const ellipsisa = document.createElement('button');
-    ellipsisa.appendChild(document.createTextNode('...'));
-    ellipsisLi.appendChild(ellipsisa);
-    ellipsisa.className = "page-link";
-    ellipsisLi.className = "page-item";
-    //CONSTRUIMOS BOTON SIGUIENTE
-    const NextLi = document.createElement('li');
-    const Nexta = document.createElement('button');
-    const NextI = document.createElement('i');
-    Nexta.appendChild(NextI);
-    NextLi.appendChild(Nexta);
-    NextI.className = "bi bi-chevron-compact-right icon-pagi";
-    Nexta.className = "page-link";
-    NextLi.className = "page-item";
-    NextLi.setAttribute("id", "next");
-    //CONSTRUIMOS BOTON ULTIMO
-    const LastLi = document.createElement('li');
-    const Lasta = document.createElement('a');
-    const LastI = document.createElement('i');
-    Lasta.appendChild(LastI);
-    LastLi.appendChild(Lasta);
-    LastI.className = "bi bi-chevron-double-right icon-pagi";
-    Lasta.className = "page-link";
-    LastLi.className = "page-item";
-    LastLi.setAttribute("id", "Last");
-    var pplimitador = 3;
-    var plimit = 3;
-    //COMPROBAMOS SI ES MAYOR DE LO PERMITIDO
-    if(paginas > pplimitador){
-      console.log('es mayor a 3');
-      //INDICAMOS EL LIMITE
-      for(var pi = 1; pi <= plimit; pi++){
-        const eli = document.createElement('li');
-        const ea = document.createElement('a');
-        console.log('estas en el numero :' + pi);
-        //COMPROBAMOS SI ESTAMOS EN PRIMER
-        var cPrevious = npagina == '1' ? 'page-item disabled' : 'page-item';
-        //COMPROBAMOS POSICION
-        pi == '1' ? FirstLi.className = cPrevious : 'page-item';
-        pi == '1' ? tablepag.appendChild(FirstLi) : 'page-item';
-        pi == '1' ? previousLi.className = cPrevious : 'page-item';
-        pi == '1' ? tablepag.appendChild(previousLi): 'page-item';
-        //COMPROBAMOS SI ESTAMOS EN ULTIMO
-        if(npagina == plimit){
-          plnext = plimit + plimit;
-          console.log('Se llego al limite pero aun falta' + plnext);
-        }
-        else{
-          console.log('No llega al limite');
-        }
-        var cNext = npagina == plimit ? 'page-item' : 'page-item';
-        pi == plimit ? eliNext.className = cNext : 'page-item';
-        pi == plimit ? LastLi.className = cNext : 'page-item';
-        pi == plimit ? NextLi.className = cNext : 'page-item';
-        //AGREGANDO CLASE
-        if(npagina == pi){
-          console.log('Es igual');
-          eli.className = "page-item active";
-          ea.className = "page-link";
-        }else{
-          console.log('No es igual');
-          eli.className = "page-item";
-          ea.className = "page-link pagina-inac";
-        }
-        //AGREGANDO ID
-        eli.setAttribute("id", "pag_" + pi);
-        //EJECUTO CONSULTA PAGINA
-        eli.addEventListener('click', consultpag);
-        //FUNCION CONSULTAR PAGINA
-        function consultpag(e) {
-          //OBTENGO EL ID
-          id = eli.getAttribute('id');
-          var sid = id.split('_');
-          var pagina = sid['1'];
-          var calpagina = pagina - 1;
-          console.log('Paginacion : ' + id);
-          //OBTENIENDO DATOS
-          //OBTENEMOS UNIDAD
-          var idsUnidad = document.getElementById('sUnidad');
-          var dtUnidad = idsUnidad.options[idsUnidad.selectedIndex].getAttribute('data-tokens');
-          console.log(dtUnidad);
-          //OBTENEMOS CANAL
-          var idsCanal = document.getElementById('sCanal');
-          var dtCanal = idsCanal.options[idsCanal.selectedIndex].getAttribute('data-tokens');
-          console.log(dtCanal);
-          //OBTENEMOS tipo documentos
-          var idsTipDoc = document.getElementById('sTipDoc');
-          var dtTipDoc = idsTipDoc.options[idsTipDoc.selectedIndex].getAttribute('data-tokens');
-          console.log(dtTipDoc);
-          //OBTENEMOS EL TAMAÑO DE CONSULTA
-          var idsSizeTable = document.getElementById('sizeTable');
-          var dtSizeTable = idsSizeTable.options[idsSizeTable.selectedIndex].getAttribute('value');
-          console.log(dtSizeTable);
-          console.log(calpagina);
-          console.log(dtSizeTable);
-          //Se MUltiplicara
-          var offset = dtSizeTable * calpagina;
-          console.log(queryformatDoc);
-          var queryformatDoc = {
-              "fechainicio" : dateStart,
-              "fechafin" : dateEnd,
-              "unidad" : dtUnidad,
-              "canal"  : dtCanal,
-              "tipdoc" : dtTipDoc,
-              "tamano" : dtSizeTable,
-              "pagina" : pagina,
-              "offset" : offset,
-          };
-          makeRequestsdocEmi(queryformatDoc);
-        }
-        console.log(pi);
-        ea.appendChild(document.createTextNode(pi));
-        eli.appendChild(ea);
-        tablepag.appendChild(eli);
-      }
-      //
-      tablepag.appendChild(ellipsisLi);
-      tablepag.appendChild(NextLi);
-      tablepag.appendChild(LastLi);
-      /*
-      0 = restar
-      1 = sumar
-      */
+
+    if(paginas > 3){
       
-      //Elemento DIV que cambia su texto 
-      var btnprevious = document.getElementById("previousBtn");
-      // Se agrega el evento al elemento
-      //btnprevious.addEventListener("click", previous_e);
-      btnprevious.addEventListener("click", previous_e);
-      function previous_e(){
-        changeText();
+      console.log('es mayor a 3');
+      urlBase = './../../assets/icons/icons-1.0.0-alpha5/';
+      console.log('es menor igual o menos a 5 ');
+      //
+      const FirstLi = document.createElement('li');
+      const Firsta = document.createElement('a');
+      const FirstI = document.createElement('i');
+      Firsta.appendChild(FirstI);
+      FirstLi.appendChild(Firsta);
+      FirstI.className = "bi bi-chevron-double-left icon-pagi";
+      Firsta.className = "page-link";
+      FirstLi.className = "page-item";
+      FirstLi.setAttribute("id", "First");
+      //
+      const previousLi = document.createElement('li');
+      const previousa = document.createElement('a');
+      const previousI = document.createElement('i');
+      previousa.appendChild(previousI);
+      previousLi.appendChild(previousa);
+      previousI.className = "bi bi-chevron-compact-left icon-pagi";
+      previousa.className = "page-link";
+      previousLi.className = "page-item";
+      previousLi.setAttribute("id", "previous");
+      //
+      const ellipsisLi = document.createElement('li');
+      const ellipsisa = document.createElement('a');
+      ellipsisa.appendChild(document.createTextNode('...'));
+      ellipsisLi.appendChild(ellipsisa);
+      ellipsisa.className = "page-link";
+      ellipsisLi.className = "page-item";
+      //
+      const NextLi = document.createElement('li');
+      const Nexta = document.createElement('a');
+      const NextI = document.createElement('i');
+      Nexta.appendChild(NextI);
+      NextLi.appendChild(Nexta);
+      NextI.className = "bi bi-chevron-compact-right icon-pagi";
+      Nexta.className = "page-link";
+      NextLi.className = "page-item";
+      NextLi.setAttribute("id", "next");
+      //
+      const LastLi = document.createElement('li');
+      const Lasta = document.createElement('a');
+      const LastI = document.createElement('i');
+      Lasta.appendChild(LastI);
+      LastLi.appendChild(Lasta);
+      LastI.className = "bi bi-chevron-double-right icon-pagi";
+      Lasta.className = "page-link";
+      LastLi.className = "page-item";
+      LastLi.setAttribute("id", "Last");
+      //
+      plimit = 3;
+      //
+      paginas
+      for(var pi = 1; pi <= plimit; pi++){
+
+      const eli = document.createElement('li');
+      const ea = document.createElement('a');
+
+      console.log('estas en el numero :' + pi);
+        
+      var cPrevious = npagina == '1' ? 'page-item disabled' : 'page-item';
+      //LETRA
+      //pi == '1' ? eliPrevious.className = cPrevious : 'page-item';
+      //pi == '1' ? tablepag.appendChild(eliPrevious) : 'page-item';
+      pi == '1' ? FirstLi.className = cPrevious : 'page-item';
+      pi == '1' ? tablepag.appendChild(FirstLi) : 'page-item';
+      pi == '1' ? previousLi.className = cPrevious : 'page-item';
+      pi == '1' ? tablepag.appendChild(previousLi): 'page-item';
+      
+      //PAGINACION FINAL
+      if(npagina == plimit){
+        vprueba = plimit + plimit;
+        console.log('Se llego al limite pero aun falta' + vprueba);
       }
-      /* Elemento DIV que cambia su texto */
-      var btnnext = document.getElementById("next");
-      /* Se agrega el evento al elemento */
-      btnnext.addEventListener("click", changeText);
-      /* Función que se gatilla al hacer click en el elemento DIV */
-      function changeText(op) {
-      console.log('La operacion es la siguiente: ' + npagina);
-      var spagina = Number(npagina) + Number(1);
-      console.log('el siguiente es: ' + spagina);
-      var pagina = spagina;
-      var calpagina = pagina - 1;
-        console.log('Paginacion : ' + pagina);
+      var cNext = npagina == plimit ? 'page-item disabled' : 'page-item';
+      pi == plimit ? eliNext.className = cNext : 'page-item';
+      pi == plimit ? LastLi.className = cNext : 'page-item';
+      pi == plimit ? NextLi.className = cNext : 'page-item';
+      //pi == pfinal ? tablepag.appendChild(eliNext) : 'page-item';  
+      console.log(cNext);
+      //AGREGANDO CLASE
+      if(npagina == pi){
+        console.log('Es igual');
+        eli.className = "page-item active";
+        ea.className = "page-link";
+      }else{
+        console.log('No es igual');
+        eli.className = "page-item";
+        ea.className = "page-link pagina-inac";
+      }
+      
+
+      
+      //AGREGANDO ID
+      eli.setAttribute("id", "pag_" + pi);
+      //EJECUTO CONSULTA PAGINA
+      eli.addEventListener('click', consultpag);
+      //FUNCION CONSULTAR PAGINA
+      function consultpag(e) {
+        //OBTENGO EL ID
+        id = eli.getAttribute('id');
+        var sid = id.split('_');
+        var pagina = sid['1'];
+        var calpagina = pagina - 1;
+        console.log('Paginacion : ' + id);
         //OBTENIENDO DATOS
         //OBTENEMOS LA FECHA
         console.log('Hola Fecha seleccionado es : ' + dateStart + ' hasta' +  dateEnd);
@@ -934,106 +875,160 @@ const insertStatesSunat = async (objectarray) => {
         };
         makeRequestsdocEmi(queryformatDoc);
       }
-    }
-    //EJECUTAMOS EN CASO NO SE HA VERDAD
-    else{
-      //AGREGAMOS EL PRIMERO Y ANTERIOR
-      tablepag.appendChild(FirstLi);
-      tablepag.appendChild(previousLi);
-      for(var pi = 1; pi <= plimit; pi++){
-        //CONSTRUIMOS BASE PARA NUMEROS DE PAGINACION
-        const pnumli = document.createElement('li');
-        const pnuma = document.createElement('a');
-        //AGREGANDO CLASE GENERAL
-        pnumli.className = "page-item";
-        pnuma.className = "page-link";
-        //AGREGANDO CLASE
-        console.log('la pagina es: ' + npagina + ' Pagina indicador: ' + pi);
-        if(npagina == pi){
-          console.log('es igual');
-          FirstLi.classList.add('disabled');
-          previousLi.classList.add('disabled');
-          pnumli.className = "page-item active";
-          pnuma.className = "page-link";
-        }else{
-          console.log('No es igual');
-          pnumli.className = "page-item";
-          pnuma.className = "page-link pagina-inac";
-        }
-        if(npagina == plimit){
-          NextLi.classList.add('disabled');
-          LastLi.classList.add('disabled');
-        }else{
-
-        }
-        //AGREGANDO ID
-        pnumli.setAttribute("id", "pag_" + pi);
-        //EJECUTO CONSULTA PAGINA
-        pnumli.addEventListener('click', consultpag);
-        //FUNCION CONSULTAR PAGINA
-        function consultpag(e) {
-          //Obtenemos el id
-          id = pnumli.getAttribute('id');
-          //Separamos
-          var sid = id.split('_');
-          //Obtenemos el numero
-          var pagina = sid['1'];
-          //Restamos
-          var npactual = pagina;
-          console.log('Paginacion : ' + id);
-          sendconsultaPaginacion(npactual);
-        }
-        function sendconsultaPaginacion(n){
-          const npactual = n;
-          console.log('Se recibio el numero ' + npactual);
-          //OBTENIENDO DATOS
-          //OBTENEMOS UNIDAD
-          var idsUnidad = document.getElementById('sUnidad');
-          var dtUnidad = idsUnidad.options[idsUnidad.selectedIndex].getAttribute('data-tokens');
-          console.log(dtUnidad);
-          //OBTENEMOS CANAL
-          var idsCanal = document.getElementById('sCanal');
-          var dtCanal = idsCanal.options[idsCanal.selectedIndex].getAttribute('data-tokens');
-          console.log(dtCanal);
-          //OBTENEMOS tipo documentos
-          var idsTipDoc = document.getElementById('sTipDoc');
-          var dtTipDoc = idsTipDoc.options[idsTipDoc.selectedIndex].getAttribute('data-tokens');
-          console.log(dtTipDoc);
-          //OBTENEMOS EL TAMAÑO DE CONSULTA
-          var idsSizeTable = document.getElementById('sizeTable');
-          var dtSizeTable = idsSizeTable.options[idsSizeTable.selectedIndex].getAttribute('value');
-          console.log(dtSizeTable);
-          console.log(npactual);
-          console.log(dtSizeTable);
-          //Se MUltiplicara
-          console.log('Size : ' + dtSizeTable + 'pagina actual : ' + npactual);
-          var offset = dtSizeTable * npactual;
-          console.log('Total : ' + offset);
-          console.log(queryformatDoc);
-          var queryformatDoc = {
-              "fechainicio" : dateStart,
-              "fechafin" : dateEnd,
-              "unidad" : dtUnidad,
-              "canal"  : dtCanal,
-              "tipdoc" : dtTipDoc,
-              "tamano" : dtSizeTable,
-              "pagina" : npactual,
-              "offset" : offset,
-          };
-          makeRequestsdocEmi(queryformatDoc);
-        }
-        console.log(pi);
-        //AGREGANDO NUMERO PAGINACION A ETIQUETA A
-        pnuma.appendChild(document.createTextNode(pi));
-        //AGREGANDO NUMERO PAGINACION A ETIQUETA LI
-        pnumli.appendChild(pnuma);
-        //AGREGANDO NUMERO PAGINACION A ETIQUETA TABLA
-        tablepag.appendChild(pnumli);
+      console.log(pi);
+      ea.appendChild(document.createTextNode(pi));
+      eli.appendChild(ea);
+      tablepag.appendChild(eli);
       }
-      //AGREMOS EL SIGUIENTE Y ULTIMO
+      //
+
+      tablepag.appendChild(ellipsisLi);
       tablepag.appendChild(NextLi);
       tablepag.appendChild(LastLi);
+      /* Elemento DIV que cambia su texto */
+      var btnnext = document.getElementById("next");
+      /* Se agrega el evento al elemento */
+      btnnext.addEventListener("click", changeText);
+      /* Función que se gatilla al hacer click en el elemento DIV */
+      function changeText() {
+      console.log('NEXT');
+      }
     }
+    else{
+      /*TEMPORAL PARA ELIMINAR
+      urlBase = './../../assets/icons/icons-1.0.0-alpha5/';
+      console.log('es menor igual o menos a 5 ');
+      //
+      const FirstLi = document.createElement('li');
+      const Firsta = document.createElement('a');
+      const FirstImg = document.createElement('img');
+      FirstImg.setAttribute("src", urlBase + "chevron-double-left.svg");
+      Firsta.appendChild(FirstImg);
+      FirstLi.appendChild(Firsta);
+      FirstImg.className = "icon-pagi";
+      Firsta.className = "page-link pagina-inac";
+      FirstLi.className = "page-item";
+      //
+      const previousLi = document.createElement('li');
+      const previousa = document.createElement('a');
+      const previousImg = document.createElement('img');
+      previousImg.setAttribute("src", urlBase + "chevron-compact-left.svg");
+      previousa.appendChild(previousImg);
+      previousLi.appendChild(previousa);
+      previousImg.className = "icon-pagi";
+      previousa.className = "page-link pagina-inac";
+      previousLi.className = "page-item";
+      //
+      const ellipsisLi = document.createElement('li');
+      const ellipsisa = document.createElement('a');
+      ellipsisa.appendChild(document.createTextNode('...'));
+      ellipsisLi.appendChild(ellipsisa);
+      ellipsisa.className = "page-link pagina-inac";
+      ellipsisLi.className = "page-item";
+      //
+      const NextLi = document.createElement('li');
+      const Nexta = document.createElement('a');
+      const NextImg = document.createElement('img');
+      NextImg.setAttribute("src", urlBase + "chevron-compact-right.svg");
+      Nexta.appendChild(NextImg);
+      NextLi.appendChild(Nexta);
+      NextImg.className = "icon-pagi";
+      Nexta.className = "page-link pagina-inac";
+      NextLi.className = "page-item";
+      //
+      const LastLi = document.createElement('li');
+      const Lasta = document.createElement('a');
+      const LastImg = document.createElement('img');
+      LastImg.setAttribute("src", urlBase + "chevron-double-right.svg");
+      Lasta.appendChild(LastImg);
+      LastLi.appendChild(Lasta);
+      LastImg.className = "icon-pagi";
+      Lasta.className = "page-link pagina-inac";
+      LastLi.className = "page-item";
+      //
+      tablepag.appendChild(FirstLi);
+      tablepag.appendChild(previousLi);
+      tablepag.appendChild(ellipsisLi);
+      tablepag.appendChild(NextLi);
+      tablepag.appendChild(LastLi);
+      */
+    }
+    /*
+    for (var pi = 1; pi <= paginas; pi++) {
+      const eli = document.createElement('li');
+      const ea = document.createElement('a');
+      console.log('estas en el numero :' + pi);
+      var cPrevious = npagina == '1' ? 'page-item disabled' : 'page-item';
+      pi == '1' ? eliPrevious.className = cPrevious : 'page-item';
+      pi == '1' ? tablepag.appendChild(eliPrevious) : 'page-item';
+      var cNext = npagina == paginas ? 'page-item disabled' : 'page-item';
+      pi == paginas ? eliNext.className = cNext : 'page-item';
+      pi == paginas ? tablepag.appendChild(eliNext) : 'page-item';  
+      console.log(cNext);
+      //AGREGANDO CLASE
+      if(npagina == pi){
+        console.log('Es igual');
+        eli.className = "page-item active";
+        ea.className = "page-link";
+      }else{
+        console.log('No es igual');
+        eli.className = "page-item";
+        ea.className = "page-link pagina-inac";
+      }
+      //AGREGANDO ID
+      eli.setAttribute("id", "pag_" + pi);
+      //EJECUTO CONSULTA PAGINA
+      eli.addEventListener('click', consultpag);
+      //FUNCION CONSULTAR PAGINA
+      function consultpag(e) {
+        //OBTENGO EL ID
+        id = eli.getAttribute('id');
+        var sid = id.split('_');
+        var pagina = sid['1'];
+        var calpagina = pagina - 1;
+        console.log('Paginacion : ' + id);
+        //OBTENIENDO DATOS
+        //OBTENEMOS LA FECHA
+        console.log('Hola Fecha seleccionado es : ' + dateStart + ' hasta' +  dateEnd);
+        //OBTENEMOS UNIDAD
+        var idsUnidad = document.getElementById('sUnidad');
+        var dtUnidad = idsUnidad.options[idsUnidad.selectedIndex].getAttribute('data-tokens');
+        console.log(dtUnidad);
+        //OBTENEMOS CANAL
+        var idsCanal = document.getElementById('sCanal');
+        var dtCanal = idsCanal.options[idsCanal.selectedIndex].getAttribute('data-tokens');
+        console.log(dtCanal);
+        //OBTENEMOS tipo documentos
+        var idsTipDoc = document.getElementById('sTipDoc');
+        var dtTipDoc = idsTipDoc.options[idsTipDoc.selectedIndex].getAttribute('data-tokens');
+        console.log(dtTipDoc);
+        //OBTENEMOS EL TAMAÑO DE CONSULTA
+        var idsSizeTable = document.getElementById('sizeTable');
+        var dtSizeTable = idsSizeTable.options[idsSizeTable.selectedIndex].getAttribute('value');
+        console.log(dtSizeTable);
+        console.log(calpagina);
+        console.log(dtSizeTable);
+        console.log('Se multiplicara');
+        var offset = dtSizeTable * calpagina;
+        console.log('Total : ' + offset);
+        console.log(queryformatDoc);
+        var queryformatDoc = {
+            "fechainicio" : dateStart,
+            "fechafin" : dateEnd,
+            "unidad" : dtUnidad,
+            "canal"  : dtCanal,
+            "tipdoc" : dtTipDoc,
+            "tamano" : dtSizeTable,
+            "pagina" : pagina,
+            "offset" : offset,
+        };
+        makeRequestsdocEmi(queryformatDoc);
+      }
+      console.log(pi);
+      ea.appendChild(document.createTextNode(pi));
+      eli.appendChild(ea);
+      tablepag.appendChild(eli);
+    }*/
     //tablepag.appendChild(eliNext);
     //i = 0;
     //tableBody.parentNode.removeChild(tableBody);
@@ -1321,6 +1316,7 @@ const insertStatesSunat = async (objectarray) => {
     body.append("data", JSON.stringify(data));  
     const responsemaindatabase = await fetch("./../../controllers/controllerSunat.php", { method: "POST", body});
     const responsemaindatabaseobject = await responsemaindatabase.json(); //await JSON.parse(returned);
+    console.log('se limpiara')
     borrarTable()
     console.log(typeof responsemaindatabaseobject);
     handleReturnedDocEmiSunat(responsemaindatabaseobject);
