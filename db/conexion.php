@@ -83,7 +83,7 @@ class Conexion
         $resultConsult = $result->fetchAll(PDO::FETCH_ASSOC);
         $cantResult = count($resultConsult);
         return $resultArray = [
-            "result" => $resultConsult,
+            "data" => $resultConsult,
             "cant" => $cantResult,
         ];
     }

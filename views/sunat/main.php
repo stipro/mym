@@ -11,7 +11,8 @@ $urlcurrent = $urlseparate[3];
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <link href="https://nightly.datatables.net/select/css/select.dataTables.css?_=766c9ac11eda67c01f759bab53b4774d.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
     <!-- Fecha -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
@@ -251,24 +252,29 @@ $urlcurrent = $urlseparate[3];
                               </tfoot>
                       </table>
                   </div>
-                  <div>
-                    <table id="table_id" class="display">
+                  <div class="container">
+                    <input type="checkbox" class="selectAll" name="selectAll" value="all"> Select All
+                    <table id="example" class="display nowrap" style="width:100%">
                       <thead>
-                        <tr>
-                          <th>Column 1</th>
-                          <th>Column 2</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                            <td>Row 1 Data 1</td>
-                            <td>Row 1 Data 2</td>
-                          </tr>
                           <tr>
-                            <td>Row 2 Data 1</td>
-                            <td>Row 2 Data 2</td>
+                          <th></th>
+                              <th>E. ENVIO</th>
+                              <th>SERIE</th>
+                              <th>N° COMPROBANDO</th>
+                              <th>F. EMISION</th>
+                              <th>I. TOTAL</th>
                           </tr>
-                      </tbody>
+                      </thead>
+                      <tfoot>
+                          <tr>
+                          <th></th>
+                              <th>E. ENVIO</th>
+                              <th>SERIE</th>
+                              <th>N° COMPROBANDO</th>
+                              <th>F. EMISION</th>
+                              <th>I. TOTAL</th>
+                          </tr>
+                      </tfoot>
                     </table>
                   </div>
               </div>
@@ -339,17 +345,80 @@ $urlcurrent = $urlseparate[3];
     </div>
   </section>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 
 <script src="./../../assets/js/btn-animado.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+<script src="https://nightly.datatables.net/select/js/dataTables.select.js?_=766c9ac11eda67c01f759bab53b4774d"></script>
 <script>
-$(document).ready( function () {
-    $('#myTable').DataTable();
-} );
+
+function datablajquery(dataDOS){
+  tableDatajq = dataDOS['consulta']['data'];
+  console.log('TABLA DESDE DB');
+  console.log(tableDatajq);
+  //data = tableDatajq['consulta'];
+  console.log('TABLA LOCAL');
+  var data = [
+            {
+                "name":       "Tiger Nixon",
+                "position":   "System Architect",
+                "salary":     "$3,120",
+                "start_date": "2011/04/25",
+                "office":     "Edinburgh",
+                "extn":       "5421"
+            },
+            {
+                "name":       "Garrett Winters",
+                "position":   "Director",
+                "salary":     "$5,300",
+                "start_date": "2011/07/25",
+                "office":     "Edinburgh",
+                "extn":       "8422"
+            }
+        ];
+  console.log('para la tabla');
+  console.log(data);
+    var table = $('#example').DataTable({
+      data: tableDatajq,
+      destroy: true,
+      select: true,
+      paging: false,
+      columns: [
+        { data: 'benviado' },
+        { data: 'cserie' },
+        { data: 'cnumero' },
+        { data: 'dfecemi' },
+        { data: 'nimporte' }  
+      ], 
+      columnDefs: [{
+        orderable: false,
+        className: 'select-checkbox',
+        targets:   0,
+        render: function ( data, type, row, meta ) {
+          return '<a href="">Download</a>';
+        },
+        checkboxes: {
+          selectRow: true
+        }
+      }],
+      select: {
+        style:    'multi',
+        selector: 'td:first-child'
+      },
+      order: [[ 1, 'asc' ]]
+    });
+    $(".selectAll").on( "click", function(e) {
+      if ($(this).is( ":checked" )) {
+        table.rows(  ).select();        
+      } else {
+        table.rows(  ).deselect(); 
+      }
+    });
+}
 var conconfailed = 0;
 var contadorFins = 0;
 var arrayinsert = [];
@@ -709,7 +778,12 @@ const insertStatesSunat = async (objectarray) => {
   function createTable(data) {
     console.log(data);
     //OBTENIEDO DATOS DE TABLA
-    tableData = data['consulta']['result'];
+    const dttbcontendor = data;
+    console.log('tabla constante');
+    console.log(dttbcontendor);
+    tableData = dttbcontendor['consulta']['data'];
+    datableprueba = dttbcontendor;
+    datablajquery(datableprueba);
     //OBTENIEDO DATOS DE TABLA
     paginas = data['paginacion']['filasPagina'];
     //OBTENIEDO N° PAGINA
