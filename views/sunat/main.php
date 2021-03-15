@@ -257,7 +257,6 @@ $urlcurrent = $urlseparate[3];
                     <table id="example" class="display nowrap" style="width:100%">
                       <thead>
                           <tr>
-                          <th></th>
                               <th>E. ENVIO</th>
                               <th>SERIE</th>
                               <th>N° COMPROBANDO</th>
@@ -267,7 +266,6 @@ $urlcurrent = $urlseparate[3];
                       </thead>
                       <tfoot>
                           <tr>
-                          <th></th>
                               <th>E. ENVIO</th>
                               <th>SERIE</th>
                               <th>N° COMPROBANDO</th>
@@ -387,20 +385,14 @@ function datablajquery(dataDOS){
       destroy: true,
       select: true,
       paging: false,
-      columns: [
-        { data: 'benviado' },
-        { data: 'cserie' },
-        { data: 'cnumero' },
-        { data: 'dfecemi' },
-        { data: 'nimporte' }  
-      ], 
       columnDefs: [{
         orderable: false,
         className: 'select-checkbox',
-        targets:   0,
+        targets:   -0,
+        /*
         render: function ( data, type, row, meta ) {
           return '<a href="">Download</a>';
-        },
+        },*/
         checkboxes: {
           selectRow: true
         }
@@ -409,7 +401,14 @@ function datablajquery(dataDOS){
         style:    'multi',
         selector: 'td:first-child'
       },
-      order: [[ 1, 'asc' ]]
+      order: [[ 1, 'asc' ]],
+      columns: [
+        { data: 'benviado' },
+        { data: 'cserie' },
+        { data: 'cnumero' },
+        { data: 'dfecemi' },
+        { data: 'nimporte' }  
+      ], 
     });
     $(".selectAll").on( "click", function(e) {
       if ($(this).is( ":checked" )) {
