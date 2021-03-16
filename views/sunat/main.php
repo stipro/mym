@@ -343,10 +343,8 @@ $urlcurrent = $urlseparate[3];
     </div>
   </section>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-
 <script src="./../../assets/js/btn-animado.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -356,10 +354,7 @@ $urlcurrent = $urlseparate[3];
 
 function datablajquery(dataDOS){
   tableDatajq = dataDOS['consulta']['data'];
-  console.log('TABLA DESDE DB');
-  console.log(tableDatajq);
-  //data = tableDatajq['consulta'];
-  console.log('TABLA LOCAL');
+
   var data = [
             {
                 "name":       "Tiger Nixon",
@@ -378,8 +373,6 @@ function datablajquery(dataDOS){
                 "extn":       "8422"
             }
         ];
-  console.log('para la tabla');
-  console.log(data);
     var table = $('#example').DataTable({
       data: tableDatajq,
       destroy: true,
@@ -421,6 +414,8 @@ function datablajquery(dataDOS){
 var conconfailed = 0;
 var contadorFins = 0;
 var arrayinsert = [];
+var plimit = 3;
+var pibloque = 1;
 //CHECKBOX
 //SELECCION / DESELECCIONA CHECKBOX
 function toggle(source) {
@@ -829,12 +824,13 @@ const insertStatesSunat = async (objectarray) => {
     //CONSTRUIMOS BOTONES PAGINACION
     //CONSTRUIMOS BOTON PRIMERO
     const FirstLi = document.createElement('li');
-    const Firsta = document.createElement('button');
+    const Firstbtn = document.createElement('button');
     const FirstI = document.createElement('i');
-    Firsta.appendChild(FirstI);
-    FirstLi.appendChild(Firsta);
+    Firstbtn.appendChild(FirstI);
+    FirstLi.appendChild(Firstbtn);
     FirstI.className = "bi bi-chevron-double-left icon-pagi";
-    Firsta.className = "page-link";
+    Firstbtn.className = "page-link";
+    Firstbtn.setAttribute("id", "firstBtn");
     FirstLi.className = "page-item";
     FirstLi.setAttribute("id", "First");
     //CONSTRUIMOS BOTON ANTERIOR
@@ -858,65 +854,77 @@ const insertStatesSunat = async (objectarray) => {
     ellipsisLi.className = "page-item";
     //CONSTRUIMOS BOTON SIGUIENTE
     const NextLi = document.createElement('li');
-    const Nexta = document.createElement('button');
+    const Nextbtn = document.createElement('button');
     const NextI = document.createElement('i');
-    Nexta.appendChild(NextI);
-    NextLi.appendChild(Nexta);
+    Nextbtn.appendChild(NextI);
+    NextLi.appendChild(Nextbtn);
     NextI.className = "bi bi-chevron-compact-right icon-pagi";
-    Nexta.className = "page-link";
+    Nextbtn.className = "page-link";
+    Nextbtn.setAttribute("id", "nextBtn");
     NextLi.className = "page-item";
     NextLi.setAttribute("id", "next");
     //CONSTRUIMOS BOTON ULTIMO
     const LastLi = document.createElement('li');
-    const Lasta = document.createElement('a');
+    const Lastbtn = document.createElement('button');
     const LastI = document.createElement('i');
-    Lasta.appendChild(LastI);
-    LastLi.appendChild(Lasta);
+    Lastbtn.appendChild(LastI);
+    LastLi.appendChild(Lastbtn);
     LastI.className = "bi bi-chevron-double-right icon-pagi";
-    Lasta.className = "page-link";
+    Lastbtn.className = "page-link";
+    Lastbtn.setAttribute("id", "lastBtn");
     LastLi.className = "page-item";
     LastLi.setAttribute("id", "Last");
     var pplimitador = 3;
-    var plimit = 3;
+    var pinicial = 1;
+    var pindicador = 1;
     //COMPROBAMOS SI ES MAYOR DE LO PERMITIDO
     if(paginas > pplimitador){
-      console.log('es mayor a 3');
-      //INDICAMOS EL LIMITE
-      for(var pi = 1; pi <= plimit; pi++){
+      //AGREGAMOS EL PRIMERO Y ANTERIOR
+      tablepag.appendChild(FirstLi);
+      tablepag.appendChild(previousLi);
+      //COMPROBAMOS SI ESTAMOS EN ULTIMO
+      if(npagina > plimit){
+        console.log('Inicio de paginacion es : ' + pindicador);
+        pindicador = Number(plimit) + Number(1);
+        pibloque = pindicador;
+        console.log('nuevo inicio de paginacion Bloque es : ' + pibloque);
+        console.log('nuevo inicio de paginacion es : ' + pindicador);
+        console.log('El limite es: ' + plimit);
+        plimit = Number(plimit) + Number(pplimitador);
+        console.log('nuevo limite es: ' + plimit);
+      }
+      else{
+        console.log('Inicio de paginacion es : ' + pindicador);
+        console.log('El limite es: ' + plimit);
+        console.log('No llega al limite');
+      }
+      for(var pindicador; pindicador <= plimit; pindicador++){
         const eli = document.createElement('li');
         const ea = document.createElement('a');
-        console.log('estas en el numero :' + pi);
+        console.log('estas en el numero :' + pindicador);
         //COMPROBAMOS SI ESTAMOS EN PRIMER
         var cPrevious = npagina == '1' ? 'page-item disabled' : 'page-item';
         //COMPROBAMOS POSICION
-        pi == '1' ? FirstLi.className = cPrevious : 'page-item';
-        pi == '1' ? tablepag.appendChild(FirstLi) : 'page-item';
-        pi == '1' ? previousLi.className = cPrevious : 'page-item';
-        pi == '1' ? tablepag.appendChild(previousLi): 'page-item';
-        //COMPROBAMOS SI ESTAMOS EN ULTIMO
-        if(npagina == plimit){
-          plnext = plimit + plimit;
-          console.log('Se llego al limite pero aun falta' + plnext);
-        }
-        else{
-          console.log('No llega al limite');
-        }
+        pindicador == '1' ? FirstLi.className = cPrevious : 'page-item';
+        pindicador == '1' ? previousLi.className = cPrevious : 'page-item';
+
         var cNext = npagina == plimit ? 'page-item active' : 'page-item';
-        pi == plimit ? eliNext.className = cNext : 'page-item';
-        pi == plimit ? LastLi.className = cNext : 'page-item';
-        pi == plimit ? NextLi.className = cNext : 'page-item';
+        pindicador == plimit ? eliNext.className = cNext : 'page-item';
+        pindicador == plimit ? LastLi.className = cNext : 'page-item';
+        pindicador == plimit ? NextLi.className = cNext : 'page-item';
         //AGREGANDO CLASE
-        if(npagina == pi){
+        if(npagina == pindicador){
           console.log('Es igual');
           eli.className = "page-item active";
           ea.className = "page-link";
+          previousbtn.removeAttribute("disabled");
         }else{
           console.log('No es igual');
           eli.className = "page-item";
           ea.className = "page-link pagina-inac";
         }
         //AGREGANDO ID
-        eli.setAttribute("id", "pag_" + pi);
+        eli.setAttribute("id", "pag_" + pindicador);
         //EJECUTO CONSULTA PAGINA
         eli.addEventListener('click', consultpag);
         //FUNCION CONSULTAR PAGINA
@@ -961,139 +969,10 @@ const insertStatesSunat = async (objectarray) => {
           };
           makeRequestsdocEmi(queryformatDoc);
         }
-        console.log(pi);
-        ea.appendChild(document.createTextNode(pi));
-        eli.appendChild(ea);
-        tablepag.appendChild(eli);
-      }
-      //
-      tablepag.appendChild(ellipsisLi);
-      tablepag.appendChild(NextLi);
-      tablepag.appendChild(LastLi);
-      /*
-      0 = restar
-      1 = sumar
-      */
-      
-      //Elemento DIV que cambia su texto 
-      var btnprevious = document.getElementById("previousBtn");
-      // Se agrega el evento al elemento
-      //btnprevious.addEventListener("click", previous_e);
-      btnprevious.addEventListener("click", previous_e);
-      function previous_e(){
-        changeText();
-      }
-      /* Elemento DIV que cambia su texto */
-      var btnnext = document.getElementById("next");
-      /* Se agrega el evento al elemento */
-      btnnext.addEventListener("click", changeText);
-      /* Función que se gatilla al hacer click en el elemento DIV */
-      function changeText(op) {
-      console.log('La operacion es la siguiente: ' + npagina);
-      var spagina = Number(npagina) + Number(1);
-      console.log('el siguiente es: ' + spagina);
-      var pagina = spagina;
-      var calpagina = pagina - 1;
-        console.log('Paginacion : ' + pagina);
-        //OBTENIENDO DATOS
-        //OBTENEMOS LA FECHA
-        console.log('Hola Fecha seleccionado es : ' + dateStart + ' hasta' +  dateEnd);
-        //OBTENEMOS UNIDAD
-        var idsUnidad = document.getElementById('sUnidad');
-        var dtUnidad = idsUnidad.options[idsUnidad.selectedIndex].getAttribute('data-tokens');
-        console.log(dtUnidad);
-        //OBTENEMOS CANAL
-        var idsCanal = document.getElementById('sCanal');
-        var dtCanal = idsCanal.options[idsCanal.selectedIndex].getAttribute('data-tokens');
-        console.log(dtCanal);
-        //OBTENEMOS tipo documentos
-        var idsTipDoc = document.getElementById('sTipDoc');
-        var dtTipDoc = idsTipDoc.options[idsTipDoc.selectedIndex].getAttribute('data-tokens');
-        console.log(dtTipDoc);
-        //OBTENEMOS EL TAMAÑO DE CONSULTA
-        var idsSizeTable = document.getElementById('sizeTable');
-        var dtSizeTable = idsSizeTable.options[idsSizeTable.selectedIndex].getAttribute('value');
-        console.log(dtSizeTable);
-        console.log(calpagina);
-        console.log(dtSizeTable);
-        console.log('Se multiplicara');
-        var offset = dtSizeTable * calpagina;
-        console.log('Total : ' + offset);
-        console.log(queryformatDoc);
-        var queryformatDoc = {
-            "fechainicio" : dateStart,
-            "fechafin" : dateEnd,
-            "unidad" : dtUnidad,
-            "canal"  : dtCanal,
-            "tipdoc" : dtTipDoc,
-            "tamano" : dtSizeTable,
-            "pagina" : pagina,
-            "offset" : offset,
-        };
-        makeRequestsdocEmi(queryformatDoc);
-      }
-    }
-    //EJECUTAMOS EN CASO NO SE HA VERDAD
-    else{
-      //AGREGAMOS EL PRIMERO Y ANTERIOR
-      tablepag.appendChild(FirstLi);
-      tablepag.appendChild(previousLi);
-      //RECORREMOS EL TAMAÑO DE PAGINACION
-      for(var pi = 1; pi <= plimit; pi++){
-        //CONSTRUIMOS BASE PARA NUMEROS DE PAGINACION
-        const pnumli = document.createElement('li');
-        const pnuma = document.createElement('a');
-        //AGREGANDO CLASE GENERAL
-        pnumli.className = "page-item";
-        pnuma.className = "page-link";
-        //AGREGANDO CLASE
-        console.log('la pagina es: ' + npagina + ' Pagina indicador: ' + pi);
-        //COMPROBAMOS SI ESTAMOS EN PRIMER
-        var cPrevious = npagina == '1' ? 'page-item disabled' : 'page-item';
-        pi == '1' ? FirstLi.className = cPrevious : 'page-item';
-        pi == '1' ? previousLi.className = cPrevious : 'page-item';
-
-        if(npagina == pi){
-          console.log('es igual');
-          //FirstLi.classList.add('disabled');
-          //previousLi.classList.add('disabled');
-          pnumli.className = "page-item active";
-          pnuma.className = "page-link";
-        }else{
-          console.log('No es igual');
-          pnumli.className = "page-item";
-          pnuma.className = "page-link pagina-inac";
-        }
-        //npagina == plimit ? (NextLi.classList.add('disabled');LastLi.classList.add('disabled'););
-        /*
-        if(npagina == plimit){
-          NextLi.classList.add('disabled');
-          LastLi.classList.add('disabled');
-        }else{
-
-        }*/
-        //AGREGANDO ID
-        pnumli.setAttribute("id", "pag_" + pi);
-        //EJECUTO CONSULTA PAGINA
-        pnumli.addEventListener('click', consultpagdos);
-        //FUNCION CONSULTAR PAGINA
-        function consultpagdos(e) {
-          //Obtenemos el id
-          id = pnumli.getAttribute('id');
-          //Separamos
-          var sid = id.split('_');
-          //Obtenemos el numero
-          var pagina = sid['1'];
-          //Restamos
-          //var npactual = pagina - 1;
-          npagselec = pagina - 1;
-          console.log('Paginacion : ' + id);
-          sendconsultaPaginacion(npagselec);
-        }
-        function sendconsultaPaginacion(n){
-          const npagselec = n;
-          pagina = npagselec + 1;
-          console.log('Se recibio el numero ' + npagselec);
+        function sendconsultaPaginacion(precibido){
+          pagina =  precibido;
+          poffset =  Number(precibido) - Number(1);
+          console.log('Se recibio el numero ' + precibido);
           //OBTENIENDO DATOS
           //OBTENEMOS UNIDAD
           var idsUnidad = document.getElementById('sUnidad');
@@ -1111,11 +990,13 @@ const insertStatesSunat = async (objectarray) => {
           var idsSizeTable = document.getElementById('sizeTable');
           var dtSizeTable = idsSizeTable.options[idsSizeTable.selectedIndex].getAttribute('value');
           //console.log(dtSizeTable);
-          console.log(npagselec);
+          console.log(precibido);
           console.log(dtSizeTable);
           //Se MUltiplicara
-          console.log('Size : ' + dtSizeTable + 'pagina actual : ' + npagselec);
-          var offset = dtSizeTable * npagselec;
+          console.log('Size : ' + dtSizeTable + 'pagina actual : ' + precibido);
+          var offset = dtSizeTable * poffset;
+          console.log('Mi OFFSET ES : ' + offset);
+          console.log('MI PAGINA ES : ' + precibido);
           console.log('Total : ' + offset);
           var queryformatDoc = {
               "fechainicio" : dateStart,
@@ -1129,9 +1010,140 @@ const insertStatesSunat = async (objectarray) => {
           };
           makeRequestsdocEmi(queryformatDoc);
         }
-        console.log(pi);
+        ea.appendChild(document.createTextNode(pindicador));
+        eli.appendChild(ea);
+        tablepag.appendChild(eli);
+      }
+      //
+      tablepag.appendChild(ellipsisLi);
+      tablepag.appendChild(NextLi);
+      tablepag.appendChild(LastLi);
+      /////////////////////////////////////////////
+      //    EVENTOS DE BOTONES DE PAGINACION     //
+      /////////////////////////////////////////////
+      var btnFirst = document.getElementById("firstBtn");
+      btnFirst.addEventListener("click", first_e);
+      function first_e(){
+        console.log('Regresamos a la pagina : ' + pinicial);
+        sendconsultaPaginacion(pinicial);
+      }
+      var btnPrevious = document.getElementById("previousBtn");
+      btnPrevious.addEventListener("click", previous_e);
+      function previous_e(){
+        pprevious =  Number(npagina) - Number(1);
+        console.log('Regresamos a la pagina : ' + pprevious);
+        sendconsultaPaginacion(pprevious);
+      }
+      var btnnext = document.getElementById("nextBtn");
+      btnnext.addEventListener("click", next_e);
+      function next_e(){
+        pnext =  Number(npagina) + Number(1);
+        console.log('Siguiente pagina es : ' + pnext);
+        sendconsultaPaginacion(pnext);
+      }
+      var btnLast = document.getElementById("lastBtn");
+      btnLast.addEventListener("click", last_e);
+      function last_e(){
+        console.log('Siguiente pagina es : ' + plimit);
+        sendconsultaPaginacion(plimit);
+      }
+    }
+    else{
+      //AGREGAMOS EL PRIMERO Y ANTERIOR
+      tablepag.appendChild(FirstLi);
+      tablepag.appendChild(previousLi);
+      //RECORREMOS EL TAMAÑO DE PAGINACION
+      for(pindicador; pindicador <= plimit; pindicador++){
+        //CONSTRUIMOS BASE PARA NUMEROS DE PAGINACION
+        const pnumli = document.createElement('li');
+        const pnuma = document.createElement('a');
+        //AGREGANDO CLASE GENERAL
+        pnumli.className = "page-item";
+        pnuma.className = "page-link";
+        //AGREGANDO CLASE
+        console.log('la pagina es: ' + npagina + ' Pagina indicador: ' + pindicador);
+        //COMPROBAMOS SI ESTAMOS EN PRIMER
+        npagina == '1' ? FirstLi.className = 'page-item disabled' : 'page-item';
+        npagina == '1' ? previousLi.className = 'page-item disabled' : 'page-item';
+        //COMPROBAMOS SI ESTAMOS EN FINAL
+        npagina == plimit ? NextLi.className = 'page-item disabled' : 'page-item';
+        npagina == plimit ? LastLi.className = 'page-item disabled' : 'page-item';
+        
+        if(npagina == pindicador){
+          console.log('es igual');
+          //FirstLi.classList.add('disabled');
+          //previousLi.classList.add('disabled');
+          pnumli.className = "page-item active";
+          pnuma.className = "page-link";
+          previousbtn.removeAttribute("disabled");
+        }else{
+          console.log('No es igual');
+          pnumli.className = "page-item";
+          pnuma.className = "page-link pagina-inac";
+        }
+        //AGREGANDO ID
+        pnumli.setAttribute("id", "pag_" + pindicador);
+        //EJECUTO CONSULTA PAGINA
+        pnumli.addEventListener('click', consultpagdos);
+        //FUNCION CONSULTAR PAGINA
+        function consultpagdos(e) {
+          //Obtenemos el id
+          id = pnumli.getAttribute('id');
+          //Separamos
+          var sid = id.split('_');
+          //Obtenemos el numero
+          var pagina = sid['1'];
+          //Restamos
+          //var npactual = pagina - 1;
+          //npagselec = pagina - 1;
+          npagselec = pagina;
+          console.log('Paginacion : ' + id);
+          sendconsultaPaginacion(npagselec);
+        }
+        function sendconsultaPaginacion(precibido){
+          pagina =  precibido;
+          poffset =  Number(precibido) - Number(1);
+          console.log('Se recibio el numero ' + precibido);
+          //OBTENIENDO DATOS
+          //OBTENEMOS UNIDAD
+          var idsUnidad = document.getElementById('sUnidad');
+          var dtUnidad = idsUnidad.options[idsUnidad.selectedIndex].getAttribute('data-tokens');
+          //console.log(dtUnidad);
+          //OBTENEMOS CANAL
+          var idsCanal = document.getElementById('sCanal');
+          var dtCanal = idsCanal.options[idsCanal.selectedIndex].getAttribute('data-tokens');
+          //console.log(dtCanal);
+          //OBTENEMOS tipo documentos
+          var idsTipDoc = document.getElementById('sTipDoc');
+          var dtTipDoc = idsTipDoc.options[idsTipDoc.selectedIndex].getAttribute('data-tokens');
+          //console.log(dtTipDoc);
+          //OBTENEMOS EL TAMAÑO DE CONSULTA
+          var idsSizeTable = document.getElementById('sizeTable');
+          var dtSizeTable = idsSizeTable.options[idsSizeTable.selectedIndex].getAttribute('value');
+          //console.log(dtSizeTable);
+          console.log(precibido);
+          console.log(dtSizeTable);
+          //Se MUltiplicara
+          console.log('Size : ' + dtSizeTable + 'pagina actual : ' + precibido);
+          var offset = dtSizeTable * poffset;
+          console.log('Mi OFFSET ES : ' + offset);
+          console.log('MI PAGINA ES : ' + precibido);
+          console.log('Total : ' + offset);
+          var queryformatDoc = {
+              "fechainicio" : dateStart,
+              "fechafin" : dateEnd,
+              "unidad" : dtUnidad,
+              "canal"  : dtCanal,
+              "tipdoc" : dtTipDoc,
+              "tamano" : dtSizeTable,
+              "pagina" : pagina,
+              "offset" : offset,
+          };
+          makeRequestsdocEmi(queryformatDoc);
+        }
+        console.log(pindicador);
         //AGREGANDO NUMERO PAGINACION A ETIQUETA A
-        pnuma.appendChild(document.createTextNode(pi));
+        pnuma.appendChild(document.createTextNode(pindicador));
         //AGREGANDO NUMERO PAGINACION A ETIQUETA LI
         pnumli.appendChild(pnuma);
         //AGREGANDO NUMERO PAGINACION A ETIQUETA TABLA
@@ -1140,6 +1152,35 @@ const insertStatesSunat = async (objectarray) => {
       //AGREMOS EL SIGUIENTE Y ULTIMO
       tablepag.appendChild(NextLi);
       tablepag.appendChild(LastLi);
+      /////////////////////////////////////////////
+      //    EVENTOS DE BOTONES DE PAGINACION     //
+      /////////////////////////////////////////////
+      var btnFirst = document.getElementById("firstBtn");
+      btnFirst.addEventListener("click", first_e);
+      function first_e(){
+        console.log('Regresamos a la pagina : ' + pinicial);
+        sendconsultaPaginacion(pinicial);
+      }
+      var btnPrevious = document.getElementById("previousBtn");
+      btnPrevious.addEventListener("click", previous_e);
+      function previous_e(){
+        pprevious =  Number(npagina) - Number(1);
+        console.log('Regresamos a la pagina : ' + pprevious);
+        sendconsultaPaginacion(pprevious);
+      }
+      var btnnext = document.getElementById("nextBtn");
+      btnnext.addEventListener("click", next_e);
+      function next_e(){
+        pnext =  Number(npagina) + Number(1);
+        console.log('Siguiente pagina es : ' + pnext);
+        sendconsultaPaginacion(pnext);
+      }
+      var btnLast = document.getElementById("lastBtn");
+      btnLast.addEventListener("click", last_e);
+      function last_e(){
+        console.log('Siguiente pagina es : ' + plimit);
+        sendconsultaPaginacion(plimit);
+      }
     }
     //tablepag.appendChild(eliNext);
     //i = 0;
@@ -1386,6 +1427,7 @@ const insertStatesSunat = async (objectarray) => {
   let btnConBDatos = document.getElementById('btnConBDatos');
   //
   btnConBDatos.addEventListener('click', function(){
+    plimit = 3;
     if(typeof dateStart === 'undefined'){
       document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-warning" role="alert">No selecciono una fecha</div>';
     } else {
