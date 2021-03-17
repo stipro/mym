@@ -39,7 +39,7 @@ $urlcurrent = $urlseparate[3];
   include ('../nav.php');
 ?>
 <section class="contenedor mx-2">
-    <div class="row">
+    <div class="">
       <div class="col-md-12">
           <h2>Modulo, <?php echo $urlcurrent?>!</h2> 
           <nav class="d-flex justify-content-end">
@@ -52,7 +52,7 @@ $urlcurrent = $urlseparate[3];
         <br>
         <div class="tab-content" id="nav-tabContent">
           <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-            <div class="row container d-flex justify-content-center">
+            <div class="container d-flex flex-column justify-content-center">
             <div id="rpts-sunat">
               <div></div>
             </div>
@@ -71,7 +71,7 @@ $urlcurrent = $urlseparate[3];
                               <div class="form-group col-sm">                                        
                                   <label for="sUnidad"><strong>Unidad</strong></label>
                                   <select id="sUnidad" class="selectpicker form-control" data-live-search="true">
-                                  <option data-tokens="">Selecciona un Almacen</option>
+                                  <option data-tokens="" >Selecciona un Almacen</option>
                                   <option data-tokens="AQP" selected>AREQUIPA</option>
                                   <option data-tokens="LIMA">LIMA</option>
                                   <option data-tokens="*">TODOS</option>
@@ -84,6 +84,7 @@ $urlcurrent = $urlseparate[3];
                                 <label for="sTipDoc"><strong>Tip. Doc</strong></label>
                                 <select id="sTipDoc" class="selectpicker form-control" data-live-search="true">
                                 <option data-tokens="">Selecciona el tipo de Doc.</option>
+                                <option data-tokens="*"selected>TODOS</option>
                                 <option data-tokens="FF">FACTURA</option>
                                 <option data-tokens="BB">BOLETA</option>
                                 <option data-tokens="C">N. CREDITO</option>
@@ -101,6 +102,7 @@ $urlcurrent = $urlseparate[3];
                                   <label for="sCanal"><strong>Canal</strong></label>
                                   <select id="sCanal" class="selectpicker form-control" data-live-search="true">
                                   <option data-tokens="">Selecciona un canal</option>
+                                  <option data-tokens="*"selected>TODOS</option>
                                   <option data-tokens="04">FARMA</option>
                                   <option data-tokens="01">CONSUMO</option>
                                   <option data-tokens="06">INSTITUCIONES</option>
@@ -166,6 +168,9 @@ $urlcurrent = $urlseparate[3];
                       <button type="button" id="btnConBDatos" class="btn btn-success">Consultar</button>
                       <button type="button" id="btnSCM" class="btn btn-success">Consultar MASIVO SUNAT</button>
                       <button type="button" id="btnSRM" class="btn btn-success">Registrar MASIVO BDATOS </button>
+                      </div>
+                      <div class="form-group">
+                      <h5>Total : <span id="spptotal" class="badge badge-secondary sptotal">...</span></h5>
                       </div>
 <!--
                       <div class="form-group col-sm">
@@ -252,6 +257,7 @@ $urlcurrent = $urlseparate[3];
                               </tfoot>
                       </table>
                   </div>
+                  <!--
                   <div class="container">
                     <input type="checkbox" class="selectAll" name="selectAll" value="all"> Select All
                     <table id="example" class="display nowrap" style="width:100%">
@@ -275,6 +281,7 @@ $urlcurrent = $urlseparate[3];
                       </tfoot>
                     </table>
                   </div>
+                  -->
               </div>
             </div>
           </div>
@@ -351,7 +358,7 @@ $urlcurrent = $urlseparate[3];
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 <script src="https://nightly.datatables.net/select/js/dataTables.select.js?_=766c9ac11eda67c01f759bab53b4774d"></script>
 <script>
-
+/*
 function datablajquery(dataDOS){
   tableDatajq = dataDOS['consulta']['data'];
 
@@ -382,10 +389,10 @@ function datablajquery(dataDOS){
         orderable: false,
         className: 'select-checkbox',
         targets:   -0,
-        /*
+        
         render: function ( data, type, row, meta ) {
           return '<a href="">Download</a>';
-        },*/
+        },
         checkboxes: {
           selectRow: true
         }
@@ -411,11 +418,13 @@ function datablajquery(dataDOS){
       }
     });
 }
+*/
 var conconfailed = 0;
 var contadorFins = 0;
 var arrayinsert = [];
 var plimit = 3;
 var pibloque = 1;
+var pindicador = 1;
 //CHECKBOX
 //SELECCION / DESELECCIONA CHECKBOX
 function toggle(source) {
@@ -777,7 +786,7 @@ const insertStatesSunat = async (objectarray) => {
     console.log(dttbcontendor);
     tableData = dttbcontendor['consulta']['data'];
     datableprueba = dttbcontendor;
-    datablajquery(datableprueba);
+    //datablajquery(datableprueba);
     //OBTENIEDO DATOS DE TABLA
     paginas = data['paginacion']['filasPagina'];
     //OBTENIEDO N° PAGINA
@@ -847,11 +856,19 @@ const insertStatesSunat = async (objectarray) => {
     previousLi.setAttribute("id", "previous");
     //CONTRUIMOS ICON SUSPENSIVOS
     const ellipsisLi = document.createElement('li');
-    const ellipsisa = document.createElement('button');
+    const ellipsisa = document.createElement('a');
+    const ptotalLi = document.createElement('li');
+    const ptotala = document.createElement('a');
     ellipsisa.appendChild(document.createTextNode('...'));
-    ellipsisLi.appendChild(ellipsisa);
     ellipsisa.className = "page-link";
+    ellipsisLi.appendChild(ellipsisa);
     ellipsisLi.className = "page-item";
+    //var spptotal = 
+    document.getElementById("spptotal").innerHTML = paginas;
+    //spptotal.appendChild(document.createTextNode(paginas));
+    ptotala.className = "page-link";
+    ptotalLi.appendChild(ptotala);
+    ptotalLi.className = "page-item"; 
     //CONSTRUIMOS BOTON SIGUIENTE
     const NextLi = document.createElement('li');
     const Nextbtn = document.createElement('button');
@@ -876,7 +893,6 @@ const insertStatesSunat = async (objectarray) => {
     LastLi.setAttribute("id", "Last");
     var pplimitador = 3;
     var pinicial = 1;
-    var pindicador = 1;
     //COMPROBAMOS SI ES MAYOR DE LO PERMITIDO
     if(paginas > pplimitador){
       //AGREGAMOS EL PRIMERO Y ANTERIOR
@@ -892,13 +908,14 @@ const insertStatesSunat = async (objectarray) => {
         console.log('El limite es: ' + plimit);
         plimit = Number(plimit) + Number(pplimitador);
         console.log('nuevo limite es: ' + plimit);
-      }
-      else{
+      }else{
+        console.log('false');
         console.log('Inicio de paginacion es : ' + pindicador);
         console.log('El limite es: ' + plimit);
         console.log('No llega al limite');
       }
-      for(var pindicador; pindicador <= plimit; pindicador++){
+      console.log('nuevo inicio de paginacion Bloque es : ' + pibloque);
+      for(pindicador; pindicador <= plimit; pindicador++){
         const eli = document.createElement('li');
         const ea = document.createElement('a');
         console.log('estas en el numero :' + pindicador);
@@ -1014,6 +1031,7 @@ const insertStatesSunat = async (objectarray) => {
         eli.appendChild(ea);
         tablepag.appendChild(eli);
       }
+      pindicador = pibloque;
       //
       tablepag.appendChild(ellipsisLi);
       tablepag.appendChild(NextLi);
@@ -1428,6 +1446,7 @@ const insertStatesSunat = async (objectarray) => {
   //
   btnConBDatos.addEventListener('click', function(){
     plimit = 3;
+    pindicador = 1;
     if(typeof dateStart === 'undefined'){
       document.getElementById("rpts-sunat").innerHTML = '<div class="alert alert-warning" role="alert">No selecciono una fecha</div>';
     } else {
